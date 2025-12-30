@@ -6,6 +6,7 @@ import { draggable } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import { useContext, useEffect, useRef } from "react";
 import { ITEM_DRAG_TYPE, onDropCTX } from "./DemoDnD";
 import { Marquee } from "./SpotifyNowPlaying/now-playing.styles";
+import { setTimeout } from "timers";
 
 export const GigCard = ({
   groupId,
@@ -46,14 +47,16 @@ export const GigCard = ({
   }, [id, groupId, index]);
   let defaultRange = 50;
   const locationRef = useRef(null);
+
   function sliderEnd(e) {
     let value = e.currentTarget.value;
 
     if (Number(value) < 15) {
-      e.currentTarget.className = "shrink";
+      // e.currentTarget.className = "shrink";
     }
     if (Number(value) > 80) {
-      e.currentTarget.className = "";
+      // e.currentTarget.className = "";
+
       setPosition({
         id,
         groupId: otherGroupSwitch(groupId)[1].id,
@@ -141,9 +144,11 @@ export const GigCard = ({
 
                     if (Number(value) < 15) {
                       e.currentTarget.value = "0";
+                      e.currentTarget.className = "shrink";
                     }
                     if (Number(value) > 80) {
                       e.currentTarget.value = "100";
+                      e.currentTarget.className = "";
                     }
                   }}
                   onPointerDown={(e) => {
