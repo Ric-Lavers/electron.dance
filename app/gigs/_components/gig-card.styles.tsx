@@ -1,5 +1,5 @@
 "use client";
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 export const Day = styled.h3`
   height: 24px;
@@ -80,6 +80,46 @@ export const Location = styled.a`
     cursor: pointer;
   }
 `;
+
+const leftToRight = (width) => keyframes`
+
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(${`-${width - 150 + 8}px`});
+  }
+  50% {
+    transform: translateX(${`-${width - 150 + 8}px`});
+  }
+  80% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(0);
+  }
+`;
+
+export const Marquee = styled.a<{ $width: number }>`
+  display: inline;
+  white-space: nowrap;
+
+  margin: 0;
+  display: inline-block;
+  white-space: nowrap;
+
+  font-size: 13px;
+  ${({ $width }) =>
+    $width > 150 &&
+    css`
+      animation: ${leftToRight($width)}
+        ${Math.min(20, Math.max(6, Math.round($width / 25)))}s linear infinite;
+    `}
+`;
+
 export const Organiser = styled.p`
   font-size: 0.75em;
   width: 100%;

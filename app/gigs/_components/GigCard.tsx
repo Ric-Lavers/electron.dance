@@ -3,8 +3,9 @@ import * as S from "./gig-card.styles";
 import GigPreview from "./SpotifyNowPlaying/GigPreview";
 import { draggable } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { ITEM_DRAG_TYPE, onDropCTX } from "./DemoDnD";
+import { Marquee } from "./SpotifyNowPlaying/now-playing.styles";
 
 export const GigCard = ({
   groupId,
@@ -44,6 +45,7 @@ export const GigCard = ({
     });
   }, [id, groupId, index]);
   let defaultRange = 50;
+  const locationRef = useRef(null);
   return (
     <>
       <S.Item>
@@ -56,9 +58,15 @@ export const GigCard = ({
               {format(startDate, "h:mma").toLowerCase()}
             </S.Time>{" "}
             <S.Location href={url} target="_blank" title={location}>
-              {location}
+              <S.Marquee
+                $width={locationRef.current?.scrollWidth || 150}
+                ref={locationRef}
+              >
+                {location}
+              </S.Marquee>
             </S.Location>
           </S.Row>
+          <S.Row></S.Row>
 
           <div id={id} style={{ borderRadius: "8px", overflow: "hidden" }}>
             {/* @ts-ignore */}
