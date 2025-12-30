@@ -5,8 +5,6 @@ import { draggable } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 
 import { useContext, useEffect, useRef } from "react";
 import { ITEM_DRAG_TYPE, onDropCTX } from "./DemoDnD";
-import { Marquee } from "./SpotifyNowPlaying/now-playing.styles";
-import { setTimeout } from "timers";
 
 export const GigCard = ({
   groupId,
@@ -45,24 +43,8 @@ export const GigCard = ({
       }),
     });
   }, [id, groupId, index]);
-  let defaultRange = 50;
   const locationRef = useRef(null);
 
-  function sliderEnd(e) {
-    let value = e.currentTarget.value;
-
-    if (Number(value) < 15) {
-      // e.currentTarget.className = "shrink";
-    }
-    if (Number(value) > 80) {
-      // e.currentTarget.className = "";
-
-      setPosition({
-        id,
-        groupId: otherGroupSwitch(groupId)[1].id,
-      });
-    }
-  }
   return (
     <>
       <S.Item>
@@ -113,65 +95,73 @@ export const GigCard = ({
           ) : (
             <div style={{ height: 14 }} />
           )}
-
-          <S.RangeWrap groupId={groupId}>
-            <span className="label left">
-              {otherGroupSwitch(groupId)[0].name}{" "}
-            </span>
-            {
-              ((defaultRange = groupId === "going" ? 0 : 50),
-              (
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  step={2}
-                  defaultValue={defaultRange}
-                  className={groupId === "going" ? "shronk" : ""}
-                  onAnimationEnd={(e) => {
-                    let value = Number(e.currentTarget.value),
-                      [{ id: leftId }, { id: rightId }] =
-                        otherGroupSwitch(groupId),
-                      targetGroupId =
-                        value < 15 ? leftId : value > 80 ? rightId : "";
-
-                    targetGroupId &&
-                      setPosition({ id, groupId: targetGroupId });
-                  }}
-                  onChange={(e) => {
-                    let value = e.currentTarget.value;
-                    e.currentTarget.style.setProperty("--value", `${value}%`);
-
-                    if (Number(value) < 15) {
-                      e.currentTarget.value = "0";
-                      e.currentTarget.className = "shrink";
-                    }
-                    if (Number(value) > 80) {
-                      e.currentTarget.value = "100";
-                      e.currentTarget.className = "";
-                    }
-                  }}
-                  onPointerDown={(e) => {
-                    e.stopPropagation();
-                    e.currentTarget.setPointerCapture(e.pointerId);
-                  }}
-                  onPointerUp={sliderEnd}
-                  onPointerCancel={sliderEnd}
-                  style={{
-                    //@ts-ignore
-                    "--value": String(defaultRange) + "%",
-                  }}
-                />
-              ))
-            }
-
-            <span className="label right">
-              {otherGroupSwitch(groupId)[1].name}{" "}
-            </span>
-          </S.RangeWrap>
+          <CoolRange groupId={groupId} gigId={id} setPosition={setPosition} />
         </S.Card>
       </S.Item>
     </>
+  );
+};
+
+const CoolRange = ({ groupId, gigId, setPosition }) => {
+  let defaultRange = groupId === "going" ? 0 : 50;
+
+  function startAnimation(e) {
+    let value = Number(e.currentTarget.value),
+      [{ id: leftId }, { id: rightId }] = otherGroupSwitch(groupId);
+    if (value < 15 || value > 80) {
+      e.currentTarget.className = "shrink";
+    } else {
+      e.currentTarget.className = "";
+    }
+  }
+  return (
+    <S.RangeWrap groupId={groupId}>
+      <span className="label left">{otherGroupSwitch(groupId)[0].name} </span>
+      {
+        ((defaultRange = groupId === "going" ? 0 : 50),
+        (
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step={2}
+            defaultValue={defaultRange}
+            className={groupId === "going" ? "shronk" : ""}
+            onAnimationEnd={(e) => {
+              let value = Number(e.currentTarget.value),
+                [{ id: leftId }, { id: rightId }] = otherGroupSwitch(groupId),
+                targetGroupId = value < 15 ? leftId : value > 80 ? rightId : "";
+
+              targetGroupId &&
+                setPosition({ id: gigId, groupId: targetGroupId });
+            }}
+            onInput={(e) => {
+              let value = e.currentTarget.value;
+
+              if (Number(value) < 15) {
+                e.currentTarget.value = "0";
+              }
+              if (Number(value) > 80) {
+                e.currentTarget.value = "100";
+              }
+
+              e.currentTarget.style.setProperty("--value", `${value}%`);
+            }}
+            onClick={startAnimation}
+            onPointerDown={(e) => {
+              e.stopPropagation();
+            }}
+            onPointerUp={startAnimation}
+            style={{
+              //@ts-ignore
+              "--value": String(defaultRange) + "%",
+            }}
+          />
+        ))
+      }
+
+      <span className="label right">{otherGroupSwitch(groupId)[1].name} </span>
+    </S.RangeWrap>
   );
 };
 

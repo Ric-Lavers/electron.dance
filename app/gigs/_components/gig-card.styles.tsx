@@ -126,14 +126,14 @@ export const Organiser = styled.p`
   padding: 0 4px;
   text-align: right;
 `;
-const fadeIn = keyframes`
+const fadeOut = keyframes`
   from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
     opacity: 1;
     transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(4px);
   }
 `;
 const shrink = keyframes`
@@ -221,9 +221,13 @@ export const RangeWrap = styled.div<{ groupId: string }>`
       appearance: none;
       margin-top: -10px;
       border-radius: 50%;
-      appearance: none;
       width: 24px;
       height: 24px;
+      @media (hover: none) and (pointer: coarse) {
+        width: 32px;
+        height: 32px;
+        margin-top: -14px;
+      }
       border: 0;
       background-color: lime;
       background-color: var(--card-color-public);
