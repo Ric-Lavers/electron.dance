@@ -56,6 +56,23 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
+export async function getGigs(userId: string | null, startDate?: Date) {
+  const from = startDate || startOfToday();
+  await connectToDatabase();
+  let usersGigIds: Schema.Types.ObjectId[] = [];
+
+  if (userId) {
+    //@ts-ignore
+    usersGigIds = (await GigUser.findOne({ id: userId }))?.gigs || [];
+    console.log(usersGigIds);
+  }
+
+  const gigs = await Event.find({ startDate: { $gte: from } }).sort({
+    startDate: 1,
+  });
+
+  return gigs;
+}
 
 export async function getUsersEvents(userId, startDate) {
   await connectToDatabase()
