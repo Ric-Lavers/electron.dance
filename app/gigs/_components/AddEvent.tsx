@@ -16,15 +16,17 @@ export const AddEvent = () => {
 
   if (open) {
     return (
-      <>
+      <S.Container>
         <S.Button onClick={() => s_open(false)}>Close</S.Button>
         <CreateEvent onSubmit={handleSubmit} />
-      </>
+      </S.Container>
     );
   }
   return (
-    <S.Form>
-      <S.Button onClick={() => s_open(true)}>Add a event</S.Button>
-    </S.Form>
+    <S.Container>
+      <S.AddForm>
+        <S.Button onClick={() => s_open(true)}>Add a event</S.Button>
+      </S.AddForm>
+    </S.Container>
   );
 };

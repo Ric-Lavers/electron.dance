@@ -1,21 +1,28 @@
 'use client'
 import styled from 'styled-components'
-
-export const Form = styled.form`
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+export const AddForm = styled.form`
+  width: 100%;
+  max-width: 600px;
   display: grid;
   place-items: center;
-  width: 100%;
   margin-bottom: 24px;
   padding: 24px;
   border: 1px solid var(--color-selected-dark);
-  box-shadow: oklch(0 0 0 / 0.05) 0px 0px 0px 1px, oklch(0 0 0 / 0.05) 0px 1.92px 1.92px 0px,
+  box-shadow: oklch(0 0 0 / 0.05) 0px 0px 0px 1px,
+    oklch(0 0 0 / 0.05) 0px 1.92px 1.92px 0px,
     oklch(0 0 0 / 0.05) 0px 3.84px 3.84px 0px;
-`
+`;
 export const Button = styled.button`
   appearance: none;
   border: 0;
   padding: 0;
   cursor: pointer;
+  width: fit-content;
 
   border-radius: 40px;
   padding: 8px 16px;
@@ -25,16 +32,17 @@ export const Button = styled.button`
   font-size: 12px;
   line-height: 12px;
   &::before {
-    content: '+ ';
+    content: "+ ";
   }
-`
+`;
 
 export const CreateForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
+  width: 100%;
   max-width: 600px;
-`
+`;
 
 export const FormGroup = styled.div`
   display: flex;

@@ -227,7 +227,11 @@ const leftToRight = (width) => keyframes`
   }
 
 `;
-export const Marquee = styled.p<{ subdued?: boolean; $width: number }>`
+export const Marquee = styled.p<{
+  subdued?: boolean;
+  $width: number;
+  on?: boolean;
+}>`
   ${({ subdued }) => subdued && `color: ${spotifyColors.textSubdued};`}
 
   @container (width < 150px) {
@@ -239,6 +243,13 @@ export const Marquee = styled.p<{ subdued?: boolean; $width: number }>`
         `};
     }
   }
+  ${({ on, $width }) =>
+    on &&
+    $width > 150 &&
+    css`
+      animation: ${leftToRight($width)}
+        ${Math.min(30, Math.max(6, Math.round($width / 25)))}s linear infinite;
+    `}
 `;
 
 export const Spotify = styled(SpotifyIcon)`

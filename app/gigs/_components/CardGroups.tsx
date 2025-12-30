@@ -1,6 +1,7 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import * as S from "./groups.style";
+import { getGigsFromLocalStorage, makeUserGigs } from "../_utils/localStorage";
 
 export const Group = ({
   id,
@@ -48,18 +49,10 @@ export const GroupS_CTX = ({
   children,
 }) => {
   const [expanded, s_open] = useState(initialExpanded);
-  const [gigs, s_gigs] = useState({});
+  const [gigs, s_gigs] = useState(makeUserGigs(events, []));
 
   useEffect(() => {
-    let Î = {
-        going: { name: "Going", data: [] },
-        maybe: { name: "Maybe", data: [] },
-        sydney: { name: "Sydney", data: events.slice(0, Infinity) },
-      },
-      g_gs = localStorage.getItem("gigs"),
-      gÍgs = g_gs ? JSON.parse(g_gs) : Î;
-
-    s_gigs(gÍgs);
+    s_gigs(getGigsFromLocalStorage(events));
   }, [events]);
   return (
     <GroupCTX.Provider

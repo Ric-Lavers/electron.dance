@@ -76,7 +76,7 @@ export const GigCard = ({
                 item: {
                   uri: "test",
                   name: title,
-                  artists: artists.map((name) => ({ name })),
+                  artists: artists.map((name) => ({ name })).slice(0, 12),
                   album: { images: [{ url: image }] },
                 },
 
@@ -107,7 +107,8 @@ const CoolRange = ({ groupId, gigId, setPosition }) => {
 
   function startAnimation(e) {
     let value = Number(e.currentTarget.value),
-      [{ id: leftId }, { id: rightId }] = otherGroupSwitch(groupId);
+      isShrunk = e.currentTarget.className === "shronk";
+
     if (value < 15 || value > 80) {
       e.currentTarget.className = "shrink";
     } else {
