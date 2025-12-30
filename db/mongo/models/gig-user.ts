@@ -11,14 +11,15 @@ export const GigUserSchema = new Schema(
       type: String,
       default: () => nano(),
     },
-    gigsAdmin: [{ type: Schema.Types.ObjectId, ref: 'Event' }],
-    gigs: [{ type: Schema.Types.ObjectId, ref: 'Event' }],
-    following: [{ type: Schema.Types.ObjectId, ref: 'GigUser' }],
+    tokens: [{ type: Schema.Types.ObjectId, ref: "Token" }],
+    gigsAdmin: [{ type: Schema.Types.ObjectId, ref: "Event" }],
+    gigs: [{ type: Schema.Types.ObjectId, ref: "Event" }],
+    following: [{ type: Schema.Types.ObjectId, ref: "GigUser" }],
 
     lastLoginMethod: { type: String },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
-)
+);
 
 // One virtual that returns the computed profile object
 GigUserSchema.virtual('profile').get(async function (this: UserDocument) {

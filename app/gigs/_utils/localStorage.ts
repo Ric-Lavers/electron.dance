@@ -1,11 +1,5 @@
 export function setGigsToLocalstorage(state) {
-  const stripGigFields = (gig) => {};
-  console.log(
-    JSON.stringify([
-      ...mapIds(state.going, "going"),
-      ...mapIds(state.maybe, "maybe"),
-    ])
-  );
+
 
   localStorage.setItem(
     "gigs",

@@ -1,6 +1,5 @@
-import axios from 'axios'
-import { startOfDay, startOfToday } from "date-fns";
-import { cookies, headers } from "next/headers";
+import { startOfToday } from "date-fns";
+import { cookies } from "next/headers";
 
 import { AddEvent } from "./_components/AddEvent";
 import { GroupS_CTX } from "./_components/CardGroups";
@@ -27,16 +26,7 @@ const Events = async () => {
       <GroupS_CTX events={events}>
         <TwoSectionDnD gigs={gigs} />
       </GroupS_CTX>
-
-      {/*  <pre>
-          {JSON.stringify(
-            gigs.sydney.data,
-            // events.slice(0, 2).map((_) => [_.title, _.organiser, _.location, _.startDate, _.image]),
-            null,
-            2
-          )}
-        </pre> */}
     </>
   );
 };
-export default Events
+export default Events;

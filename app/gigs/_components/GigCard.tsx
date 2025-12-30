@@ -43,7 +43,7 @@ export const GigCard = ({
       }),
     });
   }, [id, groupId, index]);
-  const locationRef = useRef(null);
+  const locationRef = useRef<HTMLAnchorElement>(null);
 
   return (
     <>
@@ -56,14 +56,15 @@ export const GigCard = ({
             <S.Time dateTime={format(startDate, "yyyy-MM-ddTHH:MM")}>
               {format(startDate, "h:mma").toLowerCase()}
             </S.Time>{" "}
-            <S.Location href={url} target="_blank" title={location}>
-              <S.Marquee
-                $width={locationRef.current?.scrollWidth || 150}
-                ref={locationRef}
-              >
-                {location}
-              </S.Marquee>
-            </S.Location>
+            <S.Marquee
+              href={url}
+              target="_blank"
+              title={location}
+              ref={locationRef}
+              $width={locationRef.current?.scrollWidth || 150}
+            >
+              {location}
+            </S.Marquee>
           </S.Row>
           <S.Row></S.Row>
 

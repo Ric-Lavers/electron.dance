@@ -56,7 +56,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
-export async function getGigs(userId: string | null, startDate?: Date) {
+export async function getGigs(userId?: string | null, startDate?: Date) {
   const from = startDate || startOfToday();
   await connectToDatabase();
   let usersGigIds: Schema.Types.ObjectId[] = [];
