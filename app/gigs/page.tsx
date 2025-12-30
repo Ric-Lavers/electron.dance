@@ -13,7 +13,6 @@ const Events = async () => {
     userId = jar.get("userId")?.value,
     events = await getGigs(userId, startOfToday());
 
-  // console.log(events[3])
   const gigs = {
     going: { name: "Going", data: [] },
     maybe: { name: "Maybe", data: [] },
@@ -24,18 +23,11 @@ const Events = async () => {
     <>
       <EventsHeader />
       <AddEvent />
-      {/* <GroupSection>
-        <Group id="going" title="going" count={5} colorNumber={7} />
-        <Group id="maybe" title="Maybe" count={0} colorNumber={2} />
-        <Group id="sydney" title="Sydney" count={events.length} colorNumber={6} />
-        <Group id="past" title="Past" count={0} colorNumber={1} />
-      </GroupSection> */}
+
       <GroupS_CTX events={events}>
         <TwoSectionDnD gigs={gigs} />
       </GroupS_CTX>
-      {/* <GroupSection>
-        <DraggableContainer gigs={gigs} />
-      </GroupSection> */}
+
       {/*  <pre>
           {JSON.stringify(
             gigs.sydney.data,

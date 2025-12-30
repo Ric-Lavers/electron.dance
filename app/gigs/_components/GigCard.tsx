@@ -46,6 +46,20 @@ export const GigCard = ({
   }, [id, groupId, index]);
   let defaultRange = 50;
   const locationRef = useRef(null);
+  function sliderEnd(e) {
+    let value = e.currentTarget.value;
+
+    if (Number(value) < 15) {
+      e.currentTarget.className = "shrink";
+    }
+    if (Number(value) > 80) {
+      e.currentTarget.className = "";
+      setPosition({
+        id,
+        groupId: otherGroupSwitch(groupId)[1].id,
+      });
+    }
+  }
   return (
     <>
       <S.Item>
@@ -126,26 +140,22 @@ export const GigCard = ({
                     e.currentTarget.style.setProperty("--value", `${value}%`);
 
                     if (Number(value) < 15) {
+                      setPosition({
+                        id,
+                        groupId: otherGroupSwitch(groupId)[0].id,
+                      });
                       e.currentTarget.value = "0";
                     }
                     if (Number(value) > 80) {
                       e.currentTarget.value = "100";
                     }
                   }}
-                  onPointerUp={(e) => {
-                    let value = e.currentTarget.value;
-
-                    if (Number(value) < 15) {
-                      e.currentTarget.className = "shrink";
-                    }
-                    if (Number(value) > 80) {
-                      e.currentTarget.className = "";
-                      setPosition({
-                        id,
-                        groupId: otherGroupSwitch(groupId)[1].id,
-                      });
-                    }
+                  onPointerDown={(e) => {
+                    e.stopPropagation();
+                    e.currentTarget.setPointerCapture(e.pointerId);
                   }}
+                  onPointerUp={sliderEnd}
+                  onPointerCancel={sliderEnd}
                   style={{
                     //@ts-ignore
                     "--value": String(defaultRange) + "%",
