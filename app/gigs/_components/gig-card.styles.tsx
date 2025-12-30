@@ -1,5 +1,6 @@
 "use client";
 import styled, { css, keyframes } from "styled-components";
+import { otherGroupSwitch } from "./GigCard";
 
 export const Day = styled.h3`
   height: 24px;
@@ -154,7 +155,7 @@ export const RangeWrap = styled.div<{ groupId: string }>`
   --card-color-public: var(--color-card-6);
   --line-public: color-mix(in srgb, var(--card-color-going) 15%, #fff);
 
-  --card-color-going: var(--color-card-7);
+  --card-color-going: var(--color-card-5);
   --line-going: color-mix(in srgb, var(--card-color-going) 15%, #fff);
 
   --card-color-maybe: var(--color-card-3);
@@ -170,7 +171,6 @@ export const RangeWrap = styled.div<{ groupId: string }>`
 
   translate: 0 0;
 
-  /* transition: translate 1880ms cubic-bezier(0.2, 0.8, 0.2, 1); */
   scale: 1;
   transform: scale(1);
 
@@ -229,20 +229,12 @@ export const RangeWrap = styled.div<{ groupId: string }>`
         margin-top: -14px;
       }
       border: 0;
-      background-color: lime;
-      background-color: var(--card-color-public);
-      background-color: var(--card-color-public);
-      --left: var(--card-color-going);
-      --right: var(--card-color-maybe);
-      --center: var(--card-color-public);
+
+      ${groupIdToSliderColors}
+
       --to-center: clamp(0%, calc(var(--value) * 2), 100%);
       --from-center: clamp(0%, calc((var(--value) - 50%) * 2), 100%);
 
-      background-color: color-mix(
-        in srgb,
-        var(--left) calc(100% - var(--value)),
-        var(--right) var(--value)
-      );
       background-color: color-mix(
         in srgb,
         color-mix(
@@ -257,77 +249,23 @@ export const RangeWrap = styled.div<{ groupId: string }>`
   }
 `;
 
-// export const DecideSlide = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-//   position: relative;
-//   --card-color-public: var(--color-card-6);
-//   --line-public: color-mix(in srgb, var(--card-color-going) 15%, #fff);
-//   --card-color-going: var(--color-card-7);
-//   --line-going: color-mix(in srgb, var(--card-color-going) 15%, #fff);
-//   --card-color-maybe: var(--color-card-3);
-//   --line-maybe: color-mix(in srgb, var(--card-color-maybe) 15%, #fff);
-//   &::before {
-//     content: '';
-//     position: absolute;
-//     block-size: 3px;
+function groupIdToSliderColors({ groupId }) {
+  const colors = {
+    going: "var(--card-color-going)",
+    sydney: "var(--card-color-public)",
+    maybe: "var(--card-color-maybe)",
+  };
 
-//     inline-size: 100%;
-//     inset: 50% 0 auto;
-//     translate: 0 -50%;
-//     background-color: gold;
-//     /* background-color: var(--card-color-maybe); */
+  let center = groupId,
+    [{ id: left }, { id: right }] = otherGroupSwitch(groupId);
+  left = colors[left];
+  center = colors[center];
+  right = colors[right];
 
-//     background-image: linear-gradient(
-//       to right,
-//       var(--line-going),
-//       var(--card-color-going),
-//       #fff,
-//       var(--card-color-maybe),
-//       var(--line-maybe)
-//     );
+  return css`
+    --left: ${left};
+    --center: ${center};
+    --right: ${right};
+  `;
+};
 
-//     z-index: 0;
-//   }
-//   span {
-//     text-transform: uppercase;
-//     font-size: 13px;
-//     z-index: 1;
-
-//     color: black;
-//     font-weight: bold;
-//   }
-//   position: relative;
-//   div {
-//     position: absolute;
-//     width: 24px;
-//     height: 24px;
-//     border-radius: 12px;
-//     background-color: var(--card-color-public);
-//     left: calc(50% - 12px);
-//     top: -4px;
-//   }
-// `
-
-//let  options = (groupId_Ø) => (groupId: string) => {
-//   let colorNumber = 6
-//   switch (groupId) {
-//     case 'going':
-//       colorNumber = 7
-//     case 'maybe':
-//       colorNumber = 2
-//     case 'public':
-//     case 'sydney':
-//       colorNumber = 6
-//       return css`
-//         --card-color-public: var(--color-card-6);
-//         --line-public: color-mix(in srgb, var(--card-color-going) 15%, #fff);
-
-//         --card-color-going: var(--color-card-7);
-//         --line-going: color-mix(in srgb, var(--card-color-going) 15%, #fff);
-
-//         --card-color-maybe: var(--color-card-3);
-//         --line-maybe: color-mix(in srgb, var(--card-color-maybe) 15%, #fff);
-//       `
-//   }
-// }

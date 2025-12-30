@@ -20,7 +20,7 @@ export const GigCard = ({
 }) => {
   startDate = new Date(startDate);
 
-  const { setUsersGroups } = useContext(onDropCTX);
+  const { setConsideringDropId, setUsersGroups } = useContext(onDropCTX);
   function setPosition({ id, groupId }) {
     setUsersGroups({ id, toColumnId: groupId });
   }
@@ -95,26 +95,34 @@ export const GigCard = ({
           ) : (
             <div style={{ height: 14 }} />
           )}
-          <CoolRange groupId={groupId} gigId={id} setPosition={setPosition} />
+          <CoolRange
+            groupId={groupId}
+            gigId={id}
+            setPosition={setPosition}
+            setConsideringDropId={setConsideringDropId}
+          />
         </S.Card>
       </S.Item>
     </>
   );
 };
 
-const CoolRange = ({ groupId, gigId, setPosition }) => {
-  let defaultRange = groupId === "going" ? 0 : 50;
+const CoolRange = ({ groupId, gigId, setPosition, setConsideringDropId }) => {
+  let defaultRange = groupId === "going" ? 0 : 50,
+    [{ id: leftId }, { id: rightId }] = otherGroupSwitch(groupId);
 
   function startAnimation(e) {
     let value = Number(e.currentTarget.value),
       isShrunk = e.currentTarget.className === "shronk";
 
+    setConsideringDropId("");
     if (value < 15 || value > 80) {
       e.currentTarget.className = "shrink";
     } else {
       e.currentTarget.className = "";
     }
   }
+
   return (
     <S.RangeWrap groupId={groupId}>
       <span className="label left">{otherGroupSwitch(groupId)[0].name} </span>
@@ -130,22 +138,27 @@ const CoolRange = ({ groupId, gigId, setPosition }) => {
             className={groupId === "going" ? "shronk" : ""}
             onAnimationEnd={(e) => {
               let value = Number(e.currentTarget.value),
-                [{ id: leftId }, { id: rightId }] = otherGroupSwitch(groupId),
                 targetGroupId = value < 15 ? leftId : value > 80 ? rightId : "";
 
               targetGroupId &&
                 setPosition({ id: gigId, groupId: targetGroupId });
             }}
             onInput={(e) => {
-              let value = e.currentTarget.value;
+              let value = Number(e.currentTarget.value);
 
-              if (Number(value) < 15) {
+              if (value < 15) {
                 e.currentTarget.value = "0";
               }
-              if (Number(value) > 80) {
+              if (value > 80) {
                 e.currentTarget.value = "100";
               }
-
+              if (value < 45) {
+                setConsideringDropId(leftId);
+              } else if (value > 55) {
+                setConsideringDropId(rightId);
+              } else {
+                setConsideringDropId("");
+              }
               e.currentTarget.style.setProperty("--value", `${value}%`);
             }}
             onClick={startAnimation}
@@ -166,7 +179,7 @@ const CoolRange = ({ groupId, gigId, setPosition }) => {
   );
 };
 
-function otherGroupSwitch(groupId) {
+export function otherGroupSwitch(groupId) {
   switch (groupId) {
     case "maybe":
       return [
