@@ -140,10 +140,6 @@ export const GigCard = ({
                     e.currentTarget.style.setProperty("--value", `${value}%`);
 
                     if (Number(value) < 15) {
-                      setPosition({
-                        id,
-                        groupId: otherGroupSwitch(groupId)[0].id,
-                      });
                       e.currentTarget.value = "0";
                     }
                     if (Number(value) > 80) {
