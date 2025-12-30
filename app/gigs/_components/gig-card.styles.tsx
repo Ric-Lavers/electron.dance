@@ -67,7 +67,7 @@ export const Row = styled.div`
   }
 `;
 export const Time = styled.time``;
-export const Location = styled.a`
+export const Location = styled.div`
   /* all: unset; */
   display: inline;
 

@@ -56,15 +56,17 @@ export const GigCard = ({
             <S.Time dateTime={format(startDate, "yyyy-MM-ddTHH:MM")}>
               {format(startDate, "h:mma").toLowerCase()}
             </S.Time>{" "}
-            <S.Marquee
-              href={url}
-              target="_blank"
-              title={location}
-              ref={locationRef}
-              $width={locationRef.current?.scrollWidth || 150}
-            >
-              {location}
-            </S.Marquee>
+            <S.Location>
+              <S.Marquee
+                href={url}
+                target="_blank"
+                title={location}
+                ref={locationRef}
+                $width={locationRef.current?.scrollWidth || 150}
+              >
+                {location}
+              </S.Marquee>
+            </S.Location>
           </S.Row>
           <S.Row></S.Row>
 
