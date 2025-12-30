@@ -13,7 +13,11 @@ export const GigUserSchema = new Schema(
     },
     tokens: [{ type: Schema.Types.ObjectId, ref: "Token" }],
     gigsAdmin: [{ type: Schema.Types.ObjectId, ref: "Event" }],
-    // gigs: [{}],
+    gigs: [
+      {
+        _id: { type: Schema.Types.ObjectId, ref: "Event" },
+      },
+    ],
 
     // following: [{ type: Schema.Types.ObjectId, ref: "GigUser" }],
 

@@ -75,27 +75,32 @@ export async function getGigs(userId?: string | null, startDate?: Date) {
 }
 
 export async function getUsersEvents(userId, startDate) {
-  await connectToDatabase()
-  if (!userId) {
-    const gigs = await Event.find({ startDate: { $gte: startDate } }).sort({ startDate: -1 })
-    return { all: gigs, going: [], friends: [] }
-  }
-  const user = await GigUser.findOne({ id: userId }).populate('gigs')
-  console.log(user)
+  await connectToDatabase();
+  // if (!userId) {
+  //   const gigs = await Event.find({ startDate: { $gte: startDate } }).sort({
+  //     startDate: -1,
+  //   });
+  //   return { all: gigs, going: [], friends: [] };
+  // }
+  // const user = await GigUser.findOne({ id: userId }).populate("gigs");
+  // console.log(user);
 
-  const going = user?.gigs || []
-  let following = user?.following || []
+  // const going = user?.gigs || [];
+  // // let following = user?.following || []
 
-  const excludedIds = going.map(({ _id }) => _id)
+  // const excludedIds = going.map(({ _id }) => _id);
 
-  const all = await Event.find({
-      startDate: { $gte: startDate },
-      $nin: excludedIds,
-      attendance: { $nin: following },
-    }).sort({ startDate: -1 }),
-    friends = await Event.find({ startDate: { $gte: startDate }, attendance: { $in: following } }).sort({
-      startDate: -1,
-    })
+  // const all = await Event.find({
+  //     startDate: { $gte: startDate },
+  //     $nin: excludedIds,
+  //     // attendance: { $nin: following },
+  //   }).sort({ startDate: -1 }),
+  //   friends = await Event.find({
+  //     startDate: { $gte: startDate },
+  //     attendance: { $in: following },
+  //   }).sort({
+  //     startDate: -1,
+  //   });
 
-  return { all, going, friends }
+  // return { all, going, friends };
 }
