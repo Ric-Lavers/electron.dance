@@ -1,5 +1,5 @@
 import axios from 'axios'
-import startOfDay from 'date-fns/startOfDay'
+import { startOfDay } from "date-fns";
 import { headers } from 'next/headers'
 
 import { AddEvent } from './_components/AddEvent'

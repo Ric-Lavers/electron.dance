@@ -1,7 +1,8 @@
 // utils/deriveProfileFromTokens.ts (or inline)
 
-import { TokenData } from '@/types'
-
+import { InferSchemaType } from "mongoose";
+import { TokenSchema } from "./models/token";
+type TokenData = InferSchemaType<typeof TokenSchema>;
 export type DerivedProfile = {
   email?: string
   name?: string
