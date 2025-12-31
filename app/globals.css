@@ -25,3 +25,8 @@ body {
   font-weight: 400;
   font-style: normal;
 }
+main {
+  padding: 8px 12px;
+  background-color: #fff;
+  min-height: 100dvh;
+}

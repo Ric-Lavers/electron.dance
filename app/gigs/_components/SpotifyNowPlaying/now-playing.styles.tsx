@@ -39,24 +39,27 @@ const spotifyColors = {
   */
 };
 //@ts-ignore
-const info = ({ isPlaying, isActive }) => {
+const info = ({ $isPlaying, $isActive }) => {
   switch (true) {
-    case isPlaying:
+    case $isPlaying:
       return css`
         content: "right now, I'm listening to ";
       `;
-    case !isPlaying && isActive:
+    case !$isPlaying && $isActive:
       return css`
         content: "right now, I'm paused on ";
       `;
-    case !isActive:
+    case !$isActive:
       return css`
         content: "this month, my top track is ";
       `;
   }
 };
 
-export const Container = styled.div<{ isActive: boolean; isPlaying: boolean }>`
+export const Container = styled.div<{
+  $isActive: boolean;
+  $isPlaying: boolean;
+}>`
   height: 57px;
   display: flex;
   flex-direction: column;
@@ -98,7 +101,7 @@ export const Container = styled.div<{ isActive: boolean; isPlaying: boolean }>`
     }
   }
   @media screen and (width < ${theme.breakpoints.sm}) {
-    ${({ isActive }) => isActive && "width: 100%"};
+    ${({ $isActive }) => $isActive && "width: 100%"};
     h6 i {
       &:before {
         ${info};
@@ -107,12 +110,12 @@ export const Container = styled.div<{ isActive: boolean; isPlaying: boolean }>`
   }
 `;
 
-export const NowPlayingContainer = styled.div<{ isPlaying: boolean }>`
+export const NowPlayingContainer = styled.div<{ $isPlaying: boolean }>`
   display: flex;
   height: 200px;
   /* box-sizing: border-box; */
-  ${({ isPlaying }) =>
-    isPlaying
+  ${({ $isPlaying }) =>
+    $isPlaying
       ? css`
           width: 100%;
           @media screen and (width >= ${theme.breakpoints.sm}) {
@@ -160,7 +163,7 @@ export const Info = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  animation: appear 0.7s ease-out forwards;
+  animation: appear 0.35s ease-out forwards;
   width: 100%;
   overflow: hidden;
   max-width: 190px;
@@ -230,7 +233,7 @@ const leftToRight = (width) => keyframes`
 export const Marquee = styled.p<{
   subdued?: boolean;
   $width: number;
-  on?: boolean;
+  $on?: boolean;
 }>`
   ${({ subdued }) => subdued && `color: ${spotifyColors.textSubdued};`}
 
@@ -243,8 +246,8 @@ export const Marquee = styled.p<{
         `};
     }
   }
-  ${({ on, $width }) =>
-    on &&
+  ${({ $on, $width }) =>
+    $on &&
     $width > 150 &&
     css`
       animation: ${leftToRight($width)}

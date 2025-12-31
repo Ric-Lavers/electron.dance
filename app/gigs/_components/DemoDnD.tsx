@@ -1,14 +1,21 @@
 'use client'
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, {
+  createContext,
+  useActionState,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
-import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter'
-import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter'
-import { GigCard } from './GigCard'
-import { Group, GroupCTX } from './CardGroups'
-import { format } from 'date-fns'
-import { Day, DayNull } from './gig-card.styles'
+import { dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import { GigCard } from "./GigCard";
+import { Group, GroupCTX } from "./CardGroups";
+import { format } from "date-fns";
+import { Day, DayNull } from "./gig-card.styles";
 import { setGigsToLocalstorage } from "../_utils/localStorage";
 import { GroupId } from "../_utils/types";
+import { updateUserGigs } from "@/app/api/_lib/actions/user";
 
 type Item = {
   id: string;
@@ -145,11 +152,6 @@ let newDrops =
         : toIndex,
       removed
     );
-    setGigsToLocalstorage({
-      ...prev,
-      [fromColumnId]: fromListWithout,
-      [toColumnId]: nextToList,
-    });
 
     return {
       ...prev,
@@ -169,8 +171,11 @@ export default function TwoSectionDnD({ gigs }) {
     setState(extractData(stored_gigs));
   }, [stored_gigs]);
 
-  function setUsersGroups({ toColumnId, id }) {
-    setState(newDrops({ toColumnId, id }));
+  async function setUsersGroups({ toColumnId, id }) {
+    const newGroups = newDrops({ toColumnId, id })(state);
+
+    setState(newGroups);
+    await setGigsToLocalstorage(newGroups);
   }
   function setConsideringDropId(groupId: GroupId) {
     s_ConsideringDropId(groupId);

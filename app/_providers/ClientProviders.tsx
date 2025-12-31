@@ -3,7 +3,8 @@ import { GlobalStyle } from "@/styles/globalStyle";
 import { ThemeProvider } from "styled-components";
 import { ErrorBoundary } from "./errorBoundary";
 import { theme } from "@/styles/theme";
-import { UserTokenContextProvider } from "./UserTokensProvider";
+import { useEffect } from "react";
+// import { UserTokenContextProvider } from "./UserTokensProvider";
 
 export default function ClientProviders({
   children,
@@ -14,7 +15,8 @@ export default function ClientProviders({
     <ThemeProvider theme={theme}>
       <ErrorBoundary>
         <GlobalStyle />
-        <UserTokenContextProvider>{children}</UserTokenContextProvider>
+        {/* <UserTokenContextProvider></UserTokenContextProvider> */}
+        {children}
       </ErrorBoundary>
     </ThemeProvider>
   );

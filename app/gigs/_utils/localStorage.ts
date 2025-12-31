@@ -1,6 +1,6 @@
-export function setGigsToLocalstorage(state) {
+import { updateUserGigs } from "@/app/api/_lib/actions/user";
 
-
+export async function setGigsToLocalstorage(state) {
   localStorage.setItem(
     "gigs",
     JSON.stringify([
@@ -8,18 +8,23 @@ export function setGigsToLocalstorage(state) {
       ...mapIds(state.maybe, "maybe"),
     ])
   );
+
+  await updateUserGigs([
+    ...mapIds(state.going, "going"),
+    ...mapIds(state.maybe, "maybe"),
+  ]).catch((err) => console.log("updateUserGigs ERROR", err));
 }
 
-export function getGigsFromLocalStorage(events) {
-  if (localStorage.getItem("gigs")?.includes("startDate")) {
-    localStorage.clear();
-  }
-  const us______vity = localStorage.getItem("gigs") || "[]",
-    userActivity = JSON.parse(us______vity),
-    gÍgs = makeUserGigs(events, userActivity);
+// export function getGigsFromLocalStorage(events) {
+//   if (localStorage.getItem("gigs")?.includes("startDate")) {
+//     localStorage.clear();
+//   }
+//   const us______vity = localStorage.getItem("gigs") || "[]",
+//     userActivity = JSON.parse(us______vity),
+//     gÍgs = makeUserGigs(events, userActivity);
 
-  return gÍgs;
-}
+//   return gÍgs;
+// }
 
 function mapIds(events: { _id: string; uri: string }[], groupId) {
   return events.map((evt) => ({ _id: evt._id, uri: evt.uri, groupId }));

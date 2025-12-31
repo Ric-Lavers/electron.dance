@@ -3,7 +3,7 @@ import { customAlphabet } from 'nanoid'
 import { TokenSchema, TokenDoc } from './token'
 import { DerivedProfile, deriveProfileFromTokens } from '../utils'
 
-const nano = customAlphabet('RicLavers1988', 10)
+const nano = customAlphabet("electronDance2026", 10);
 
 export const UserSchema = new Schema(
   {

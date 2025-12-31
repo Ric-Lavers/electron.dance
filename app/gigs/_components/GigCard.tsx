@@ -127,7 +127,7 @@ const CoolRange = ({ groupId, gigId, setPosition, setConsideringDropId }) => {
   }
 
   return (
-    <S.RangeWrap groupId={groupId}>
+    <S.RangeWrap $groupId={groupId}>
       <span className="label left">{otherGroupSwitch(groupId)[0].name} </span>
       {
         ((defaultRange = groupId === "going" ? 0 : 50),

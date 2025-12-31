@@ -65,14 +65,14 @@ const SpotifyNowPlaying: React.FC<SpotifyNowPlayingProps> = ({
   isPlaying,
 }) => {
   return (
-    <S.Container isActive={isActive} isPlaying={isPlaying}>
+    <S.Container $isActive={isActive} $isPlaying={isPlaying}>
       {(isActive || Boolean(item)) && (
         <S.H6>
           <i />
         </S.H6>
       )}
 
-      <S.NowPlayingContainer isPlaying={isActive || Boolean(item)}>
+      <S.NowPlayingContainer $isPlaying={isActive || Boolean(item)}>
         {item ? (
           <S.Info key={item.uri}>
             <S.AlbumImg src={getImage(item)} alt={`${item.name} album art`} />

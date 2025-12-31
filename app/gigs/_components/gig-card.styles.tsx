@@ -145,7 +145,7 @@ const shrink = keyframes`
       transform: scale(0.55);
     }
     `;
-export const RangeWrap = styled.div<{ groupId: string }>`
+export const RangeWrap = styled.div<{ $groupId: string }>`
   @media (hover: hover) and (pointer: fine) {
     /* display: none; */
   }
@@ -249,7 +249,7 @@ export const RangeWrap = styled.div<{ groupId: string }>`
   }
 `;
 
-function groupIdToSliderColors({ groupId }) {
+function groupIdToSliderColors({ $groupId: groupId }) {
   const colors = {
     going: "var(--card-color-going)",
     sydney: "var(--card-color-public)",

@@ -1,5 +1,5 @@
-import React, { useRef } from 'react'
-import * as S from './now-playing.styles'
+import React, { useEffect, useRef, useState } from "react";
+import * as S from "./now-playing.styles";
 import { Marquee } from "../gig-card.styles";
 
 interface SpotifyNowPlayingProps {
@@ -32,11 +32,11 @@ const GigPreview: React.FC<SpotifyNowPlayingProps> = ({
   return (
     <S.Container
       id={id}
-      isActive={isActive}
-      isPlaying={isPlaying}
+      $isActive={isActive}
+      $isPlaying={isPlaying}
       className="now-playing"
     >
-      <S.GigPreview isPlaying={isActive || Boolean(item)}>
+      <S.GigPreview $isPlaying={isActive || Boolean(item)}>
         {item ? (
           <S.Info key={item.uri}>
             <S.AlbumImg
@@ -94,33 +94,27 @@ function getImage(item) {
     : item?.images?.[0]?.url || placeholder;
 }
 
-const TrackInfo = ({
-  title,
-  name,
-  //@ts-ignore
-  url,
-  //@ts-ignore
-  src,
-}) => {
+const TrackInfo = ({ title, name }) => {
   const titleRef = useRef<HTMLParagraphElement>(null),
-    nameRef = useRef<HTMLParagraphElement>(null);
+    nameRef = useRef<HTMLParagraphElement>(null),
+    [, s_isMounted] = useState(false);
+
+  useEffect(() => s_isMounted(true), []);
 
   return (
-    <S.TrackInfo
-    //  title={url}
-    >
+    <S.TrackInfo>
       <S.Marquee
-        on
+        $on
         $width={titleRef.current?.scrollWidth || 150}
         ref={titleRef}
       >
         {title}
       </S.Marquee>
-      <S.Marquee on $width={nameRef.current?.scrollWidth || 150} ref={nameRef}>
+      <S.Marquee $on $width={nameRef.current?.scrollWidth || 150} ref={nameRef}>
         {name}
       </S.Marquee>
     </S.TrackInfo>
   );
 };
 
-export default GigPreview
+export default GigPreview;

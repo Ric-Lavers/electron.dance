@@ -13,13 +13,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Electron",
+  title: "Electron.Dance",
   description: "",
   icons: {
     icon: "/favicon.ico",
   },
 };
 
+const h𐒢𐒓ªߟߋߕ߃߅ߏߊ = 4,
+  ホߡㇵポ = 4;
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -46,7 +48,6 @@ export default function RootLayout({
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        style={{}}
       >
         {children}
       </body>

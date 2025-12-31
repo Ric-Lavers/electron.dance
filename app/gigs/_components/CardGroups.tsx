@@ -1,7 +1,6 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import * as S from "./groups.style";
-import { getGigsFromLocalStorage, makeUserGigs } from "../_utils/localStorage";
 
 export const Group = ({
   id,
@@ -43,21 +42,12 @@ export const GroupCTX = createContext({
   setExpanded: (_: string) => {},
 });
 
-export const GroupS_CTX = ({
-  events,
-  initialExpanded = "sydney",
-  children,
-}) => {
+export const GroupS_CTX = ({ gigs, initialExpanded = "sydney", children }) => {
   const [expanded, s_open] = useState(initialExpanded);
-  const [gigs, s_gigs] = useState(makeUserGigs(events, []));
 
-  useEffect(() => {
-    s_gigs(getGigsFromLocalStorage(events));
-  }, [events]);
   return (
     <GroupCTX.Provider
       value={{
-        //@ts-ignore
         gigs,
         expanded,
         setExpanded: (goupId) => {

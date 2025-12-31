@@ -119,7 +119,8 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   html {
-    background-color: ${theme.colors.accentGreen};
+    background-color: ${theme.palette.offBlack};
+    background-color: ${theme.palette.riverRockGrey};
   }
 
   body {
@@ -128,6 +129,9 @@ export const GlobalStyle = createGlobalStyle`
     font-family: -apple-system,'system-ui','Segoe UI','Noto Sans',Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji';
     font-family: "Comfortaa",'Roboto', sans-serif;
     margin: 0;
+    padding: 8px 12px;
+    background-color: #fff;
+    min-height: 100dvh;
   }
   h2,
   h3,
