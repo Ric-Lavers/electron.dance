@@ -33,13 +33,14 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/spotify-api": "^0.0.25",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.1.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
   "prettier": {
     "printWidth": 120,
     "semi": false,
-    "singleQuote": true,
     "trailingComma": "es5"
   }
 }

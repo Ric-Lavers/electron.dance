@@ -18,7 +18,6 @@ export const EventSchema = new Schema(
     location: String,
     price: Number,
     public: Boolean,
-    attendance: [{ type: Schema.Types.ObjectId, ref: 'GigUser' }],
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 )

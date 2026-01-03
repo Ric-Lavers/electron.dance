@@ -34,16 +34,18 @@ export const GroupCTX = createContext({
     maybe: { name: "Maybe", data: [] },
     sydney: { name: "Sydney", data: [] },
   },
+  attendanceSummary: [],
   setExpanded: (_: string) => {},
-});
+})
 
-export const GroupS_CTX = ({ gigs, initialExpanded = 'container-sydney', children }) => {
+export const GroupS_CTX = ({ gigs, initialExpanded = "container-sydney", attendanceSummary, children }) => {
   const [expanded, s_open] = useState(initialExpanded)
 
   return (
     <GroupCTX.Provider
       value={{
         gigs,
+        attendanceSummary,
         expanded,
         setExpanded: (goupId) => {
           s_open(goupId)

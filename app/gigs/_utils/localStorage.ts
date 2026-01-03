@@ -1,11 +1,5 @@
-// import { updateUserGigs } from "@/app/api/_lib/actions/user";
-
 export async function saveUserGigs(state) {
-  localStorage.setItem('gigs', JSON.stringify([...mapIds(state.going, 'going'), ...mapIds(state.maybe, 'maybe')]))
-
-  // await updateUserGigs([...mapIds(state.going, 'going'), ...mapIds(state.maybe, 'maybe')]).catch((err) =>
-  //   console.log('updateUserGigs ERROR', err)
-  // )
+  // localStorage.setItem("gigs", JSON.stringify([...mapIds(state.going, "going"), ...mapIds(state.maybe, "maybe")]))
 }
 
 // export function getGigsFromLocalStorage(events) {
@@ -18,26 +12,30 @@ export async function saveUserGigs(state) {
 
 //   return gÍgs;
 // }
-export type UserActivity = {
-  _id: string
-  groupId: 'going' | 'maybe' | 'sydney'
-}
-function mapIds(events: UserActivity[], groupId) {
-  return events.map((evt) => ({ _id: evt._id, groupId }))
-}
+// export type UserActivity = {
+//   _id: string
+//   groupId: "going" | "maybe" | "sydney"
+// }
+// function mapIds(events: UserActivity[], groupId) {
+//   return events.map((evt) => ({ _id: evt._id, groupId }))
+// }
 
-export function makeUserGigs(events, userActivity: { eventId: string; groupId: string }[]) {
+export function makeUserGigs(
+  events,
+  userActivity: { eventId: string; groupId: string }[],
+  attendanceSummary: { status: string; count: number }[]
+) {
   return events.reduce(
     (a, gig) => {
-      const group = userActivity.find(({ eventId }) => gig._id === eventId)?.groupId || 'sydney'
+      const group = userActivity.find(({ eventId }) => gig._id === eventId)?.groupId || "sydney"
 
       a[group].data.push(gig)
       return a
     },
     {
-      going: { name: 'Going', data: [] },
-      maybe: { name: 'Maybe', data: [] },
-      sydney: { name: 'Sydney', data: [] },
+      going: { name: "Going", data: [] }, //, attendanceCount: 0 },
+      maybe: { name: "Maybe", data: [] }, //, attendanceCount: 0 },
+      sydney: { name: "Sydney", data: [] }, //, attendanceCount: 0 },
     }
   )
 }

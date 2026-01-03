@@ -11,14 +11,8 @@ export const UserSchema = new Schema(
       type: String,
       default: () => nano(),
     },
-    tokens: [{ type: Schema.Types.ObjectId, ref: 'Token' }],
-    gigsAdmin: [{ type: Schema.Types.ObjectId, ref: 'Event' }],
-    gigs: [
-      {
-        _id: { type: Schema.Types.ObjectId, ref: 'Event' },
-        groupId: String,
-      },
-    ],
+    tokens: [{ type: Schema.Types.ObjectId, ref: "Token" }],
+    gigsAdmin: [{ type: Schema.Types.ObjectId, ref: "Event" }],
 
     // following: [{ type: Schema.Types.ObjectId, ref: "GigUser" }],
 

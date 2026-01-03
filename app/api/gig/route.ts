@@ -37,11 +37,10 @@ export async function GET(req: NextRequest) {
     const query = Object.fromEntries(req.nextUrl.searchParams),
       from = new Date(query?.start || startOfToday()),
       jar = await cookies(),
-      userId = jar.get('userId')?.value
+      userId = jar.get("userId")?.value
 
     await connectToDatabase()
     let usersGigIds: Schema.Types.ObjectId[] = []
-    console.log('userId', userId)
 
     if (userId) {
       //@ts-ignore
@@ -54,54 +53,7 @@ export async function GET(req: NextRequest) {
     })
     return NextResponse.json(gigs, { status: 200 })
   } catch (error) {
-    console.error('Error fetching events:', error)
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    console.error("Error fetching events:", error)
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
   }
-}
-export async function getGigs(userId?: string | null, startDate?: Date) {
-  const from = startDate || startOfToday();
-  await connectToDatabase();
-  let usersGigIds: Schema.Types.ObjectId[] = [];
-
-  if (userId) {
-    //@ts-ignore
-    usersGigIds = (await User.findOne({ id: userId }))?.gigs || []
-  }
-
-  const gigs = await Event.find({ startDate: { $gte: from } }).sort({
-    startDate: 1,
-  });
-
-  return JSON.parse(JSON.stringify(gigs));
-}
-
-export async function getUsersEvents(userId, startDate) {
-  await connectToDatabase();
-  // if (!userId) {
-  //   const gigs = await Event.find({ startDate: { $gte: startDate } }).sort({
-  //     startDate: -1,
-  //   });
-  //   return { all: gigs, going: [], friends: [] };
-  // }
-  // const user = await GigUser.findOne({ id: userId }).populate("gigs");
-  // console.log(user);
-
-  // const going = user?.gigs || [];
-  // // let following = user?.following || []
-
-  // const excludedIds = going.map(({ _id }) => _id);
-
-  // const all = await Event.find({
-  //     startDate: { $gte: startDate },
-  //     $nin: excludedIds,
-  //     // attendance: { $nin: following },
-  //   }).sort({ startDate: -1 }),
-  //   friends = await Event.find({
-  //     startDate: { $gte: startDate },
-  //     attendance: { $in: following },
-  //   }).sort({
-  //     startDate: -1,
-  //   });
-
-  // return { all, going, friends };
 }
