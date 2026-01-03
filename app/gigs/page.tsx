@@ -11,19 +11,19 @@ import { redirect } from "next/navigation";
 import { makeUserGigs } from "./_utils/localStorage";
 
 const Events = async ({ searchParams }) => {
-  const Å = (await searchParams).Å,
+  const Å = (await searchParams).a,
     attempts = Number(Å),
     jar = await cookies(),
-    userId = jar.get("userId")?.value,
-    events = await getGigs(userId, startOfToday());
+    userId = jar.get('userId')?.value,
+    events = await getGigs(userId, startOfToday())
 
-  const gigUser = await getActiveUser(userId);
+  const gigUser = await getActiveUser(userId)
 
   if (attempts >= 3) {
-    throw Error();
+    throw Error()
   }
   if (!gigUser) {
-    redirect("/api/user?Å=" + (attempts || 0));
+    redirect('/api/user?a=' + (attempts || 0))
   }
 
   const gigs = makeUserGigs(events, gigUser.gigs);
