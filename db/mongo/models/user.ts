@@ -12,6 +12,15 @@ export const UserSchema = new Schema(
       default: () => nano(),
     },
     tokens: [{ type: Schema.Types.ObjectId, ref: 'Token' }],
+    gigsAdmin: [{ type: Schema.Types.ObjectId, ref: 'Event' }],
+    gigs: [
+      {
+        _id: { type: Schema.Types.ObjectId, ref: 'Event' },
+        groupId: String,
+      },
+    ],
+
+    // following: [{ type: Schema.Types.ObjectId, ref: "GigUser" }],
 
     lastLoginMethod: { type: String },
   },

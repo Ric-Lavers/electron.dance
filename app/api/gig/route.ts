@@ -3,14 +3,14 @@ import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { connectToDatabase } from '@/db/mongo/connect'
 import Event from '@/db/mongo/models/event'
-import GigUser from '@/db/mongo/models/gig-user'
-import { Schema } from "mongoose";
+import User from '@/db/mongo/models/user'
+import { Schema } from 'mongoose'
 
 export async function POST(req: NextRequest) {
   try {
-    const formData = await req.json();
+    const formData = await req.json()
 
-    await connectToDatabase();
+    await connectToDatabase()
 
     const event = await Event.create({
       url: formData.url,
@@ -23,15 +23,12 @@ export async function POST(req: NextRequest) {
       endDate: formData.endDate ? new Date(formData.endDate) : undefined,
       location: formData.location,
       price: formData.price,
-    });
+    })
 
-    return NextResponse.json({ success: true, data: event }, { status: 201 });
+    return NextResponse.json({ success: true, data: event }, { status: 201 })
   } catch (error) {
-    console.error("Error creating event:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
+    console.error('Error creating event:', error)
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
 
@@ -40,28 +37,25 @@ export async function GET(req: NextRequest) {
     const query = Object.fromEntries(req.nextUrl.searchParams),
       from = new Date(query?.start || startOfToday()),
       jar = await cookies(),
-      userId = jar.get("userId")?.value;
+      userId = jar.get('userId')?.value
 
-    await connectToDatabase();
-    let usersGigIds: Schema.Types.ObjectId[] = [];
-    console.log("userId", userId);
+    await connectToDatabase()
+    let usersGigIds: Schema.Types.ObjectId[] = []
+    console.log('userId', userId)
 
     if (userId) {
       //@ts-ignore
-      usersGigIds = (await GigUser.findOne({ id: userId }))?.gigs || [];
-      console.log(usersGigIds);
+      usersGigIds = (await User.findOne({ id: userId }))?.gigs || []
+      console.log(usersGigIds)
     }
 
     const gigs = await Event.find({ startDate: { $gte: from } }).sort({
       startDate: 1,
-    });
-    return NextResponse.json(gigs, { status: 200 });
+    })
+    return NextResponse.json(gigs, { status: 200 })
   } catch (error) {
-    console.error("Error fetching events:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
+    console.error('Error fetching events:', error)
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
 export async function getGigs(userId?: string | null, startDate?: Date) {
@@ -71,7 +65,7 @@ export async function getGigs(userId?: string | null, startDate?: Date) {
 
   if (userId) {
     //@ts-ignore
-    usersGigIds = (await GigUser.findOne({ id: userId }))?.gigs || [];
+    usersGigIds = (await User.findOne({ id: userId }))?.gigs || []
   }
 
   const gigs = await Event.find({ startDate: { $gte: from } }).sort({

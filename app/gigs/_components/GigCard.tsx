@@ -6,56 +6,37 @@ import { draggable } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import { useContext, useEffect, useRef } from "react";
 import { ITEM_DRAG_TYPE, onDropCTX } from "./DemoDnD";
 
-export const GigCard = ({
-  groupId,
-  index,
-  id,
-  title,
-  artists,
-  organiser,
-  location,
-  startDate,
-  url,
-  image,
-}) => {
-  startDate = new Date(startDate);
+export const GigCard = ({ groupId, index, id, title, artists, organiser, location, startDate, url, image }) => {
+  startDate = new Date(startDate)
 
-  const { setConsideringDropId, setUsersGroups } = useContext(onDropCTX);
+  const { setConsideringDropId, setUsersGroups } = useContext(onDropCTX)
   function setPosition({ id, groupId }) {
-    setUsersGroups({ id, toColumnId: groupId });
+    setUsersGroups({ id, groupId })
   }
+  const locationRef = useRef<HTMLAnchorElement>(null)
 
   useEffect(() => {
-    const el = document.getElementById(id);
+    const el = document.getElementById(id)
 
-    if (!el) return;
-    const dragHandle = el.querySelector(".now-playing");
-    if (!dragHandle) return;
+    if (!el) return
 
     return draggable({
       element: el,
-      dragHandle,
       getInitialData: () => ({
         type: ITEM_DRAG_TYPE,
-        id: id,
+        id,
         fromColumnId: groupId,
         fromIndex: index,
       }),
-    });
-  }, [id, groupId, index]);
-  const locationRef = useRef<HTMLAnchorElement>(null);
+    })
+  }, [id, groupId, index])
 
   return (
     <>
       <S.Item>
         <S.Card>
-          {/* <S.Title>{title}</S.Title> */}
-          {/*  */}
-          {/* <S.Support>{[artists.join(', '), last].filter(Boolean).join(' & ')}</S.Support> */}
           <S.Row>
-            <S.Time dateTime={format(startDate, "yyyy-MM-ddTHH:MM")}>
-              {format(startDate, "h:mma").toLowerCase()}
-            </S.Time>{" "}
+            <S.Time dateTime={format(startDate, 'yyyy-MM-ddTHH:MM')}>{format(startDate, 'h:mma').toLowerCase()}</S.Time>{' '}
             <S.Location>
               <S.Marquee
                 href={url}
@@ -70,14 +51,14 @@ export const GigCard = ({
           </S.Row>
           <S.Row></S.Row>
 
-          <div id={id} style={{ borderRadius: "8px", overflow: "hidden" }}>
+          <div id={id} style={{ borderRadius: '8px', overflow: 'hidden' }}>
             {/* @ts-ignore */}
             <GigPreview
               {...{
                 isActive: true,
                 isPlaying: true,
                 item: {
-                  uri: "test",
+                  uri: 'test',
                   name: title,
                   artists: artists.map((name) => ({ name })).slice(0, 12),
                   album: { images: [{ url: image }] },
@@ -89,9 +70,7 @@ export const GigCard = ({
           </div>
 
           {organiser !== location ? (
-            <S.Organiser
-              style={{ visibility: organiser ? "visible" : "hidden" }}
-            >
+            <S.Organiser style={{ visibility: organiser ? 'visible' : 'hidden' }}>
               <i>presented by </i>
               {organiser}
             </S.Organiser>
@@ -107,8 +86,8 @@ export const GigCard = ({
         </S.Card>
       </S.Item>
     </>
-  );
-};
+  )
+}
 
 const CoolRange = ({ groupId, gigId, setPosition, setConsideringDropId }) => {
   let defaultRange = groupId === "going" ? 0 : 50,

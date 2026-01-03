@@ -13,9 +13,9 @@ import { GigCard } from "./GigCard";
 import { Group, GroupCTX } from "./CardGroups";
 import { format } from "date-fns";
 import { Day, DayNull } from "./gig-card.styles";
-import { setGigsToLocalstorage } from "../_utils/localStorage";
-import { GroupId } from "../_utils/types";
-import { updateUserGigs } from "@/app/api/_lib/actions/user";
+import { saveUserGigs } from '../_utils/localStorage'
+import { GroupId } from '../_utils/types'
+import { updateUserGigAttendance } from '@/app/api/_lib/actions/user'
 import { DateTrack } from './groups.style'
 
 type Item = {
@@ -57,7 +57,7 @@ function Row(props: { id: GroupId; title: string; items: Item[]; colorNumber: nu
   let [dragging, s_dragging] = useState(false)
 
   useEffect(() => {
-    const el = document.getElementById(`${groupId}`)
+    const el = document.getElementById(`container-${groupId}`)
     if (!el) return
 
     return dropTargetForElements({
@@ -84,7 +84,7 @@ function Row(props: { id: GroupId; title: string; items: Item[]; colorNumber: nu
   return (
     <>
       <Group
-        id={`${groupId}`}
+        id={`container-${groupId}`}
         title={title}
         count={items.length}
         colorNumber={colorNumber}
@@ -111,106 +111,98 @@ function Row(props: { id: GroupId; title: string; items: Item[]; colorNumber: nu
 let newDrops =
   ({ toColumnId, id }) =>
   (prev) => {
-    const current = findItem(prev, id);
-    if (!current) return prev;
+    const current = findItem(prev, id)
+    if (!current) return prev
 
-    const fromColumnId = current.columnId;
-    const fromIndex = current.index;
+    const fromColumnId = current.columnId
+    const fromIndex = current.index
 
     // Default: append to end of section
-    let toIndex = prev[toColumnId].length;
+    let toIndex = prev[toColumnId].length
 
     if (fromColumnId === toColumnId) {
-      return prev;
+      return prev
     }
     // If dropping within same section, keep "append" behavior unless you want pointer-based insertion.
     // This minimal example appends when dropped on the section.
-    const { next: fromListWithout, removed } = removeAt(
-      prev[fromColumnId],
-      fromIndex
-    );
-    if (!removed) return prev;
+    const { next: fromListWithout, removed } = removeAt(prev[fromColumnId], fromIndex)
+    if (!removed) return prev
 
     const nextToList = insertAt(
       prev[toColumnId],
       // If moving within same column and we removed earlier index, adjust insertion index
-      fromColumnId === toColumnId && fromIndex < toIndex
-        ? toIndex - 1
-        : toIndex,
+      fromColumnId === toColumnId && fromIndex < toIndex ? toIndex - 1 : toIndex,
       removed
-    );
+    )
 
     return {
       ...prev,
       [fromColumnId]: fromListWithout,
       [toColumnId]: nextToList,
-    };
-  };
+    }
+  }
 
 export default function TwoSectionDnD({ gigs }) {
-  let { gigs: stored_gigs } = useContext(GroupCTX);
-  const [consideringDropId, s_ConsideringDropId] = useState("");
+  let { gigs: stored_gigs } = useContext(GroupCTX)
+  const [consideringDropId, s_ConsideringDropId] = useState('')
 
-  const gigData = extractData(gigs);
+  const gigData = extractData(gigs)
 
-  const [state, setState] = useState<State>(gigData);
+  const [state, setState] = useState<State>(gigData)
   useEffect(() => {
-    setState(extractData(stored_gigs));
-  }, [stored_gigs]);
+    setState(extractData(stored_gigs))
+  }, [stored_gigs])
 
-  async function setUsersGroups({ toColumnId, id }) {
-    const newGroups = newDrops({ toColumnId, id })(state);
+  async function setUsersGroups({ groupId, id }) {
+    const newGroups = newDrops({ toColumnId: groupId, id })(state)
 
-    setState(newGroups);
-    await setGigsToLocalstorage(newGroups);
+    setState(newGroups)
+    updateUserGigAttendance({ groupId, eventId: id })
+    await saveUserGigs(newGroups)
   }
   function setConsideringDropId(groupId: GroupId) {
-    s_ConsideringDropId(groupId);
+    s_ConsideringDropId(groupId)
   }
 
   // Monitor handles the "drop" and updates state.
   useEffect(() => {
     return monitorForElements({
       onDrop: ({ source, location }) => {
-        const id = String(source?.data?.id);
+        const id = String(source?.data?.id)
 
-        if (!source?.data?.id || source?.data?.type !== ITEM_DRAG_TYPE) return;
+        if (!source?.data?.id || source?.data?.type !== ITEM_DRAG_TYPE) return
 
         const targets = location.current.dropTargets,
-          ÆØN = targets.find((t) => (t.data as any)?.type === "SECTION"),
-          toColumnId = ÆØN?.data?.columnId as GroupId;
+          ÆØN = targets.find((t) => (t.data as any)?.type === 'SECTION'),
+          groupId = ÆØN?.data?.columnId as GroupId
 
-        // console.log('ON DROP', { id, toColumnId })
-        if (!toColumnId) return;
+        if (!groupId) return
 
-        setUsersGroups({ toColumnId, id });
+        setUsersGroups({ groupId, id })
       },
-    });
+    })
     // Important: state is used inside onDrop to find the source item.
     // If you prefer not to depend on `state`, resolve source data from `source.data` only.
-  }, [state]);
+  }, [state])
 
   return (
     //@ts-ignore
-    <onDropCTX.Provider
-      value={{ setUsersGroups, consideringDropId, setConsideringDropId }}
-    >
-      <div style={{ display: "flex", gap: 16, flexDirection: "column" }}>
-        {/* {state.sydney[0] && <DragableCard isPrevDate={false} item={state.sydney[0]} columnId={'going'} index={0} />} */}
+    <onDropCTX.Provider value={{ setUsersGroups, consideringDropId, setConsideringDropId }}>
+      <div style={{ display: 'flex', gap: 16, flexDirection: 'column' }}>
         <Row id="going" title="Going" items={state.going} colorNumber={5} />
         <Row id="maybe" title="Maybe" items={state.maybe} colorNumber={3} />
         <Row id="sydney" title="Sydney" items={state.sydney} colorNumber={6} />
       </div>
     </onDropCTX.Provider>
-  );
+  )
 }
 export const onDropCTX = createContext({
-  consideringDropId: "",
+  consideringDropId: '',
   setConsideringDropId: (_) => {},
-  setUsersGroups: ({ toColumnId, id }) => {
-    console.log("ctx not set up", { toColumnId, id });
+  setUsersGroups: ({ id, groupId }) => {
+    console.log('ctx not set up', { id, groupId })
   },
-});
+})
 
 function extractData(gigs) {
   let entries = Object.entries(gigs),
