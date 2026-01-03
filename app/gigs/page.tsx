@@ -26,7 +26,7 @@ const Events = async ({ searchParams }) => {
     redirect('/api/user?a=' + (attempts || 0))
   }
 
-  const gigs = makeUserGigs(events, gigUser.gigs);
+  const gigs = makeUserGigs(events, gigUser.gigs)
 
   return (
     <>
@@ -37,6 +37,6 @@ const Events = async ({ searchParams }) => {
         <TwoSectionDnD gigs={gigs} />
       </GroupS_CTX>
     </>
-  );
+  )
 };
 export default Events;

@@ -37,8 +37,8 @@ export const GroupCTX = createContext({
   setExpanded: (_: string) => {},
 });
 
-export const GroupS_CTX = ({ gigs, initialExpanded = "sydney", children }) => {
-  const [expanded, s_open] = useState(initialExpanded);
+export const GroupS_CTX = ({ gigs, initialExpanded = 'container-sydney', children }) => {
+  const [expanded, s_open] = useState(initialExpanded)
 
   return (
     <GroupCTX.Provider
@@ -46,11 +46,11 @@ export const GroupS_CTX = ({ gigs, initialExpanded = "sydney", children }) => {
         gigs,
         expanded,
         setExpanded: (goupId) => {
-          s_open(goupId);
+          s_open(goupId)
         },
       }}
     >
       <section>{children}</section>
     </GroupCTX.Provider>
-  );
-};
+  )
+}

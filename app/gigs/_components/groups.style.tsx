@@ -25,7 +25,7 @@ export const Section = styled.section<{ $open: boolean }>`
       : css`
           --content-visibility: hidden;
         `};
-`;
+`
 export const Content = styled.ul`
   //<{ $open: boolean }>
   visibility: var(--content-visibility);
@@ -48,7 +48,7 @@ export const Content = styled.ul`
   scrollbar-width: none;
   grid-template-rows: auto;
   grid-auto-columns: 45%;
-`;
+`
 
 export const Link = styled.button`
   /* all: unset;
@@ -58,7 +58,7 @@ export const Link = styled.button`
   padding: 0;
   background: none;
   cursor: pointer;
-`;
+`
 
 export const Group = styled.div<{ $count: number; $colorNumber: number; $side?: 'right' }>`
   color: #000;

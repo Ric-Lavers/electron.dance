@@ -15,10 +15,8 @@ const placeholder =
       <circle cx="50" cy="50" r="14" fill="gold" />
     </svg>
   `);
-const GigPreview: React.FC<SpotifyNowPlayingProps> = ({
-  //@ts-ignore
-  id,
-  item = { uri: "", name: "", album: { images: [] } },
+const GigPreview: React.FC<SpotifyNowPlayingProps & {}> = ({
+  item = { uri: '', name: '', album: { images: [] } },
   isActive,
   isPlaying,
   //@ts-ignore
@@ -27,10 +25,10 @@ const GigPreview: React.FC<SpotifyNowPlayingProps> = ({
   //@ts-ignore
   let { uri, name, album, album: images } = item,
     µ = getImage(item),
-    src = µ == null ? placeholder : µ;
+    src = µ == null ? placeholder : µ
 
   return (
-    <S.Container id={id} $isActive={isActive} $isPlaying={isPlaying} className="now-playing">
+    <S.Container $isActive={isActive} $isPlaying={isPlaying} className="now-playing">
       <S.GigPreview $isPlaying={isActive || Boolean(item)}>
         {item ? (
           <S.Info key={item.uri}>
@@ -61,7 +59,7 @@ const GigPreview: React.FC<SpotifyNowPlayingProps> = ({
     </S.Container>
     // ,JSON.stringify({ uri, name, album, images })
   )
-};
+}
 // function openRicProfile(url) {
 //   url
 //     ? window.open(url, '_blank')
