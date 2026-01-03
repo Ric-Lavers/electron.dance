@@ -5,10 +5,14 @@ import ClientProviders from "../_providers/ClientProviders";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <main>
+    <main
+      style={{
+        backgroundColor: '#fff',
+      }}
+    >
       <StyledComponentsRegistry>
         <ClientProviders>{children}</ClientProviders>
       </StyledComponentsRegistry>
     </main>
-  );
+  )
 }

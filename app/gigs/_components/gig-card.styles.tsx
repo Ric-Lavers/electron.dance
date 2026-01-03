@@ -4,6 +4,9 @@ import { otherGroupSwitch } from "./GigCard";
 
 export const Day = styled.h3`
   height: 24px;
+  position: sticky;
+  left: 0;
+  width: fit-content;
 `;
 export const DayNull = styled.div`
   height: 24px;

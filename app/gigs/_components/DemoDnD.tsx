@@ -16,79 +16,71 @@ import { Day, DayNull } from "./gig-card.styles";
 import { setGigsToLocalstorage } from "../_utils/localStorage";
 import { GroupId } from "../_utils/types";
 import { updateUserGigs } from "@/app/api/_lib/actions/user";
+import { DateTrack } from './groups.style'
 
 type Item = {
-  id: string;
-  title: string;
-  startDate: string;
-  organiser?: string;
-  location?: string;
-};
+  id: string
+  title: string
+  startDate: string
+  organiser?: string
+  location?: string
+}
 
-type State = Record<GroupId, Item[]>;
+type State = Record<GroupId, Item[]>
 
-export const ITEM_DRAG_TYPE = "ARTICLE_ITEM";
+export const ITEM_DRAG_TYPE = 'ARTICLE_ITEM'
 
 function removeAt<T>(arr: T[], index: number) {
-  const next = arr.slice();
-  const [removed] = next.splice(index, 1);
-  return { next, removed };
+  const next = arr.slice()
+  const [removed] = next.splice(index, 1)
+  return { next, removed }
 }
 
 function insertAt<T>(arr: T[], index: number, item: T) {
-  const next = arr.slice();
-  next.splice(index, 0, item);
-  return next;
+  const next = arr.slice()
+  next.splice(index, 0, item)
+  return next
 }
 
-function findItem(
-  state: State,
-  id: string
-): { columnId: GroupId; index: number; item: Item } | null {
+function findItem(state: State, id: string): { columnId: GroupId; index: number; item: Item } | null {
   for (const columnId of Object.keys(state) as GroupId[]) {
-    const index = state[columnId].findIndex((x) => x.id === id);
-    if (index !== -1) return { columnId, index, item: state[columnId][index] };
+    const index = state[columnId].findIndex((x) => x.id === id)
+    if (index !== -1) return { columnId, index, item: state[columnId][index] }
   }
-  return null;
+  return null
 }
 
-function Row(props: {
-  id: GroupId;
-  title: string;
-  items: Item[];
-  colorNumber: number;
-}) {
-  const { consideringDropId } = useContext(onDropCTX);
+function Row(props: { id: GroupId; title: string; items: Item[]; colorNumber: number }) {
+  const { consideringDropId } = useContext(onDropCTX)
 
-  const { id: groupId, title, items, colorNumber } = props;
-  let [dragging, s_dragging] = useState(false);
+  const { id: groupId, title, items, colorNumber } = props
+  let [dragging, s_dragging] = useState(false)
 
   useEffect(() => {
-    const el = document.getElementById(`${groupId}`);
-    if (!el) return;
+    const el = document.getElementById(`${groupId}`)
+    if (!el) return
 
     return dropTargetForElements({
       element: el,
-      getData: () => ({ type: "SECTION", columnId: groupId, groupId }),
+      getData: () => ({ type: 'SECTION', columnId: groupId, groupId }),
 
       onDragEnter() {
-        s_dragging(true);
+        s_dragging(true)
       },
       onDragLeave() {
-        s_dragging(false);
+        s_dragging(false)
       },
       onDrag() {
-        document.body.style.cursor = "grabbing";
+        document.body.style.cursor = 'grabbing'
       },
       onDrop() {
-        document.body.style.cursor = "default";
-        s_dragging(false);
+        document.body.style.cursor = 'default'
+        s_dragging(false)
       },
-    });
-  }, [groupId]);
-  const formatDate = (startDate) =>
-    startDate && format(new Date(startDate), "MM-dd");
-  let isPrevDate = false;
+    })
+  }, [groupId])
+  const formatDate = (startDate) => startDate && format(new Date(startDate), 'MM-dd')
+  let isPrevDate = false
   return (
     <>
       <Group
@@ -96,29 +88,24 @@ function Row(props: {
         title={title}
         count={items.length}
         colorNumber={colorNumber}
+        // double={groupId === 'maybe'}
         dragging={dragging || consideringDropId === groupId}
       >
         {items.map(
           (item, index, arr) => (
-            (isPrevDate =
-              formatDate(item.startDate) ===
-              formatDate(arr[index - 1]?.startDate)),
+            (isPrevDate = formatDate(item.startDate) === formatDate(arr[index - 1]?.startDate)),
             (
-              <div key={item.id}>
-                {isPrevDate ? (
-                  <DayNull />
-                ) : (
-                  <Day> {format(new Date(item.startDate), "EEEE d MMMM")}</Day>
-                )}
+              <DateTrack key={item.id}>
+                {isPrevDate ? <DayNull /> : <Day> {format(new Date(item.startDate), 'EEEE d MMMM')}</Day>}
                 {/* @ts-ignore */}
                 <GigCard groupId={groupId} index={index} {...item} />
-              </div>
+              </DateTrack>
             )
           )
         )}
       </Group>
     </>
-  );
+  )
 }
 
 let newDrops =

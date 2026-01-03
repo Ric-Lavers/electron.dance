@@ -30,12 +30,7 @@ const GigPreview: React.FC<SpotifyNowPlayingProps> = ({
     src = µ == null ? placeholder : µ;
 
   return (
-    <S.Container
-      id={id}
-      $isActive={isActive}
-      $isPlaying={isPlaying}
-      className="now-playing"
-    >
+    <S.Container id={id} $isActive={isActive} $isPlaying={isPlaying} className="now-playing">
       <S.GigPreview $isPlaying={isActive || Boolean(item)}>
         {item ? (
           <S.Info key={item.uri}>
@@ -43,10 +38,10 @@ const GigPreview: React.FC<SpotifyNowPlayingProps> = ({
               src={src}
               alt={`${item.name} album art`}
               onError={function (e) {
-                let ø = e.currentTarget;
-                /* prevent ∞ loop */ ø.onerror = null;
-                ø.src = placeholder;
-                ø.title = getImage(item); //url
+                let ø = e.currentTarget
+                /* prevent ∞ loop */ ø.onerror = null
+                ø.src = placeholder
+                ø.title = getImage(item) //url
               }}
               // title={µ == null ? µ : url}
             />
@@ -57,8 +52,6 @@ const GigPreview: React.FC<SpotifyNowPlayingProps> = ({
                 // @ts-ignore
                 getName(item)
               }
-              url={url}
-              src={getImage(item)}
             />
           </S.Info>
         ) : (
@@ -67,7 +60,7 @@ const GigPreview: React.FC<SpotifyNowPlayingProps> = ({
       </S.GigPreview>
     </S.Container>
     // ,JSON.stringify({ uri, name, album, images })
-  );
+  )
 };
 // function openRicProfile(url) {
 //   url

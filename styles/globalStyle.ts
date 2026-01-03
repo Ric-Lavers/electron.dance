@@ -125,13 +125,9 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     color: ${theme.colors.accentGreen};
-    background-color: ${theme.colors.background};
     font-family: -apple-system,'system-ui','Segoe UI','Noto Sans',Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji';
     font-family: "Comfortaa",'Roboto', sans-serif;
     margin: 0;
-    padding: 8px 12px;
-    background-color: #fff;
-    min-height: 100dvh;
   }
   h2,
   h3,
@@ -158,4 +154,4 @@ export const GlobalStyle = createGlobalStyle`
   }
 
 
-`;
+`

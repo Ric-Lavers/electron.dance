@@ -43,20 +43,17 @@ export async function getActiveUser(userId?: string) {
 
 export async function updateUserGigs(gigs) {
   const jar = await cookies(),
-    userId = jar.get("userId")?.value;
+    userId = jar.get('userId')?.value
+  console.log('updateuserGigs ', userId)
 
-  if (!userId) return [];
+  if (!userId) return []
 
-  await connectToDatabase();
+  await connectToDatabase()
   try {
-    let user = await models.GigUser.findOneAndUpdate(
-      { id: userId },
-      { gigs },
-      { new: true, upsert: true }
-    );
+    let user = await models.GigUser.findOneAndUpdate({ id: userId }, { gigs }, { new: true, upsert: true })
 
-    return JSON.parse(JSON.stringify(user.gigs));
+    return JSON.parse(JSON.stringify(user.gigs))
   } catch (error) {
-    console.log("erro.updateUserGigs", error);
+    console.log('erro.updateUserGigs', error)
   }
 }

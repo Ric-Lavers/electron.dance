@@ -55,35 +55,18 @@ const Electron = () => {
         preserveAspectRatio="xMidYMid meet"
       >
         <defs>
-          <linearGradient
-            id="modernGradient_pink"
-            x1="0%"
-            y1="0%"
-            x2="100%"
-            y2="100%"
-          >
+          <linearGradient id="modernGradient_pink" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#ff6ec4" />
             <stop offset="100%" stopColor="#7873f5" />
           </linearGradient>
         </defs>
         <defs>
-          <linearGradient
-            id="modernGradient_blue"
-            x1="0%"
-            y1="0%"
-            x2="100%"
-            y2="100%"
-          >
+          <linearGradient id="modernGradient_blue" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#4facfe" />
             <stop offset="100%" stopColor="#00f2fe" />
           </linearGradient>
         </defs>
-        <g
-          fill="url(#modernGradient_pink)"
-          stroke="aliceblue"
-          strokeWidth="2"
-          strokeLinejoin="round"
-        >
+        <g fill="url(#modernGradient_pink)" stroke="aliceblue" strokeWidth="2" strokeLinejoin="round">
           <polygon points="708.6,453.5 623.6,368.6 538.5,28.4 453.6,198.5 368.6,28.4 334.5,164.4 368.6,113.4 538.5,283.5 878.7,368.6 711.2,453.5 715.1,447.2 793.1,368.9 538.5,198.5 368.6,198.5 283.5,283.5 283.5,368.6 113.4,538.5 368.6,708.6 453.5,708.6 453.5,708.6 538.5,793.7 572.4,743.6 538.5,878.8 453.6,708.6 538.5,623.6 607.2,605.7 623.6,538.5 708.6,453.5 878.7,538.5 744.5,572.1 793.7,538.5 708.6,453.5 708.6,538.4 641.9,639.3 538.5,708.6 453.5,708.6 368.4,623.6 28.3,538.5 191.1,457.4 192.6,450.6 28.3,368.6 164.6,334.4 113.4,368.4 283.5,538.5 368.6,878.8 451.8,712.2 369.5,792.2 198.5,538.5 198.5,368.6 283.5,283.5 368.6,283.5 538.5,113.4 708.6,368.6" />
         </g>
         <text
@@ -92,24 +75,25 @@ const Electron = () => {
           style={{
             // fill: 'aliceblue',
             // fill: '#7873f5',
-            fill: "url(#modernGradient_pink)",
+            fill: 'url(#modernGradient_pink)',
           }}
         >
           Hello you,
         </text>
         <text
-          onClick={() => window.open("/gigs")}
+          onClick={() => window.open('/gigs')}
           x="460"
           y="500"
           style={{
-            fill: "url(#modernGradient_pink)",
+            fill: 'url(#modernGradient_pink)',
+            cursor: 'pointer',
           }}
         >
           looking for a gig?
         </text>
       </svg>
     </>
-  );
+  )
 };
 const svgAnimation = ` 
       text {

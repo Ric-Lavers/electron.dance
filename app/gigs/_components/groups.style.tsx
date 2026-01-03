@@ -60,33 +60,20 @@ export const Link = styled.button`
   cursor: pointer;
 `;
 
-export const Group = styled.div<{ $count: number; $colorNumber: number }>`
+export const Group = styled.div<{ $count: number; $colorNumber: number; $side?: 'right' }>`
   color: #000;
   width: 100%;
 
-  --card-color: ${({ $colorNumber }) =>
-    `var(--color-card-${$colorNumber % 8})`};
+  --card-color: ${({ $colorNumber }) => `var(--color-card-${$colorNumber % 8})`};
   --color-canvas: #fff;
   --column-width-collapsed: 40px;
   --card-count: ${({ $count }) => $count};
   --progress-max-width: 100%;
   --progress-max-cards: 20;
   --progress-increment: var(--progress-max-width) / var(--progress-max-cards);
-  --column-color: color-mix(
-    in srgb,
-    var(--card-color) 15%,
-    var(--color-canvas)
-  );
-  --column-color: color-mix(
-    in srgb,
-    var(--card-color) 15%,
-    var(--color-canvas)
-  );
-  --column-color-strong: color-mix(
-    in srgb,
-    var(--card-color) 45%,
-    var(--color-canvas)
-  );
+  --column-color: color-mix(in srgb, var(--card-color) 15%, var(--color-canvas));
+  --column-color: color-mix(in srgb, var(--card-color) 15%, var(--color-canvas));
+  --column-color-strong: color-mix(in srgb, var(--card-color) 45%, var(--color-canvas));
   /* 
   
   
@@ -96,9 +83,11 @@ export const Group = styled.div<{ $count: number; $colorNumber: number }>`
   --column-color: color-mix(in srgb, var(--card-color) 15%, var(--color-canvas)); */
 
   display: flex;
+
   gap: 8px;
   position: relative;
   align-items: center;
+
   @keyframes linePulse {
     0% {
       block-size: 3px;
@@ -108,8 +97,7 @@ export const Group = styled.div<{ $count: number; $colorNumber: number }>`
     50% {
       block-size: 7px;
       background-color: var(--column-color-strong);
-      box-shadow: 0 0 0 3px
-        color-mix(in srgb, var(--column-color-strong) 35%, transparent);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--column-color-strong) 35%, transparent);
     }
     100% {
       block-size: 3px;
@@ -119,7 +107,7 @@ export const Group = styled.div<{ $count: number; $colorNumber: number }>`
   }
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     block-size: 3px;
 
@@ -133,56 +121,34 @@ export const Group = styled.div<{ $count: number; $colorNumber: number }>`
     animation: linePulse 1.1s ease-in-out infinite;
   }
   &::after {
-    content: "";
+    content: '';
+    ${({ $side }) => $side === 'right' && 'right: 0;'}
     position: absolute;
     border-radius: 99px;
 
-    inline-size: calc(
-      var(--column-width-collapsed) + var(--card-count) *
-        var(--progress-increment)
-    );
+    inline-size: calc(var(--column-width-collapsed) + var(--card-count) * var(--progress-increment));
 
     max-inline-size: var(--progress-max-width);
     max-block-size: 40px;
     height: 40px;
-    background: linear-gradient(
-      to right,
-      var(--card-color),
-      var(--column-color) 80%
-    );
+    background: linear-gradient(to right, var(--card-color), var(--column-color) 80%);
     background: var(--card-color);
     background: var(--column-color);
-    background-image: linear-gradient(
-      to right,
-      oklch(0.66 0.258 308),
-      color(srgb 0.961665 0.898301 1.00521) 80%
-    );
-    background-image: linear-gradient(
-      to right,
-      var(--card-color),
-      var(--column-color) 80%
-    );
-
-    /* block-size: var(--column-width-collapsed);
-    inline-size: calc(var(--column-width-collapsed) + var(--card-count) * var(--progress-increment));
-    margin-inline-start: 0;
-    max-inline-size: var(--progress-max-width);
-
-    
-    
-    block-size: var(--column-width-collapsed);
-    border-radius: 99rem;
-
-    inset: 0 0 auto;
-    margin-inline: auto;
-    max-block-size: 40px;
-    min-block-size: 40px;
-    opacity: 0;
-    position: absolute;
-    transition: block-size 500ms var(--ease-out-overshoot), inline-size var(--column-transition-duration) ease-out,
-      opacity var(--column-transition-duration) ease-out; */
+    background-image: linear-gradient(to right, oklch(0.66 0.258 308), color(srgb 0.961665 0.898301 1.00521) 80%);
+    background-image: linear-gradient(to right, var(--card-color), var(--column-color) 80%);
   }
-`;
+  ${({ $side }) =>
+    $side === 'right' &&
+    css`
+      justify-content: flex-end;
+      &::after {
+        right: 0;
+      }
+    `}
+`
+export const DateTrack = styled.div`
+  position: relative;
+`
 export const Count = styled.span`
   width: 40px;
   height: 40px;

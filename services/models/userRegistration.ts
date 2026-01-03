@@ -1,7 +1,7 @@
 import { connectToDatabase } from '@/db/mongo/connect'
 import { ObjectId } from 'mongoose'
-import { TokenProvider } from '@/types'
 import User, { UserDoc } from '@/db/mongo/models/user'
+import { TokenProvider } from '@/app/_providers/UserTokensProvider'
 
 export class UserRegistrator {
   user: UserDoc | null
@@ -16,6 +16,7 @@ export class UserRegistrator {
     this.userId = userId
     this.user = exisitingUser
   }
+
   async getExistingUserWithToken(userUri) {
     const [user] = await User.aggregate([
       {
@@ -35,7 +36,10 @@ export class UserRegistrator {
         },
       },
     ])
-    return user.doc
+    if (user) {
+      return user.doc
+    }
+    return null
     // return await User.findOne().populate({ path: 'tokens', match: { userUri } }).exec()
   }
   async addTokenToUser(tokenObjectId: ObjectId, type: TokenProvider) {
@@ -54,6 +58,7 @@ export class UserRegistrator {
   }
   async createUser(tokenObjectId: ObjectId, type: TokenProvider) {
     return await User.create({
+      //@ts-ignore
       tokens: [tokenObjectId],
       lastLoginMethod: type,
     })
