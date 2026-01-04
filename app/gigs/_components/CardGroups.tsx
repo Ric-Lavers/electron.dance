@@ -3,8 +3,6 @@ import { createContext, useContext, useEffect, useState } from "react"
 import * as S from "./groups.style"
 
 export const Group = ({ id, title, colorNumber = 6, count, gigs, dragging = false, double = false, children }) => {
-  console.log(gigs)
-
   const { attendanceSummary, expanded, setExpanded } = useContext(GroupCTX),
     open = expanded === id,
     totalAttendance = attendanceSummary.reduce((a, c) => a + c.count, 0)

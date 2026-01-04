@@ -187,8 +187,6 @@ export default function TwoSectionDnD({ gigs }) {
   }, [state])
 
   const maybeItems = useMemo(() => {
-    console.log("maybeItems")
-
     return [...state.maybe, ...state.others].sort(
       (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
     )
