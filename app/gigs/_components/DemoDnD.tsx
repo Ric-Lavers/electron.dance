@@ -44,11 +44,10 @@ function findItem(state: State, id: string): { columnId: GroupId; index: number;
   return null
 }
 
-function Row(props: { id: GroupId; title: string; items: Item[]; colorNumber: number }) {
-  const { consideringDropId } = useContext(onDropCTX)
 
-  const { id: groupId, title, items, colorNumber } = props
-  let [dragging, s_dragging] = useState(false)
+const useDragGroup = (groupId) => {
+  const { consideringDropId } = useContext(onDropCTX)
+  const [dragging, s_dragging] = useState(false)
 
   useEffect(() => {
     const el = document.getElementById(`container-${groupId}`)
@@ -73,8 +72,16 @@ function Row(props: { id: GroupId; title: string; items: Item[]; colorNumber: nu
       },
     })
   }, [groupId])
+
+  return dragging || dragging || consideringDropId === groupId
+}
+function DragGroup(props: { id: GroupId; title: string; items: Item[]; colorNumber: number }) {
+  const { id: groupId, title, items, colorNumber } = props
+
+  const dragging = useDragGroup(groupId)
   const formatDate = (startDate) => startDate && format(new Date(startDate), "MM-dd")
   let isPrevDate = false
+
   return (
     <>
       <Group
@@ -83,7 +90,7 @@ function Row(props: { id: GroupId; title: string; items: Item[]; colorNumber: nu
         count={items.length}
         colorNumber={colorNumber}
         double={groupId === "maybe"}
-        dragging={dragging || consideringDropId === groupId}
+        dragging={dragging}
       >
         {items.map(
           (item, index, arr) => (
@@ -152,7 +159,6 @@ export default function TwoSectionDnD({ gigs }) {
 
     setState(newGroups)
     updateUserGigAttendance({ groupId, eventId: id })
-    await saveUserGigs(newGroups)
   }
   function setConsideringDropId(groupId: GroupId) {
     s_ConsideringDropId(groupId)
@@ -179,21 +185,19 @@ export default function TwoSectionDnD({ gigs }) {
     // If you prefer not to depend on `state`, resolve source data from `source.data` only.
   }, [state])
 
-  const maybeItems = useMemo(
-    () =>
-      [...state.maybe, ...state.others].sort(
-        (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
-      ),
-    [state]
-  )
+  const maybeItems = useMemo(() => {
+    return [...state.maybe, ...state.others].sort(
+      (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+    )
+  }, [state.maybe, state.others])
 
   return (
     //@ts-ignore
     <onDropCTX.Provider value={{ setUsersGroups, consideringDropId, setConsideringDropId }}>
       <div style={{ display: "flex", gap: 16, flexDirection: "column" }}>
-        <Row id="going" title="Going" items={state.going} colorNumber={5} />
-        <Row id="maybe" title="Maybe" items={maybeItems} colorNumber={3} />
-        <Row id="sydney" title="Sydney" items={state.sydney} colorNumber={6} />
+        <DragGroup id="going" title="Going" items={state.going} colorNumber={5} />
+        <DragGroup id="maybe" title="Maybe" items={maybeItems} colorNumber={3} />
+        <DragGroup id="sydney" title="Sydney" items={state.sydney} colorNumber={6} />
       </div>
     </onDropCTX.Provider>
   )

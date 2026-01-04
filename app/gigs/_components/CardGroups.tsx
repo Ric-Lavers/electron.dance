@@ -28,7 +28,7 @@ export const Group = ({ id, title, colorNumber = 6, count, dragging = false, dou
                 $count={gigs.others.data.length * 2}
                 className={(dragging && "drag-hover") || ""}
               >
-                <S.Title className="cards__expander-title">others</S.Title>
+                <S.Title className="cards__expander-title">Mates</S.Title>
                 <S.Count className="cards__expander-count">{gigs.others.data.length}</S.Count>
               </S.Group>
             </S.Link>

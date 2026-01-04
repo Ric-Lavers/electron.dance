@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
       console.log(gig)
       try {
         let ç: any = await Event.findOne({ uri: gig.uri })
-        if (!ç) {
+        if (!ç && gig.url) {
           ç = await generateEventData(gig.url, gig)
           await Event.create({
             public: true,
@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
         }
         result.push(ç)
       } catch (error) {
-        console.log("ERR0R", error)
+        console.log(`ERR0R with url ${gig.url} |`, error)
         console.log(JSON.stringify(error))
       }
     }

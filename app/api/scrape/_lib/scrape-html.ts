@@ -4,7 +4,7 @@ import * as cheerio from "cheerio"
 export async function chromiumHtml(url: string) {
   const browser = await chromium.launch({ headless: true })
   const page = await browser.newPage()
-  await page.goto(url, { waitUntil: "networkidle" })
+  await page.goto(url, { waitUntil: "domcontentloaded" })
   let html = await page.content()
 
   await browser.close()

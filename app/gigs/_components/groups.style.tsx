@@ -139,7 +139,13 @@ export const Group = styled.div<{ $count: number; $colorNumber: number; $side?: 
   }
   &::after {
     content: "";
-    ${({ $side }) => $side === "right" && "right: 0;"}
+    --gradient-direction: right;
+    ${({ $side }) =>
+      $side === "right" &&
+      css`
+        right: 0;
+        --gradient-direction: left;
+      `}
     position: absolute;
     border-radius: 99px;
 
@@ -152,7 +158,8 @@ export const Group = styled.div<{ $count: number; $colorNumber: number; $side?: 
     background: var(--card-color);
     background: var(--column-color);
     background-image: linear-gradient(to right, oklch(0.66 0.258 308), color(srgb 0.961665 0.898301 1.00521) 80%);
-    background-image: linear-gradient(to right, var(--card-color), var(--column-color) 80%);
+
+    background-image: linear-gradient(to var(--gradient-direction), var(--card-color), var(--column-color) 80%);
   }
   ${({ $side }) =>
     $side === "right" &&

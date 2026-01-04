@@ -100,8 +100,7 @@ const CoolRange = ({ groupId, gigId, setPosition, setConsideringDropId }) => {
     [{ id: leftId }, { id: rightId }] = otherGroupSwitch(groupId)
 
   function startAnimation(e) {
-    let value = Number(e.currentTarget.value),
-      isShrunk = e.currentTarget.className === "shronk"
+    let value = Number(e.currentTarget.value)
 
     setConsideringDropId("")
     if (value < 15 || value > 80) {
