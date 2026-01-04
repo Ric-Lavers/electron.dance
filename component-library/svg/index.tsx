@@ -1,107 +1,107 @@
-import styled, { keyframes } from "styled-components";
-import SpinnerUrl from "./spinner.svg";
-export { default as LockClosedIcon } from "./lock-closed.svg";
-export { default as LockOpenIcon } from "./lock-open-1.svg";
-export { default as LockOpen2Icon } from "./lock-open-2.svg";
-export { default as SpotifyIcon } from "./spotify-logo.svg";
-export { default as SpotifyBlackIcon } from "./spotify-logo-black.svg";
-export { default as ArrowDownIcon } from "./arrow-down.svg";
-export { default as ArrowLeftIcon } from "./arrow-left.svg";
-export { default as ArrowRightIcon } from "./arrow-right.svg";
-export { default as ArrowUpIcon } from "./arrow-up.svg";
-export { default as BookmarkIcon } from "./bookmark.svg";
-export { default as BookmarkFilledIcon } from "./bookmark-filled.svg";
-export { default as BoxConditionIcon } from "./box-condition.svg";
-export { default as BellIcon } from "./bell.svg";
-export { default as CameraIcon } from "./camera.svg";
-export { default as CaretIcon } from "./caret.svg";
-export { default as CartIcon } from "./cart.svg";
-export { default as CheckCircleFilledIcon } from "./check-circle-filled.svg";
-export { default as CrossCircleFilledIcon } from "./cross-circle-filled.svg";
-export { default as MinusCircleFilledIcon } from "./minus-circle-filled.svg";
-export { default as CalculatorIcon } from "./calculator.svg";
-export { default as CalendarAddIcon } from "./calendar-add.svg";
-export { default as CheckCircleIcon } from "./check-circle.svg";
-export { default as CheckIcon } from "./check.svg";
-export { default as ChevronDownIcon } from "./chevron-down.svg";
-export { default as ImagesIcon } from "./images.svg";
-export { default as ChevronLeftIcon } from "./chevron-left.svg";
-export { default as ChevronRightIcon } from "./chevron-right.svg";
-export { default as ChevronRightLightIcon } from "./chevron-right-light.svg";
-export { default as ChevronUpIcon } from "./chevron-up.svg";
-export { default as ClockIcon } from "./clock.svg";
-export { default as CopyIcon } from "./copy.svg";
-export { default as CreditCardIcon } from "./credit-card.svg";
-export { default as CrossIcon } from "./cross.svg";
-export { default as DeliveryIcon } from "./delivery.svg";
-export { default as DollarSignPicket } from "./dollar-sign-picket.svg";
-export { default as DollarSignIcon } from "./dollar-sign.svg";
-export { default as EnvelopeIcon } from "./envelope.svg";
-export { default as ExclamationTriangleIcon } from "./exclamation-triangle.svg";
-export { default as ExpandedListIcon } from "./expanded-list.svg";
-export { default as ExternalLinkIcon } from "./external-link.svg";
-export { default as EyeIcon } from "./eye.svg";
-export { default as FileIcon } from "./file.svg";
-export { default as FilterIcon } from "./filter.svg";
-export { default as GavelIcon } from "./gavel.svg";
-export { default as GiftIcon } from "./gift.svg";
-export { default as HeartFilledIcon } from "./heart-filled.svg";
-export { default as HeartIcon } from "./heart.svg";
-export { default as HomeIcon } from "./home.svg";
-export { default as InfoCircleIcon } from "./info-circle.svg";
-export { default as LogoIcon } from "./logo.svg";
-export { default as MagnifyingGlassIcon } from "./magnifying-glass.svg";
-export { default as MapMarkerIcon } from "./map-marker.svg";
-export { default as MedalGoldIcon } from "./medal-gold.svg";
-export { default as MegaphoneIcon } from "./megaphone.svg";
-export { default as HamburgerMenuIcon } from "./hamburger-menu.svg";
-export { default as HamburgerMenuLeftIcon } from "./hamburger-menu-left.svg";
-export { default as HamburgerMenuRightIcon } from "./hamburger-menu-right.svg";
-export { default as MinusIcon } from "./minus.svg";
-export { default as PaypalIcon } from "./paypal.svg";
-export { default as PhoneIcon } from "./phone.svg";
-export { default as PlusIcon } from "./plus.svg";
-export { default as ShieldCheckIcon } from "./shield-check.svg";
-export { default as TagIcon } from "./tag.svg";
-export { default as TimesCircleIcon } from "./times-circle.svg";
-export { default as TruckIcon } from "./truck.svg";
-export { default as UserIcon } from "./user.svg";
-export { default as ItemsPageIcon } from "./items-page.svg";
-export { default as StarIcon } from "./star.svg";
-export { default as HalfStarIcon } from "./half-star.svg";
-export { default as GooglePlayIcon } from "./google-play.svg";
-export { default as AppStoreIcon } from "./app-store.svg";
-export { default as AmexIcon } from "./amex.svg";
-export { default as DinersClubIcon } from "./diners-club.svg";
-export { default as FacebookIcon } from "./facebook.svg";
-export { default as InstagramIcon } from "./instagram.svg";
-export { default as LinkedinIcon } from "./linkedin.svg";
-export { default as MastercardIcon } from "./mastercard.svg";
-export { default as PaypalLogoIcon } from "./paypal-logo.svg";
-export { default as TiktokIcon } from "./tiktok.svg";
-export { default as TwitterIcon } from "./twitter.svg";
-export { default as VisaIcon } from "./visa.svg";
-export { default as YoutubeIcon } from "./youtube.svg";
-export { default as GraysAppIcon } from "./grays-app.svg";
-export { default as WineTastingPanelIcon } from "./wine-tasting-panel.svg";
-export { default as WineCriticIcon } from "./wine-critic.svg";
-export { default as TimeIcon } from "./time.svg";
-export { default as SupportIcon } from "./support.svg";
-export { default as MailIcon } from "./mail.svg";
-export { default as PlayIcon } from "./play.svg";
+import styled, { keyframes } from "styled-components"
+import SpinnerUrl from "./spinner.svg"
+export { default as LockClosedIcon } from "./lock-closed.svg"
+export { default as LockOpenIcon } from "./lock-open-1.svg"
+export { default as LockOpen2Icon } from "./lock-open-2.svg"
+export { default as SpotifyIcon } from "./spotify-logo.svg"
+export { default as SpotifyBlackIcon } from "./spotify-logo-black.svg"
+export { default as ArrowDownIcon } from "./arrow-down.svg"
+export { default as ArrowLeftIcon } from "./arrow-left.svg"
+export { default as ArrowRightIcon } from "./arrow-right.svg"
+export { default as ArrowUpIcon } from "./arrow-up.svg"
+export { default as BookmarkIcon } from "./bookmark.svg"
+export { default as BookmarkFilledIcon } from "./bookmark-filled.svg"
+export { default as BoxConditionIcon } from "./box-condition.svg"
+export { default as BellIcon } from "./bell.svg"
+export { default as CameraIcon } from "./camera.svg"
+export { default as CaretIcon } from "./caret.svg"
+export { default as CartIcon } from "./cart.svg"
+export { default as CheckCircleFilledIcon } from "./check-circle-filled.svg"
+export { default as CrossCircleFilledIcon } from "./cross-circle-filled.svg"
+export { default as MinusCircleFilledIcon } from "./minus-circle-filled.svg"
+export { default as CalculatorIcon } from "./calculator.svg"
+export { default as CalendarAddIcon } from "./calendar-add.svg"
+export { default as CheckCircleIcon } from "./check-circle.svg"
+export { default as CheckIcon } from "./check.svg"
+export { default as ChevronDownIcon } from "./chevron-down.svg"
+export { default as ImagesIcon } from "./images.svg"
+export { default as ChevronLeftIcon } from "./chevron-left.svg"
+export { default as ChevronRightIcon } from "./chevron-right.svg"
+export { default as ChevronRightLightIcon } from "./chevron-right-light.svg"
+export { default as ChevronUpIcon } from "./chevron-up.svg"
+export { default as ClockIcon } from "./clock.svg"
+export { default as CopyIcon } from "./copy.svg"
+export { default as CreditCardIcon } from "./credit-card.svg"
+export { default as CrossIcon } from "./cross.svg"
+export { default as DeliveryIcon } from "./delivery.svg"
+export { default as DollarSignPicket } from "./dollar-sign-picket.svg"
+export { default as DollarSignIcon } from "./dollar-sign.svg"
+export { default as EnvelopeIcon } from "./envelope.svg"
+export { default as ExclamationTriangleIcon } from "./exclamation-triangle.svg"
+export { default as ExpandedListIcon } from "./expanded-list.svg"
+export { default as ExternalLinkIcon } from "./external-link.svg"
+export { default as EyeIcon } from "./eye.svg"
+export { default as FileIcon } from "./file.svg"
+export { default as FilterIcon } from "./filter.svg"
+export { default as GavelIcon } from "./gavel.svg"
+export { default as GiftIcon } from "./gift.svg"
+export { default as HeartFilledIcon } from "./heart-filled.svg"
+export { default as HeartIcon } from "./heart.svg"
+export { default as HomeIcon } from "./home.svg"
+export { default as InfoCircleIcon } from "./info-circle.svg"
+export { default as LogoIcon } from "./logo.svg"
+export { default as MagnifyingGlassIcon } from "./magnifying-glass.svg"
+export { default as MapMarkerIcon } from "./map-marker.svg"
+export { default as MedalGoldIcon } from "./medal-gold.svg"
+export { default as MegaphoneIcon } from "./megaphone.svg"
+export { default as HamburgerMenuIcon } from "./hamburger-menu.svg"
+export { default as HamburgerMenuLeftIcon } from "./hamburger-menu-left.svg"
+export { default as HamburgerMenuRightIcon } from "./hamburger-menu-right.svg"
+export { default as MinusIcon } from "./minus.svg"
+export { default as PaypalIcon } from "./paypal.svg"
+export { default as PhoneIcon } from "./phone.svg"
+export { default as PlusIcon } from "./plus.svg"
+export { default as ShieldCheckIcon } from "./shield-check.svg"
+export { default as TagIcon } from "./tag.svg"
+export { default as TimesCircleIcon } from "./times-circle.svg"
+export { default as TruckIcon } from "./truck.svg"
+export { default as UserIcon } from "./user.svg"
+export { default as ItemsPageIcon } from "./items-page.svg"
+export { default as StarIcon } from "./star.svg"
+export { default as HalfStarIcon } from "./half-star.svg"
+export { default as GooglePlayIcon } from "./google-play.svg"
+export { default as AppStoreIcon } from "./app-store.svg"
+export { default as AmexIcon } from "./amex.svg"
+export { default as DinersClubIcon } from "./diners-club.svg"
+export { default as FacebookIcon } from "./facebook.svg"
+export { default as InstagramIcon } from "./instagram.svg"
+export { default as LinkedinIcon } from "./linkedin.svg"
+export { default as MastercardIcon } from "./mastercard.svg"
+export { default as PaypalLogoIcon } from "./paypal-logo.svg"
+export { default as TiktokIcon } from "./tiktok.svg"
+export { default as TwitterIcon } from "./twitter.svg"
+export { default as VisaIcon } from "./visa.svg"
+export { default as YoutubeIcon } from "./youtube.svg"
+export { default as GraysAppIcon } from "./grays-app.svg"
+export { default as WineTastingPanelIcon } from "./wine-tasting-panel.svg"
+export { default as WineCriticIcon } from "./wine-critic.svg"
+export { default as TimeIcon } from "./time.svg"
+export { default as SupportIcon } from "./support.svg"
+export { default as MailIcon } from "./mail.svg"
+export { default as PlayIcon } from "./play.svg"
 
-export { default as DownloadIcon } from "./download.svg";
+export { default as DownloadIcon } from "./download.svg"
 
-export * from "./types";
+export * from "./types"
 
 const spin = keyframes`
   0% { transform: rotate(0deg); }
   100% { transform: rotate(359deg); }
-`;
+`
 
 export const SpinnerIcon = styled.img.attrs({
   src: SpinnerUrl,
   alt: "Loading...",
 })`
   animation: ${spin} 2s linear infinite;
-`;
+`

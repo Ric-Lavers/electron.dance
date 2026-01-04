@@ -1,22 +1,16 @@
-'use client'
-import React, {
-  createContext,
-  useActionState,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+"use client"
+import React, { createContext, useActionState, useContext, useEffect, useMemo, useState } from "react"
 
-import { dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
-import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
-import { GigCard } from "./GigCard";
-import { Group, GroupCTX } from "./CardGroups";
-import { format } from "date-fns";
-import { Day, DayNull } from "./gig-card.styles";
-import { saveUserGigs } from '../_utils/localStorage'
-import { GroupId } from '../_utils/types'
-import { updateUserGigAttendance } from '@/app/api/_lib/actions/user'
-import { DateTrack } from './groups.style'
+import { dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter"
+import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter"
+import { GigCard } from "./GigCard"
+import { Group, GroupCTX } from "./CardGroups"
+import { format } from "date-fns"
+import { Day, DayNull } from "./gig-card.styles"
+import { saveUserGigs } from "../_utils/localStorage"
+import { GroupId } from "../_utils/types"
+import { updateUserGigAttendance } from "@/app/api/_lib/actions/user"
+import { DateTrack } from "./groups.style"
 
 type Item = {
   id: string
@@ -26,9 +20,9 @@ type Item = {
   location?: string
 }
 
-type State = Record<GroupId, Item[]>
+type State = Record<GroupId | "others", Item[]>
 
-export const ITEM_DRAG_TYPE = 'ARTICLE_ITEM'
+export const ITEM_DRAG_TYPE = "ARTICLE_ITEM"
 
 function removeAt<T>(arr: T[], index: number) {
   const next = arr.slice()
@@ -62,7 +56,7 @@ function Row(props: { id: GroupId; title: string; items: Item[]; colorNumber: nu
 
     return dropTargetForElements({
       element: el,
-      getData: () => ({ type: 'SECTION', columnId: groupId, groupId }),
+      getData: () => ({ type: "SECTION", columnId: groupId, groupId }),
 
       onDragEnter() {
         s_dragging(true)
@@ -71,15 +65,15 @@ function Row(props: { id: GroupId; title: string; items: Item[]; colorNumber: nu
         s_dragging(false)
       },
       onDrag() {
-        document.body.style.cursor = 'grabbing'
+        document.body.style.cursor = "grabbing"
       },
       onDrop() {
-        document.body.style.cursor = 'default'
+        document.body.style.cursor = "default"
         s_dragging(false)
       },
     })
   }, [groupId])
-  const formatDate = (startDate) => startDate && format(new Date(startDate), 'MM-dd')
+  const formatDate = (startDate) => startDate && format(new Date(startDate), "MM-dd")
   let isPrevDate = false
   return (
     <>
@@ -88,7 +82,7 @@ function Row(props: { id: GroupId; title: string; items: Item[]; colorNumber: nu
         title={title}
         count={items.length}
         colorNumber={colorNumber}
-        // double={groupId === 'maybe'}
+        double={groupId === "maybe"}
         dragging={dragging || consideringDropId === groupId}
       >
         {items.map(
@@ -96,7 +90,7 @@ function Row(props: { id: GroupId; title: string; items: Item[]; colorNumber: nu
             (isPrevDate = formatDate(item.startDate) === formatDate(arr[index - 1]?.startDate)),
             (
               <DateTrack key={item.id}>
-                {isPrevDate ? <DayNull /> : <Day> {format(new Date(item.startDate), 'EEEE d MMMM')}</Day>}
+                {isPrevDate ? <DayNull /> : <Day> {format(new Date(item.startDate), "EEEE d MMMM")}</Day>}
                 {/* @ts-ignore */}
                 <GigCard groupId={groupId} index={index} {...item} />
               </DateTrack>
@@ -144,7 +138,7 @@ let newDrops =
 
 export default function TwoSectionDnD({ gigs }) {
   let { gigs: stored_gigs } = useContext(GroupCTX)
-  const [consideringDropId, s_ConsideringDropId] = useState('')
+  const [consideringDropId, s_ConsideringDropId] = useState("")
 
   const gigData = extractData(gigs)
 
@@ -173,7 +167,7 @@ export default function TwoSectionDnD({ gigs }) {
         if (!source?.data?.id || source?.data?.type !== ITEM_DRAG_TYPE) return
 
         const targets = location.current.dropTargets,
-          ÆØN = targets.find((t) => (t.data as any)?.type === 'SECTION'),
+          ÆØN = targets.find((t) => (t.data as any)?.type === "SECTION"),
           groupId = ÆØN?.data?.columnId as GroupId
 
         if (!groupId) return
@@ -185,22 +179,30 @@ export default function TwoSectionDnD({ gigs }) {
     // If you prefer not to depend on `state`, resolve source data from `source.data` only.
   }, [state])
 
+  const maybeItems = useMemo(
+    () =>
+      [...state.maybe, ...state.others].sort(
+        (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+      ),
+    [state]
+  )
+
   return (
     //@ts-ignore
     <onDropCTX.Provider value={{ setUsersGroups, consideringDropId, setConsideringDropId }}>
-      <div style={{ display: 'flex', gap: 16, flexDirection: 'column' }}>
+      <div style={{ display: "flex", gap: 16, flexDirection: "column" }}>
         <Row id="going" title="Going" items={state.going} colorNumber={5} />
-        <Row id="maybe" title="Maybe" items={state.maybe} colorNumber={3} />
+        <Row id="maybe" title="Maybe" items={maybeItems} colorNumber={3} />
         <Row id="sydney" title="Sydney" items={state.sydney} colorNumber={6} />
       </div>
     </onDropCTX.Provider>
   )
 }
 export const onDropCTX = createContext({
-  consideringDropId: '',
+  consideringDropId: "",
   setConsideringDropId: (_) => {},
   setUsersGroups: ({ id, groupId }) => {
-    console.log('ctx not set up', { id, groupId })
+    console.log("ctx not set up", { id, groupId })
   },
 })
 
@@ -210,6 +212,7 @@ function extractData(gigs) {
       going: [],
       maybe: [],
       sydney: [],
+      others: [],
     }
 
   if (!entries.length) {

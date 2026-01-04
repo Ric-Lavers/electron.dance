@@ -1,12 +1,12 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 
 export default function Home() {
-  const [vh, s_vh] = useState(0);
+  const [vh, s_vh] = useState(0)
   useEffect(() => {
-    s_vh(window.innerHeight * 0.01);
-  }, []);
+    s_vh(window.innerHeight * 0.01)
+  }, [])
 
   return (
     <div
@@ -15,22 +15,19 @@ export default function Home() {
         backgroundColor: "#010",
       }}
     >
-      <main
-        style={{ border: "5px sold lime" }}
-        className="flex h-full flex-center items-center sm:items-start"
-      >
+      <main style={{ border: "5px sold lime" }} className="flex h-full flex-center items-center sm:items-start">
         <Electron />
       </main>
     </div>
-  );
+  )
 }
 
 const Electron = () => {
   useEffect(() => {
-    const polygon = document.querySelector("polygon") as SVGPolygonElement;
-    const length = polygon.getTotalLength();
-    polygon.style.strokeDasharray = String(length);
-    polygon.style.strokeDashoffset = String(length);
+    const polygon = document.querySelector("polygon") as SVGPolygonElement
+    const length = polygon.getTotalLength()
+    polygon.style.strokeDasharray = String(length)
+    polygon.style.strokeDashoffset = String(length)
 
     // const setRealVh = () => {
     //   const vh = window.innerHeight * 0.01;
@@ -39,7 +36,7 @@ const Electron = () => {
     // setRealVh();
     // window.addEventListener('resize', setRealVh);
     // return () => window.removeEventListener('resize', setRealVh);
-  }, []);
+  }, [])
 
   return (
     <>
@@ -75,18 +72,18 @@ const Electron = () => {
           style={{
             // fill: 'aliceblue',
             // fill: '#7873f5',
-            fill: 'url(#modernGradient_pink)',
+            fill: "url(#modernGradient_pink)",
           }}
         >
           Hello you,
         </text>
         <text
-          onClick={() => window.open('/gigs')}
+          onClick={() => window.open("/gigs")}
           x="460"
           y="500"
           style={{
-            fill: 'url(#modernGradient_pink)',
-            cursor: 'pointer',
+            fill: "url(#modernGradient_pink)",
+            cursor: "pointer",
           }}
         >
           looking for a gig?
@@ -94,7 +91,7 @@ const Electron = () => {
       </svg>
     </>
   )
-};
+}
 const svgAnimation = ` 
       text {
         font-family: 'Great Vibes', cursive;

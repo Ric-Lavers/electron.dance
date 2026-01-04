@@ -1,29 +1,28 @@
-import { InferSchemaType } from "mongoose";
-import { connectToDatabase } from "@/db/mongo/connect";
-import Token, { TokenSchema } from "@/db/mongo/models/token";
-import Alert, { AlertSchema } from "@/db/mongo/models/alert";
-import { twilioSMS } from "@/services/twilio/helpers/sendSms";
-import { refreshTokenServices } from "@/services/index";
-import { TokenProvider } from "@/app/_providers/UserTokensProvider";
-import { TokenData } from "@/db/mongo/models/user";
+import { InferSchemaType } from "mongoose"
+import { connectToDatabase } from "@/db/mongo/connect"
+import Token, { TokenSchema } from "@/db/mongo/models/token"
+import Alert, { AlertSchema } from "@/db/mongo/models/alert"
+import { twilioSMS } from "@/services/twilio/helpers/sendSms"
+import { refreshTokenServices } from "@/services/index"
+import { TokenProvider } from "@/app/_providers/UserTokensProvider"
+import { TokenData } from "@/db/mongo/models/user"
 
-export const me = "+61421000554";
+export const me = "+61421000554"
 
 interface Init {
-  phone: string;
-  type: TokenProvider;
+  phone: string
+  type: TokenProvider
 }
 interface ConstructorProps extends Init {
-  db: typeof import("mongoose");
+  db: typeof import("mongoose")
 }
-
 
 export class refreshToken {
   // used for sms error logs
   phone: string
   type: string
   provider: TokenProvider
-  db: typeof import('mongoose')
+  db: typeof import("mongoose")
   token: Required<InferSchemaType<typeof TokenSchema>> | null | undefined
   tokenList: Required<InferSchemaType<typeof TokenSchema>>[]
   alert: InferSchemaType<typeof AlertSchema> | null | undefined
@@ -106,7 +105,7 @@ export class refreshToken {
     const { access_token, refresh_token, created_at, expires_in } = token
 
     let expiresAt = this.now + expires_in * 1000
-    if (this.provider === 'linkedIn') {
+    if (this.provider === "linkedIn") {
       expiresAt = created_at + expires_in
     }
 

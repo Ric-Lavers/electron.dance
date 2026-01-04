@@ -1,4 +1,4 @@
-import { models, model, Schema, Model, Document, ObjectId } from 'mongoose'
+import { models, model, Schema, Model, Document, ObjectId } from "mongoose"
 
 export const TokenSchema = new Schema(
   {
@@ -24,6 +24,6 @@ export interface TokenDoc extends Document<ObjectId> {
   data: any
 }
 //@ts-ignore
-const TokenModel = (models.Token as Model<TokenDoc> | undefined) || model<TokenDoc>('Token', TokenSchema)
+const TokenModel = (models.Token as Model<TokenDoc> | undefined) || model<TokenDoc>("Token", TokenSchema)
 
 export default TokenModel

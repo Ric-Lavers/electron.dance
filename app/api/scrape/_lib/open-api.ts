@@ -1,48 +1,48 @@
-import OpenAI from "openai";
-import { z } from "zod";
-import { zodTextFormat } from "openai/helpers/zod";
-import { chromiumHtml, getSocialMeta, getRenderedHtml } from "./scrape-html";
+import OpenAI from "openai"
+import { z } from "zod"
+import { zodTextFormat } from "openai/helpers/zod"
+import { chromiumHtml, getSocialMeta, getRenderedHtml } from "./scrape-html"
 
 export type EventExtractInput = {
-  url: string; // parsed html page (already textified / cleaned as you like)
-  content: string; // parsed html page (already textified / cleaned as you like)
+  url: string // parsed html page (already textified / cleaned as you like)
+  content: string // parsed html page (already textified / cleaned as you like)
   meta: {
-    title?: string;
-    description?: string;
-    image?: string;
-  };
-  data?: any;
-};
+    title?: string
+    description?: string
+    image?: string
+  }
+  data?: any
+}
 
 // STRICT model output (schema-conformant)
 export type EventExtractOutputStrict = {
-  uri?: string; // a
-  url: string;
-  title: string | null;
-  artists: string[];
-  description: string | null;
-  organiser: string | null;
-  image: string | null; //href
-  startDate: string | null; // ISO 8601
-  endDate: string | null; // ISO 8601 or null
-  price: number | null;
-  location: "TBA" | "Online" | "Secret location" | string | null; // venue Name
-  address: string | null;
-};
+  uri?: string // a
+  url: string
+  title: string | null
+  artists: string[]
+  description: string | null
+  organiser: string | null
+  image: string | null //href
+  startDate: string | null // ISO 8601
+  endDate: string | null // ISO 8601 or null
+  price: number | null
+  location: "TBA" | "Online" | "Secret location" | string | null // venue Name
+  address: string | null
+}
 
 // RELAXED app-facing output
 export type EventExtractOutput = {
-  url: string;
-  title?: string;
-  artists: string[];
-  description?: string;
-  organiser?: string;
-  image?: string;
-  startDate?: string;
-  endDate?: string;
-  location?: "TBA" | "Online" | "Secret location" | string;
-  price?: number;
-};
+  url: string
+  title?: string
+  artists: string[]
+  description?: string
+  organiser?: string
+  image?: string
+  startDate?: string
+  endDate?: string
+  location?: "TBA" | "Online" | "Secret location" | string
+  price?: number
+}
 
 export const EventExtractSchema = z.object({
   uri: z.string().min(1).nullable(),
@@ -60,7 +60,7 @@ export const EventExtractSchema = z.object({
   price: z.number().nonnegative().nullable(),
 
   location: z.string().nullable(),
-});
+})
 
 // function normalizeEvent(strict: EventExtractOutputStrict): EventExtractOutput {
 //   const out: EventExtractOutput = {
@@ -79,10 +79,8 @@ export const EventExtractSchema = z.object({
 
 //   return out
 // }
-export async function extractEventJson(
-  input: EventExtractInput
-): Promise<EventExtractOutputStrict> {
-  const client = new OpenAI({ apiKey: process.env.OPEN_API_SECRET });
+export async function extractEventJson(input: EventExtractInput): Promise<EventExtractOutputStrict> {
+  const client = new OpenAI({ apiKey: process.env.OPEN_API_SECRET })
 
   const resp = await client.responses.parse({
     model: "gpt-4o-mini",
@@ -135,25 +133,22 @@ export async function extractEventJson(
     text: {
       format: zodTextFormat(EventExtractSchema, "event_extract"),
     },
-  });
+  })
   //@ts-ignore
   // This is already a validated object (or the call throws).
-  return resp.output_parsed as EventExtractOutputStrict;
+  return resp.output_parsed as EventExtractOutputStrict
   //   const strict = resp.output_parsed as EventExtractOutputStrict
   //   return normalizeEvent(strict)
 }
 
 export async function generateEventData(url: string, data?: any) {
   const html = await chromiumHtml(url),
-    [meta, content] = await Promise.all([
-      getSocialMeta(html),
-      getRenderedHtml(html),
-    ]);
+    [meta, content] = await Promise.all([getSocialMeta(html), getRenderedHtml(html)])
 
   return extractEventJson({
     url,
     meta,
     content,
     data,
-  });
+  })
 }

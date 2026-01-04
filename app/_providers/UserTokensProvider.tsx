@@ -1,13 +1,13 @@
-import { useEffect } from 'react'
-import { propertiesFromTokenData } from '@/utils/propertiesFromTokenData'
-import { createContext, useContext, useState } from 'react'
+import { useEffect } from "react"
+import { propertiesFromTokenData } from "@/utils/propertiesFromTokenData"
+import { createContext, useContext, useState } from "react"
 
-export type TokenProvider = 'spotify' | 'linkedIn' | 'calendly' | 'google'
+export type TokenProvider = "spotify" | "linkedIn" | "calendly" | "google"
 export const UserTokenContextProvider = ({ children }) => {
   const [tokens, setTokens] = useState<any[]>([])
 
   useEffect(() => {
-    fetch('/api/user-tokens', { credentials: 'include' })
+    fetch("/api/user-tokens", { credentials: "include" })
       .then((res) => res.json())
       .then(setTokens)
   }, [])

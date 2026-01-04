@@ -1,39 +1,39 @@
-'use client'
-import { useState } from 'react'
-import * as S from './add-event.style'
-import { EventDoc } from '@/db/mongo/models/event'
-import axios from 'axios'
-import { format } from 'date-fns'
+"use client"
+import { useState } from "react"
+import * as S from "./add-event.style"
+import { EventDoc } from "@/db/mongo/models/event"
+import axios from "axios"
+import { format } from "date-fns"
 
 export const CreateEvent = ({ onSubmit }) => {
   const [formData, setFormData] = useState<Partial<EventDoc>>({
-    url: '',
-    title: '',
+    url: "",
+    title: "",
     artists: [],
-    description: '',
-    organiser: '',
-    image: '',
+    description: "",
+    organiser: "",
+    image: "",
     startDate: undefined,
     endDate: undefined,
-    location: '',
+    location: "",
     price: undefined,
   })
 
-  const [artistInput, setArtistInput] = useState('')
-  const [customLocation, setCustomLocation] = useState('')
+  const [artistInput, setArtistInput] = useState("")
+  const [customLocation, setCustomLocation] = useState("")
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
-    if (name === 'location') {
+    if (name === "location") {
       //@ts-ignore
       setFormData((prev) => ({ ...prev, location: value }))
-      if (value === '') {
-        setCustomLocation('')
+      if (value === "") {
+        setCustomLocation("")
       }
     } else {
       setFormData((prev) => ({
         ...prev,
-        [name]: name === 'price' ? (value ? parseFloat(value) : undefined) : value,
+        [name]: name === "price" ? (value ? parseFloat(value) : undefined) : value,
       }))
     }
   }
@@ -44,7 +44,7 @@ export const CreateEvent = ({ onSubmit }) => {
         ...prev,
         artists: [...(prev.artists || []), artistInput.trim()],
       }))
-      setArtistInput('')
+      setArtistInput("")
     }
   }
 
@@ -61,7 +61,7 @@ export const CreateEvent = ({ onSubmit }) => {
     if (isManual) {
       onSubmit(formData)
     } else {
-      const { data } = await axios.get('/api/scrape/gig-url', { params: { url: formData.url } })
+      const { data } = await axios.get("/api/scrape/gig-url", { params: { url: formData.url } })
 
       setFormData(data)
       s_isManual(true)
@@ -98,7 +98,7 @@ export const CreateEvent = ({ onSubmit }) => {
               id="title"
               name="title"
               type="text"
-              value={formData.title || ''}
+              value={formData.title || ""}
               onChange={handleChange}
               placeholder="Event title"
             />
@@ -111,7 +111,7 @@ export const CreateEvent = ({ onSubmit }) => {
                 type="text"
                 value={artistInput}
                 onChange={(e) => setArtistInput(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddArtist())}
+                onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), handleAddArtist())}
                 placeholder="Add artist name"
               />
               <S.SubmitButton type="button" onClick={handleAddArtist}>
@@ -135,7 +135,7 @@ export const CreateEvent = ({ onSubmit }) => {
             <textarea
               id="description"
               name="description"
-              value={formData.description || ''}
+              value={formData.description || ""}
               onChange={handleChange}
               placeholder="Event description"
               rows={4}
@@ -148,7 +148,7 @@ export const CreateEvent = ({ onSubmit }) => {
               id="organiser"
               name="organiser"
               type="text"
-              value={formData.organiser || ''}
+              value={formData.organiser || ""}
               onChange={handleChange}
               placeholder="Organiser name"
             />
@@ -160,7 +160,7 @@ export const CreateEvent = ({ onSubmit }) => {
               id="image"
               name="image"
               type="url"
-              value={formData.image || ''}
+              value={formData.image || ""}
               onChange={handleChange}
               placeholder="https://example.com/image.jpg"
             />
@@ -174,7 +174,7 @@ export const CreateEvent = ({ onSubmit }) => {
                 id="startDate"
                 name="startDate"
                 type="datetime-local"
-                value={formData.startDate ? format(new Date(formData.startDate), "yyyy-MM-dd'T'HH:mm") : ''}
+                value={formData.startDate ? format(new Date(formData.startDate), "yyyy-MM-dd'T'HH:mm") : ""}
                 onChange={(e) =>
                   setFormData((prev) => ({
                     ...prev,
@@ -190,7 +190,7 @@ export const CreateEvent = ({ onSubmit }) => {
                 id="endDate"
                 name="endDate"
                 type="datetime-local"
-                value={formData.endDate ? format(new Date(formData.endDate), "yyyy-MM-dd'T'HH:mm") : ''}
+                value={formData.endDate ? format(new Date(formData.endDate), "yyyy-MM-dd'T'HH:mm") : ""}
                 onChange={(e) =>
                   setFormData((prev) => ({
                     ...prev,
@@ -204,13 +204,13 @@ export const CreateEvent = ({ onSubmit }) => {
           <S.FormRow>
             <S.FormGroup>
               <label htmlFor="location">Location</label>
-              <select id="location" name="location" value={formData.location || ''} onChange={handleChange}>
+              <select id="location" name="location" value={formData.location || ""} onChange={handleChange}>
                 <option value="">Custom location</option>
                 <option value="TBA">TBA</option>
                 <option value="Online">Online</option>
                 <option value="Secret location">Secret location</option>
               </select>
-              {formData.location === '' && (
+              {formData.location === "" && (
                 <input
                   type="text"
                   value={customLocation}
@@ -232,7 +232,7 @@ export const CreateEvent = ({ onSubmit }) => {
                 type="number"
                 step="0.01"
                 min="0"
-                value={formData.price || ''}
+                value={formData.price || ""}
                 onChange={handleChange}
                 placeholder="0.00"
               />

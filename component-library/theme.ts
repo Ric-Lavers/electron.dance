@@ -1,10 +1,10 @@
-"use client";
+"use client"
 
 const buttonSizes = {
   small: "small",
   medium: "medium",
   large: "large",
-} as const;
+} as const
 
 const buttons = {
   fontSize: {
@@ -27,13 +27,13 @@ const buttons = {
     [buttonSizes.medium]: "10px 16px",
     [buttonSizes.large]: "16px 24px",
   },
-};
+}
 
 const borderRadius = {
   default: "4px",
   small: "2px",
   rounded: "25px",
-};
+}
 
 const spacings = {
   0: { px: "0px", rem: "0rem" },
@@ -61,11 +61,11 @@ const spacings = {
     rem: "6rem",
   },
   15: { px: "128px", rem: "8rem" },
-};
+}
 
 const grid = {
   maxWidth: "1320px",
-};
+}
 
 export const breakpoints = {
   xs: "410px",
@@ -73,7 +73,7 @@ export const breakpoints = {
   md: "769px", // 1 pixel bigger than an iPad
   lg: "992px",
   xl: "1320px",
-};
+}
 
 //Don't refer 'base colors' only refer 'colors'
 const baseColors = {
@@ -87,7 +87,7 @@ const baseColors = {
   graysGray5: "#CECDCE",
   graysGray6: "#909090",
   black: "#000000",
-};
+}
 const colors = {
   primary: {
     graysRed: baseColors.graysRed,
@@ -198,7 +198,7 @@ const colors = {
       light: baseColors.graysGray5,
     },
   },
-} as const;
+} as const
 
 const fonts = {
   title: "Roboto",
@@ -206,7 +206,7 @@ const fonts = {
   heading: "Roboto",
   body: "Roboto",
   uiText: "Roboto",
-} as const;
+} as const
 
 // const commonTypography = {
 //   title: {
@@ -423,25 +423,25 @@ const typography = {
   //       color: colors.system.systemBlue,
   //     },
   //   },
-} as const;
+} as const
 
-export type BreakpointsOfTOrT<T> = T | BreakpointsOf<T>;
+export type BreakpointsOfTOrT<T> = T | BreakpointsOf<T>
 
 export type BreakpointsOf<T> = {
-  [K in keyof typeof breakpoints]?: T;
-};
+  [K in keyof typeof breakpoints]?: T
+}
 
-export type AllBreakpointsOf<T> = Required<BreakpointsOf<T>>;
+export type AllBreakpointsOf<T> = Required<BreakpointsOf<T>>
 
 export interface GraysTheme {
-  buttons: typeof buttons;
-  borderRadius: typeof borderRadius;
-  spacings: typeof spacings;
-  breakpoints: typeof breakpoints;
-  grid: typeof grid;
-  colors: typeof colors;
-  fonts: typeof fonts;
-  typography: typeof typography;
+  buttons: typeof buttons
+  borderRadius: typeof borderRadius
+  spacings: typeof spacings
+  breakpoints: typeof breakpoints
+  grid: typeof grid
+  colors: typeof colors
+  fonts: typeof fonts
+  typography: typeof typography
 }
 
 export const theme: GraysTheme = {
@@ -453,4 +453,4 @@ export const theme: GraysTheme = {
   colors,
   fonts,
   typography,
-};
+}

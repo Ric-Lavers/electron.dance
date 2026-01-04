@@ -1,10 +1,10 @@
-"use client";
-import { GlobalStyle } from "@/styles/globalStyle";
-import { ThemeProvider } from "styled-components";
-import { ErrorBoundary } from "./errorBoundary";
-import { theme } from "@/styles/theme";
+"use client"
+import { GlobalStyle } from "@/styles/globalStyle"
+import { ThemeProvider } from "styled-components"
+import { ErrorBoundary } from "./errorBoundary"
+import { theme } from "@/styles/theme"
 
-import { UserTokenContextProvider } from './UserTokensProvider'
+import { UserTokenContextProvider } from "./UserTokensProvider"
 
 export default function ClientProviders({ children }: { children: React.ReactNode }) {
   return (

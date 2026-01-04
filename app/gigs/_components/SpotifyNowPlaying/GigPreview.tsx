@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import * as S from "./now-playing.styles";
-import { Marquee } from "../gig-card.styles";
+import React, { useEffect, useRef, useState } from "react"
+import * as S from "./now-playing.styles"
+import { Marquee } from "../gig-card.styles"
 
 interface SpotifyNowPlayingProps {
-  item?: SpotifyApi.CurrentlyPlayingObject["item"];
-  isPlaying: boolean;
-  isActive: boolean;
+  item?: SpotifyApi.CurrentlyPlayingObject["item"]
+  isPlaying: boolean
+  isActive: boolean
 }
 
 const placeholder =
@@ -14,9 +14,9 @@ const placeholder =
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
       <circle cx="50" cy="50" r="14" fill="gold" />
     </svg>
-  `);
+  `)
 const GigPreview: React.FC<SpotifyNowPlayingProps & {}> = ({
-  item = { uri: '', name: '', album: { images: [] } },
+  item = { uri: "", name: "", album: { images: [] } },
   isActive,
   isPlaying,
   //@ts-ignore
@@ -41,7 +41,6 @@ const GigPreview: React.FC<SpotifyNowPlayingProps & {}> = ({
                 ø.src = placeholder
                 ø.title = getImage(item) //url
               }}
-              // title={µ == null ? µ : url}
             />
 
             <TrackInfo
@@ -66,46 +65,40 @@ const GigPreview: React.FC<SpotifyNowPlayingProps & {}> = ({
 //     : window.open('https://open.spotify.com/user/ric-lavers?si=f9f171d3c07f41d0', '_blank')
 // }
 
-function getName(
-  item: Exclude<SpotifyApi.CurrentlyPlayingObject["item"], null>
-) {
+function getName(item: Exclude<SpotifyApi.CurrentlyPlayingObject["item"], null>) {
   if ("show" in item && item.show) {
-    return item.show.name;
+    return item.show.name
   }
 
   if ("artists" in item && item.artists) {
-    return item.artists.map((a) => a.name).join(", ");
+    return item.artists.map((a) => a.name).join(", ")
   }
 
-  return "";
+  return ""
 }
 function getImage(item) {
   return item.album && item.album.images && item.album.images.length > 0
     ? item?.album.images[0].url
-    : item?.images?.[0]?.url || placeholder;
+    : item?.images?.[0]?.url || placeholder
 }
 
 const TrackInfo = ({ title, name }) => {
   const titleRef = useRef<HTMLParagraphElement>(null),
     nameRef = useRef<HTMLParagraphElement>(null),
-    [, s_isMounted] = useState(false);
+    [, s_isMounted] = useState(false)
 
-  useEffect(() => s_isMounted(true), []);
+  useEffect(() => s_isMounted(true), [])
 
   return (
     <S.TrackInfo>
-      <S.Marquee
-        $on
-        $width={titleRef.current?.scrollWidth || 150}
-        ref={titleRef}
-      >
+      <S.Marquee $on $width={titleRef.current?.scrollWidth || 150} ref={titleRef}>
         {title}
       </S.Marquee>
       <S.Marquee $on $width={nameRef.current?.scrollWidth || 150} ref={nameRef}>
         {name}
       </S.Marquee>
     </S.TrackInfo>
-  );
-};
+  )
+}
 
-export default GigPreview;
+export default GigPreview

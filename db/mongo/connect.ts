@@ -1,15 +1,15 @@
 //@ts-nocheck
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
-import { TokenSchema } from "./models/token";
-import { AlertSchema } from "./models/alert";
-import { UserSchema } from "./models/user";
-import { CountSchema } from "./models/count";
-import { EventSchema } from "./models/event";
-import { AttendanceSchema } from './models/attendance'
+import { TokenSchema } from "./models/token"
+import { AlertSchema } from "./models/alert"
+import { UserSchema } from "./models/user"
+import { CountSchema } from "./models/count"
+import { EventSchema } from "./models/event"
+import { AttendanceSchema } from "./models/attendance"
 
 const MONGODB_URI = process.env.MONGODB_URI!
-if (!MONGODB_URI) throw new Error('❌ Missing MONGODB_URI in .env')
+if (!MONGODB_URI) throw new Error("❌ Missing MONGODB_URI in .env")
 
 let cached = global.mongoose as {
   conn: typeof mongoose | null
@@ -26,12 +26,12 @@ export async function connectToDatabase() {
 
   cached.conn = await cached.promise
 
-  cached.conn.Token = cached.conn.model('Token', TokenSchema)
-  cached.conn.Alert = cached.conn.model('Alert', AlertSchema)
-  cached.conn.User = cached.conn.model('User', UserSchema)
-  cached.conn.Count = cached.conn.model('Count', CountSchema)
-  cached.conn.Event = cached.conn.model('Event', EventSchema)
-  cached.conn.Attendance = cached.conn.model('Attendance', AttendanceSchema)
+  cached.conn.Token = cached.conn.model("Token", TokenSchema)
+  cached.conn.Alert = cached.conn.model("Alert", AlertSchema)
+  cached.conn.User = cached.conn.model("User", UserSchema)
+  cached.conn.Count = cached.conn.model("Count", CountSchema)
+  cached.conn.Event = cached.conn.model("Event", EventSchema)
+  cached.conn.Attendance = cached.conn.model("Attendance", AttendanceSchema)
 
   return cached.conn
 }

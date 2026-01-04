@@ -1,12 +1,12 @@
-import { NextResponse } from 'next/server'
-import { refreshGoogleAccessToken } from '@/services/google/refreshAccessToken'
-import { me, refreshToken } from '@/services/models/refreshToken'
+import { NextResponse } from "next/server"
+import { refreshGoogleAccessToken } from "@/services/google/refreshAccessToken"
+import { me, refreshToken } from "@/services/models/refreshToken"
 
 export async function GET(request: Request) {
-  const host = await request.headers.get('host')
+  const host = await request.headers.get("host")
 
   try {
-    const Refresh = await refreshToken.init({ phone: me, type: 'google' })
+    const Refresh = await refreshToken.init({ phone: me, type: "google" })
 
     await Refresh.getToken()
 
@@ -26,13 +26,13 @@ export async function GET(request: Request) {
       throw Error("Google token is expired or doesn't exist")
     }
     //send a sms when its not valid as they owner will need to log in
-    const message = "Google token is expired or doesn't exist; \ngo to https://" + host + '/api/google/auth'
+    const message = "Google token is expired or doesn't exist; \ngo to https://" + host + "/api/google/auth"
     await Refresh.sendSms(message)
     await Refresh.setAlertSent()
 
     return new Response(message, { status: 427 })
   } catch (error: any) {
-    const message = 'error refreshing google token' + error?.message || error
+    const message = "error refreshing google token" + error?.message || error
     console.log(message)
     return new Response(message, { status: 500 })
   }

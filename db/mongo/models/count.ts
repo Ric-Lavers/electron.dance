@@ -1,4 +1,4 @@
-import { model, models, Schema } from 'mongoose'
+import { model, models, Schema } from "mongoose"
 
 export const CountSchema = new Schema(
   {
@@ -10,4 +10,4 @@ export const CountSchema = new Schema(
 )
 
 //@ts-ignore
-export default models.Count || model('Count', CountSchema)
+export default models.Count || model("Count", CountSchema)

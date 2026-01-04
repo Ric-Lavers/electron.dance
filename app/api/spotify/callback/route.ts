@@ -1,16 +1,16 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from "next/server"
 
-import Token from '@/db/mongo/models/token'
-import { exchangeSpotifyCodeForTokens } from '@/services/spotify/exchangeCodeForTokens'
-import { UserRegistrator } from '@/services/models/userRegistration'
-import { setUserId } from '@/services/api.utils'
-import { UserDoc } from '@/db/mongo/models/user'
+import Token from "@/db/mongo/models/token"
+import { exchangeSpotifyCodeForTokens } from "@/services/spotify/exchangeCodeForTokens"
+import { UserRegistrator } from "@/services/models/userRegistration"
+import { setUserId } from "@/services/api.utils"
+import { UserDoc } from "@/db/mongo/models/user"
 
 export async function GET(req: NextRequest) {
   try {
     const query = Object.fromEntries(req.nextUrl.searchParams),
       url = new URL(req.url),
-      redirect_uri = url.origin + '/api/spotify/callback',
+      redirect_uri = url.origin + "/api/spotify/callback",
       created_at = Date.now(),
       { access_token, token_type, expires_in, refresh_token } = await exchangeSpotifyCodeForTokens(
         query.code as string,
@@ -18,28 +18,28 @@ export async function GET(req: NextRequest) {
       ),
       spotifyUser = await fetch(`https://api.spotify.com/v1/me`, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${access_token}`,
         },
       }).then((res) => res.json())
 
     // we need to know if the user exists
     let userUri = spotifyUser.uri,
-      stateString = decodeURIComponent(query.state || ''),
+      stateString = decodeURIComponent(query.state || ""),
       params = new URLSearchParams(stateString),
-      origin = params.get('origin'),
-      userId = params.get('userId'),
+      origin = params.get("origin"),
+      userId = params.get("userId"),
       expiresAt = created_at + expires_in * 1000
-    origin = origin === 'undefined' ? '' : origin
+    origin = origin === "undefined" ? "" : origin
 
     const UserReg = await UserRegistrator.init(userId),
       exisitingUserWithToken = await UserReg.getExistingUserWithToken(userUri),
       exisitingUser = UserReg.user
 
     const spotifyToken = await Token.findOneAndUpdate(
-      { userUri, provider: 'spotify' },
+      { userUri, provider: "spotify" },
       {
-        provider: 'spotify',
+        provider: "spotify",
         userUri,
         userId,
         accessToken: access_token,
@@ -56,11 +56,11 @@ export async function GET(req: NextRequest) {
       user = exisitingUserWithToken
       //no actions required, token would have updated automatically
     } else if (exisitingUser) {
-      user = await UserReg.addTokenToUser(spotifyToken._id, 'spotify')
+      user = await UserReg.addTokenToUser(spotifyToken._id, "spotify")
     } else if (userId) {
       throw Error(`Oops, this has the user id cookie, but no user was found in db, userId:${userId}`)
     } else {
-      user = await UserReg.createUser(spotifyToken._id, 'spotify')
+      user = await UserReg.createUser(spotifyToken._id, "spotify")
     }
     userId = user?.id || null
 
@@ -68,14 +68,14 @@ export async function GET(req: NextRequest) {
       if (userId) {
         await setUserId(userId)
       }
-      console.log('redirecting to ', { origin })
+      console.log("redirecting to ", { origin })
 
       return NextResponse.redirect(origin)
     }
 
     return NextResponse.json(
       {
-        message: 'Callback processed successfully',
+        message: "Callback processed successfully",
         data: {
           access_token,
           refresh_token,
@@ -88,7 +88,7 @@ export async function GET(req: NextRequest) {
       { status: 200 }
     )
   } catch (error) {
-    console.error('Error processing Spotify callback:', error)
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    console.error("Error processing Spotify callback:", error)
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
   }
 }
