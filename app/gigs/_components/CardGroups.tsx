@@ -2,8 +2,10 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import * as S from "./groups.style"
 
-export const Group = ({ id, title, colorNumber = 6, count, dragging = false, double = false, children }) => {
-  const { gigs, attendanceSummary, expanded, setExpanded } = useContext(GroupCTX),
+export const Group = ({ id, title, colorNumber = 6, count, gigs, dragging = false, double = false, children }) => {
+  console.log(gigs)
+
+  const { attendanceSummary, expanded, setExpanded } = useContext(GroupCTX),
     open = expanded === id,
     totalAttendance = attendanceSummary.reduce((a, c) => a + c.count, 0)
   if (double) {
@@ -13,10 +15,10 @@ export const Group = ({ id, title, colorNumber = 6, count, dragging = false, dou
           <S.Link onClick={() => setExpanded(id)}>
             <S.Group
               $colorNumber={colorNumber}
-              $count={gigs.maybe.data.length * 2}
+              $count={gigs.maybe.length * 2}
               className={(dragging && "drag-hover") || ""}
             >
-              <S.Count className="cards__expander-count">{gigs.maybe.data.length}</S.Count>
+              <S.Count className="cards__expander-count">{gigs.maybe.length}</S.Count>
               <S.Title className="cards__expander-title">{title + String()}</S.Title>
             </S.Group>
           </S.Link>
@@ -25,11 +27,11 @@ export const Group = ({ id, title, colorNumber = 6, count, dragging = false, dou
               <S.Group
                 $side="right"
                 $colorNumber={7}
-                $count={gigs.others.data.length * 2}
+                $count={gigs.others.length * 2}
                 className={(dragging && "drag-hover") || ""}
               >
                 <S.Title className="cards__expander-title">Mates</S.Title>
-                <S.Count className="cards__expander-count">{gigs.others.data.length}</S.Count>
+                <S.Count className="cards__expander-count">{gigs.others.length}</S.Count>
               </S.Group>
             </S.Link>
           )}

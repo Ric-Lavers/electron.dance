@@ -17,10 +17,15 @@ export const EventSchema = new Schema(
     endDate: Date,
     location: String,
     price: Number,
-    public: Boolean,
+    public: {
+      type: Boolean,
+      default: true,
+    },
+    community: String,
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 )
+EventSchema.index({ startDate: 1 }, { unique: true })
 
 type EventSchemaType = InferSchemaType<typeof EventSchema>
 export type EventDoc = EventSchemaType & {

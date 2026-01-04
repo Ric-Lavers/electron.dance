@@ -15,10 +15,12 @@ const Events = async ({ searchParams }) => {
     attempts = Number(Å),
     jar = await cookies(),
     userId = jar.get("userId")?.value,
-    events = await getGigs(userId, startOfToday()),
-    gigUser = await getActiveUser(userId),
-    allAttendance = await getAllAttendance(),
-    attendanceSummary = await getOthersAttendanceSummary(startOfToday())
+    [events, gigUser, allAttendance, attendanceSummary] = await Promise.all([
+      getGigs(userId, startOfToday()),
+      getActiveUser(userId),
+      getAllAttendance(),
+      getOthersAttendanceSummary(startOfToday()),
+    ])
 
   if (attempts >= 3) {
     throw Error()

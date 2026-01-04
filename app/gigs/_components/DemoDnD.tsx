@@ -75,8 +75,8 @@ const useDragGroup = (groupId) => {
 
   return dragging || dragging || consideringDropId === groupId
 }
-function DragGroup(props: { id: GroupId; title: string; items: Item[]; colorNumber: number }) {
-  const { id: groupId, title, items, colorNumber } = props
+function DragGroup(props: { id: GroupId; title: string; items: Item[]; colorNumber: number; gigs: object }) {
+  const { id: groupId, title, items, colorNumber, gigs } = props
 
   const dragging = useDragGroup(groupId)
   const formatDate = (startDate) => startDate && format(new Date(startDate), "MM-dd")
@@ -88,6 +88,7 @@ function DragGroup(props: { id: GroupId; title: string; items: Item[]; colorNumb
         id={`container-${groupId}`}
         title={title}
         count={items.length}
+        gigs={gigs}
         colorNumber={colorNumber}
         double={groupId === "maybe"}
         dragging={dragging}
@@ -186,6 +187,8 @@ export default function TwoSectionDnD({ gigs }) {
   }, [state])
 
   const maybeItems = useMemo(() => {
+    console.log("maybeItems")
+
     return [...state.maybe, ...state.others].sort(
       (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
     )
@@ -195,9 +198,9 @@ export default function TwoSectionDnD({ gigs }) {
     //@ts-ignore
     <onDropCTX.Provider value={{ setUsersGroups, consideringDropId, setConsideringDropId }}>
       <div style={{ display: "flex", gap: 16, flexDirection: "column" }}>
-        <DragGroup id="going" title="Going" items={state.going} colorNumber={5} />
-        <DragGroup id="maybe" title="Maybe" items={maybeItems} colorNumber={3} />
-        <DragGroup id="sydney" title="Sydney" items={state.sydney} colorNumber={6} />
+        <DragGroup id="going" title="Going" gigs={state} items={state.going} colorNumber={5} />
+        <DragGroup id="maybe" title="Maybe" gigs={state} items={maybeItems} colorNumber={3} />
+        <DragGroup id="sydney" title="Sydney" gigs={state} items={state.sydney} colorNumber={6} />
       </div>
     </onDropCTX.Provider>
   )
