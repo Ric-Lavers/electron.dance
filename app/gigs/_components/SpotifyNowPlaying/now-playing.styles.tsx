@@ -187,9 +187,10 @@ export const Info = styled.div`
 `;
 export const AlbumImg = styled.img`
   width: 40px;
+  max-height: 40px;
   border-radius: 4px;
   z-index: 1;
-`;
+`
 export const TrackInfo = styled.div`
   container-type: inline-size;
   width: 100%;

@@ -41,7 +41,6 @@ const GigPreview: React.FC<SpotifyNowPlayingProps & {}> = ({
                 ø.src = placeholder
                 ø.title = getImage(item) //url
               }}
-              // title={µ == null ? µ : url}
             />
 
             <TrackInfo

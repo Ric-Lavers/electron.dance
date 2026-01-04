@@ -148,6 +148,35 @@ const shrink = keyframes`
       transform: scale(0.55);
     }
     `;
+
+
+const thumb = (props) => css`
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -10px;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  @media (hover: none) and (pointer: coarse) {
+    width: 32px;
+    height: 32px;
+    margin-top: -14px;
+  }
+  border: 0;
+
+  ${groupIdToSliderColors(props)}
+
+  --to-center: clamp(0%, calc(var(--value) * 2), 100%);
+  --from-center: clamp(0%, calc((var(--value) - 50%) * 2), 100%);
+
+  background-color: color-mix(
+    in srgb,
+    color-mix(in srgb, var(--left) calc(100% - var(--to-center)), var(--center) var(--to-center))
+      calc(100% - var(--from-center)),
+    var(--right) var(--from-center)
+  );
+`
+
 export const RangeWrap = styled.div<{ $groupId: string }>`
   @media (hover: hover) and (pointer: fine) {
     /* display: none; */
@@ -163,6 +192,9 @@ export const RangeWrap = styled.div<{ $groupId: string }>`
 
   --card-color-maybe: var(--color-card-3);
   --line-maybe: color-mix(in srgb, var(--card-color-maybe) 15%, #fff);
+
+  --card-color-others: var(--color-card-7);
+  --line-others: color-mix(in srgb, var(--card-color-others) 15%, #fff);
 
   margin-top: 16px;
   display: flex;
@@ -204,71 +236,72 @@ export const RangeWrap = styled.div<{ $groupId: string }>`
     height: 32px;
     background: transparent;
     cursor: pointer;
-
+    &::-moz-range-track {
+      height: 3px;
+      border-radius: 999px;
+      ${groupIdToTrackColors}
+    }
     &::-webkit-slider-runnable-track {
       height: 3px;
       border-radius: 999px;
-
-      background-image: linear-gradient(
-        to right,
-        var(--line-going),
-        var(--card-color-going),
-        #fff,
-        var(--card-color-maybe),
-        var(--line-maybe)
-      );
+      ${groupIdToTrackColors}
     }
-
+    &::-moz-range-thumb {
+      ${thumb}
+    }
     &::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      margin-top: -10px;
-      border-radius: 50%;
-      width: 24px;
-      height: 24px;
-      @media (hover: none) and (pointer: coarse) {
-        width: 32px;
-        height: 32px;
-        margin-top: -14px;
-      }
-      border: 0;
-
-      ${groupIdToSliderColors}
-
-      --to-center: clamp(0%, calc(var(--value) * 2), 100%);
-      --from-center: clamp(0%, calc((var(--value) - 50%) * 2), 100%);
-
-      background-color: color-mix(
-        in srgb,
-        color-mix(
-            in srgb,
-            var(--left) calc(100% - var(--to-center)),
-            var(--center) var(--to-center)
-          )
-          calc(100% - var(--from-center)),
-        var(--right) var(--from-center)
-      );
+      ${thumb}
     }
   }
-`;
+`
 
 function groupIdToSliderColors({ $groupId: groupId }) {
   const colors = {
     going: "var(--card-color-going)",
     sydney: "var(--card-color-public)",
     maybe: "var(--card-color-maybe)",
-  };
+    others: "var(--card-color-others)",
+  }
 
   let center = groupId,
-    [{ id: left }, { id: right }] = otherGroupSwitch(groupId);
-  left = colors[left];
-  center = colors[center];
-  right = colors[right];
+    [{ id: left }, { id: right }] = otherGroupSwitch(groupId)
+
+  left = colors[left]
+  center = colors[center]
+  right = colors[right]
+
+  if (groupId === "others") {
+    center = colors.maybe
+  }
 
   return css`
     --left: ${left};
     --center: ${center};
     --right: ${right};
-  `;
-};
+  `
+}
 
+function groupIdToTrackColors({ $groupId: groupId }) {
+  if (groupId === "others") {
+    return css`
+      background-image: linear-gradient(
+        to right,
+        var(--line-going),
+        var(--card-color-going),
+        #fff,
+        var(--card-color-others),
+        var(--line-others)
+      );
+    `
+  }
+  return css`
+    background-image: linear-gradient(
+      to right,
+      var(--line-going),
+      var(--card-color-going),
+      #fff,
+      var(--card-color-maybe),
+      var(--line-maybe)
+    );
+  `
+}

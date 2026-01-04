@@ -23,19 +23,41 @@ export async function saveUserGigs(state) {
 export function makeUserGigs(
   events,
   userActivity: { eventId: string; groupId: string }[],
-  attendanceSummary: { status: string; count: number }[]
+  allAttendance: {
+    userId: any
+    eventId: any
+    gigId: any
+    status: any
+    community: any
+  }[],
+  gigUser
 ) {
-  return events.reduce(
-    (a, gig) => {
-      const group = userActivity.find(({ eventId }) => gig._id === eventId)?.groupId || "sydney"
+  const userObjectId = gigUser._id,
+    otherAttendance = allAttendance.filter(({ userId }) => userId !== userObjectId),
+    result = events.reduce(
+      (a, gig) => {
+        let attendedByUser = userActivity.find(({ eventId }) => gig._id === eventId),
+          attendedByOthers = otherAttendance.find(({ eventId }) => gig._id === eventId)
 
-      a[group].data.push(gig)
-      return a
-    },
-    {
-      going: { name: "Going", data: [] }, //, attendanceCount: 0 },
-      maybe: { name: "Maybe", data: [] }, //, attendanceCount: 0 },
-      sydney: { name: "Sydney", data: [] }, //, attendanceCount: 0 },
-    }
-  )
+        let group = "sydney"
+        if (attendedByUser) {
+          group = attendedByUser.groupId
+        } else if (attendedByOthers) {
+          group = "others"
+        }
+
+        a[group].data.push(gig)
+
+        return a
+      },
+      {
+        going: { name: "Going", data: [] },
+        maybe: { name: "Maybe", data: [] },
+        sydney: { name: "Sydney", data: [] },
+        others: { name: "Others", data: [] },
+      }
+    )
+  console.log(otherAttendance)
+
+  return result
 }

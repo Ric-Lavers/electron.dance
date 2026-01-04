@@ -2,26 +2,42 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import * as S from "./groups.style";
 
-export const Group = ({ id, title, colorNumber = 6, count = 5, dragging = false, double = false, children }) => {
-  const { expanded, setExpanded } = useContext(GroupCTX),
-    open = expanded === id
-
+export const Group = ({ id, title, colorNumber = 6, count, dragging = false, double = false, children }) => {
+  const { attendanceSummary, expanded, setExpanded } = useContext(GroupCTX),
+    open = expanded === id,
+    totalAttendance = attendanceSummary.reduce((a, c) => a + c.count, 0)
+  if (double) {
+    count = count - totalAttendance
+    return (
+      <>
+        <S.DoubleSection id={id} $open={open}>
+          <S.Link onClick={() => setExpanded(id)}>
+            <S.Group $colorNumber={colorNumber} $count={count * 2} className={(dragging && "drag-hover") || ""}>
+              <S.Count className="cards__expander-count">{count}</S.Count>
+              <S.Title className="cards__expander-title">{title + String()}</S.Title>
+            </S.Group>
+          </S.Link>
+          {double && (
+            <S.Link onClick={() => setExpanded(id)}>
+              <S.Group $side="right" $colorNumber={7} $count={count * 2} className={(dragging && "drag-hover") || ""}>
+                <S.Title className="cards__expander-title">others</S.Title>
+                <S.Count className="cards__expander-count">{totalAttendance}</S.Count>
+              </S.Group>
+            </S.Link>
+          )}
+        </S.DoubleSection>
+        {open && <S.Content>{children}</S.Content>}
+      </>
+    )
+  }
   return (
     <S.Section id={id} $open={open}>
       <S.Link onClick={() => setExpanded(id)}>
-        <S.Group $colorNumber={colorNumber} $count={count} className={(dragging && 'drag-hover') || ''}>
+        <S.Group $colorNumber={colorNumber} $count={count} className={(dragging && "drag-hover") || ""}>
           <S.Count className="cards__expander-count">{count}</S.Count>
           <S.Title className="cards__expander-title">{title + String()}</S.Title>
         </S.Group>
       </S.Link>
-      {double && (
-        <S.Link>
-          <S.Group $side="right" $colorNumber={colorNumber} $count={count} className={(dragging && 'drag-hover') || ''}>
-            <S.Title className="cards__expander-title">{title + String()}</S.Title>
-            <S.Count className="cards__expander-count">{count}</S.Count>
-          </S.Group>
-        </S.Link>
-      )}
       {open && <S.Content>{children}</S.Content>}
     </S.Section>
   )
@@ -33,8 +49,9 @@ export const GroupCTX = createContext({
     going: { name: "Going", data: [] },
     maybe: { name: "Maybe", data: [] },
     sydney: { name: "Sydney", data: [] },
+    others: { name: "Others", data: [] },
   },
-  attendanceSummary: [],
+  attendanceSummary: [] as { count: number; status: string }[],
   setExpanded: (_: string) => {},
 })
 

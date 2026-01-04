@@ -113,17 +113,31 @@ export const getAllAttendance = async (community = "sydney") => {
       },
     ])
 
-    return allAttendance.map(mapAttendance)
+    return JSON.parse(JSON.stringify(allAttendance.map(mapAttendance)))
   } catch (error) {
     console.log("erro.updateUserGigs", error)
+    return []
   }
 }
 
-export const getAttendanceSummary = async (from, community = "sydney") => {
+export const getOthersAttendanceSummary = async (
+  from,
+  community = "sydney"
+): Promise<{ status: "going" | "maybe"; count: number }[]> => {
+  let jar = await cookies(),
+    userId: string | null | undefined = jar.get("userId")?.value
   await connectToDatabase()
+
   try {
+    userId = (await models.User.findOne({ id: userId }))?._id
+    let usersGigs = await models.Attendance.find({ userId })
     //TODO make communities
     let attendanceSummary = await models.Attendance.aggregate([
+      {
+        $match: {
+          eventId: { $nin: usersGigs.map((_) => _.eventId) },
+        },
+      },
       {
         $lookup: {
           from: "events",
@@ -162,6 +176,7 @@ export const getAttendanceSummary = async (from, community = "sydney") => {
     return attendanceSummary
   } catch (error) {
     console.log("error attendanceSummary", error)
+    return []
   }
 }
 

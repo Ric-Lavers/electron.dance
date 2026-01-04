@@ -13,6 +13,7 @@ export const Section = styled.section<{ $open: boolean }>`
   scroll-snap-type: x proximity;
   scroll-behavior: smooth;
   scrollbar-width: none;
+
   ${({ $open }) =>
     $open
       ? css`
@@ -21,6 +22,22 @@ export const Section = styled.section<{ $open: boolean }>`
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
+        `
+      : css`
+          --content-visibility: hidden;
+        `};
+`
+export const DoubleSection = styled(Section)`
+  ${({ $open }) =>
+    $open
+      ? css`
+          --content-visibility: visible;
+          min-height: fit-content;
+          display: flex;
+          flex-direction: row;
+          button {
+            width: 50%;
+          }
         `
       : css`
           --content-visibility: hidden;

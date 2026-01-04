@@ -6,7 +6,7 @@ import { GroupS_CTX } from "./_components/CardGroups";
 import { EventsHeader } from "./_components/Header";
 import TwoSectionDnD from "./_components/DemoDnD";
 
-import { getAllAttendance, getActiveUser, getGigs, getAttendanceSummary } from "../api/_lib/actions/user"
+import { getAllAttendance, getActiveUser, getGigs, getOthersAttendanceSummary } from "../api/_lib/actions/user"
 import { redirect } from "next/navigation"
 import { makeUserGigs } from "./_utils/localStorage"
 
@@ -18,7 +18,7 @@ const Events = async ({ searchParams }) => {
     events = await getGigs(userId, startOfToday()),
     gigUser = await getActiveUser(userId),
     allAttendance = await getAllAttendance(),
-    attendanceSummary = await getAttendanceSummary(startOfToday())
+    attendanceSummary = await getOthersAttendanceSummary(startOfToday())
 
   if (attempts >= 3) {
     throw Error()
@@ -27,7 +27,7 @@ const Events = async ({ searchParams }) => {
     redirect("/api/user?a=" + (attempts || 0))
   }
 
-  const gigs = makeUserGigs(events, gigUser.gigs, attendanceSummary)
+  const gigs = makeUserGigs(events, gigUser.gigs, allAttendance, gigUser)
 
   return (
     <>
@@ -37,7 +37,7 @@ const Events = async ({ searchParams }) => {
       <GroupS_CTX gigs={gigs} attendanceSummary={attendanceSummary}>
         <TwoSectionDnD gigs={gigs} />
       </GroupS_CTX>
-      {/* <pre>{JSON.stringify(attendanceSummary, null, 2)}</pre> */}
+      {/* <pre>{JSON.stringify(gigs, null, 2)}</pre> */}
     </>
   )
 }
