@@ -57,7 +57,6 @@ export function makeUserGigs(
         others: { name: "Others", data: [] },
       }
     )
-  console.log(otherAttendance)
 
   return result
 }
