@@ -1,10 +1,10 @@
-import { startOfToday } from 'date-fns'
-import { NextRequest, NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
-import { connectToDatabase } from '@/db/mongo/connect'
-import Event from '@/db/mongo/models/event'
-import User from '@/db/mongo/models/user'
-import { Schema } from 'mongoose'
+import { startOfToday } from "date-fns"
+import { NextRequest, NextResponse } from "next/server"
+import { cookies } from "next/headers"
+import { connectToDatabase } from "@/db/mongo/connect"
+import Event from "@/db/mongo/models/event"
+import User from "@/db/mongo/models/user"
+import { Schema } from "mongoose"
 
 export async function POST(req: NextRequest) {
   try {
@@ -27,8 +27,8 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, data: event }, { status: 201 })
   } catch (error) {
-    console.error('Error creating event:', error)
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    console.error("Error creating event:", error)
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
   }
 }
 

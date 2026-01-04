@@ -1,4 +1,4 @@
-import * as S from './header.style'
+import * as S from "./header.style"
 
 export const EventsHeader = () => {
   return (

@@ -1,4 +1,4 @@
-import { model, models, Schema } from 'mongoose'
+import { model, models, Schema } from "mongoose"
 
 export const AlertSchema = new Schema(
   {
@@ -12,4 +12,4 @@ export const AlertSchema = new Schema(
 
 AlertSchema.index({ createdAt: 1 }, { expireAfterSeconds: 86400 })
 //@ts-ignore
-export default models.Alert || model('Alert', AlertSchema)
+export default models.Alert || model("Alert", AlertSchema)

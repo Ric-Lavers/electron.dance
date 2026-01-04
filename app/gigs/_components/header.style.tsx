@@ -1,5 +1,5 @@
-'use client'
-import styled from 'styled-components'
+"use client"
+import styled from "styled-components"
 
 export const Header = styled.header`
   display: flex;
@@ -18,7 +18,7 @@ export const Title = styled.h1`
   position: relative;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
 
     block-size: 1.5px;

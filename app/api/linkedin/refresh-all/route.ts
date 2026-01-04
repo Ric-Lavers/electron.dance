@@ -1,11 +1,11 @@
-import { NextResponse } from 'next/server'
-import { me, refreshToken } from '@/services/models/refreshToken'
+import { NextResponse } from "next/server"
+import { me, refreshToken } from "@/services/models/refreshToken"
 
 export async function GET(request: Request) {
-  const host = await request.headers.get('host')
+  const host = await request.headers.get("host")
 
   try {
-    const Refresh = await refreshToken.init({ phone: me, type: 'linkedIn' })
+    const Refresh = await refreshToken.init({ phone: me, type: "linkedIn" })
 
     const tokenListData = await Refresh.refreshManyTokens()
     if (tokenListData.length) {
@@ -17,13 +17,13 @@ export async function GET(request: Request) {
       throw Error("Linked token is expired or doesn't exist")
     }
     //send a sms when its not valid as they owner will need to log in
-    const message = "Linked token is expired or doesn't exist; \ngo to https://" + host + '/api/linkedin/auth'
+    const message = "Linked token is expired or doesn't exist; \ngo to https://" + host + "/api/linkedin/auth"
     await Refresh.sendSms(message)
     await Refresh.setAlertSent()
 
     return new Response(message, { status: 427 })
   } catch (error: any) {
-    const message = 'error refreshing linkedin token' + error?.message || error
+    const message = "error refreshing linkedin token" + error?.message || error
     console.log(message)
     return new Response(message, { status: 500 })
   }

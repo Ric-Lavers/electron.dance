@@ -1,16 +1,16 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server"
 
-import { connectToDatabase } from '@/db/mongo/connect'
-import Count from '@/db/mongo/models/count'
+import { connectToDatabase } from "@/db/mongo/connect"
+import Count from "@/db/mongo/models/count"
 
-export const dynamic = 'force-dynamic'
-const id = 'page-views'
+export const dynamic = "force-dynamic"
+const id = "page-views"
 export async function GET() {
   try {
     return countAdd()
   } catch (error) {
-    console.error('Error processing:', error)
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    console.error("Error processing:", error)
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
   }
 }
 export async function countAdd() {
@@ -24,14 +24,14 @@ export async function countAdd() {
   } else {
     count = await Count.create({
       id,
-      name: 'Page views',
+      name: "Page views",
       count: 0,
     })
   }
 
   return NextResponse.json(
     {
-      message: 'processed successfully',
+      message: "processed successfully",
       count: count.count,
     },
     { status: 200 }

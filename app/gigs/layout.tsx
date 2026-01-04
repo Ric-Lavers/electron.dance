@@ -1,13 +1,13 @@
-import React from "react";
-import styled from "styled-components";
-import StyledComponentsRegistry from "../_providers/style-registery";
-import ClientProviders from "../_providers/ClientProviders";
+import React from "react"
+import styled from "styled-components"
+import StyledComponentsRegistry from "../_providers/style-registery"
+import ClientProviders from "../_providers/ClientProviders"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <main
       style={{
-        backgroundColor: '#fff',
+        backgroundColor: "#fff",
       }}
     >
       <StyledComponentsRegistry>

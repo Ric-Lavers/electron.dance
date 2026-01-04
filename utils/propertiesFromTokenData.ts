@@ -1,4 +1,4 @@
-import { TokenProvider } from '@/app/_providers/UserTokensProvider'
+import { TokenProvider } from "@/app/_providers/UserTokensProvider"
 
 export const propertiesFromTokenData = (provider: TokenProvider, data) => {
   let email: string | undefined,
@@ -7,25 +7,25 @@ export const propertiesFromTokenData = (provider: TokenProvider, data) => {
     userDetailsProvider: string | undefined
 
   switch (provider) {
-    case 'spotify':
+    case "spotify":
       email = data.email
       name = data.display_name || data.id
       avatarUrl = Array.isArray(data.images) ? data.images[0]?.url : undefined
       break
 
-    case 'linkedIn':
+    case "linkedIn":
       email = data.email
       name = data.firstName || data.lastName
       avatarUrl = data.picture
       break
 
-    case 'google':
+    case "google":
       email = data.email
-      name = data.given_name + ' ' + data.family_name
+      name = data.given_name + " " + data.family_name
       avatarUrl = data.picture
       break
 
-    case 'calendly':
+    case "calendly":
       email = data.email
       name = data.name
       avatarUrl = data.avatar_url

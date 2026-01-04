@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import { io } from "socket.io-client";
-import * as S from "./now-playing.styles";
+import React, { useEffect, useRef, useState } from "react"
+import { io } from "socket.io-client"
+import * as S from "./now-playing.styles"
 
 interface SpotifyNowPlayingProps {
-  item?: SpotifyApi.CurrentlyPlayingObject["item"];
-  isPlaying: boolean;
-  isActive: boolean;
+  item?: SpotifyApi.CurrentlyPlayingObject["item"]
+  isPlaying: boolean
+  isActive: boolean
 }
 
 export const SpotifyNowPlayingStream = () => {
@@ -13,16 +13,16 @@ export const SpotifyNowPlayingStream = () => {
     [topTracks, setTopTrack] = useState<SpotifyApi.UsersTopTracksResponse>(),
     topTrack = topTracks?.items?.[0],
     isActive = Boolean(data?.item),
-    item = isActive ? data!.item : topTrack;
+    item = isActive ? data!.item : topTrack
 
   useEffect(() => {
     // Connect to your now-playing server (adjust URL for production)
-    const socket = io("https://now-playing-39fz.onrender.com");
+    const socket = io("https://now-playing-39fz.onrender.com")
 
     // Listen for playback updates
     socket.on("spotify:currently-playing", (data) => {
-      setTrack(data);
-    });
+      setTrack(data)
+    })
 
     // Trigger streaming once connected (optional: do this on mount or via user action)
     fetch("https://now-playing-39fz.onrender.com/spotify/stream", {
@@ -35,35 +35,22 @@ export const SpotifyNowPlayingStream = () => {
         fetch("api/spotify/top")
           .then((r) => r.json())
           .then(
-            (tracks) =>
-              new Promise<SpotifyApi.UsersTopTracksResponse>((res) =>
-                setTimeout(() => res(tracks), 8_000)
-              )
+            (tracks) => new Promise<SpotifyApi.UsersTopTracksResponse>((res) => setTimeout(() => res(tracks), 8_000))
           )
           .then((tracks) => setTopTrack(tracks))
 
-          .catch(() => {});
-      });
+          .catch(() => {})
+      })
     // Cleanup on unmount
     return () => {
-      socket.disconnect();
-    };
-  }, []);
+      socket.disconnect()
+    }
+  }, [])
 
-  return (
-    <SpotifyNowPlaying
-      item={item}
-      isActive={Boolean(data?.item)}
-      isPlaying={Boolean(data?.isPlaying)}
-    />
-  );
-};
+  return <SpotifyNowPlaying item={item} isActive={Boolean(data?.item)} isPlaying={Boolean(data?.isPlaying)} />
+}
 
-const SpotifyNowPlaying: React.FC<SpotifyNowPlayingProps> = ({
-  item,
-  isActive,
-  isPlaying,
-}) => {
+const SpotifyNowPlaying: React.FC<SpotifyNowPlayingProps> = ({ item, isActive, isPlaying }) => {
   return (
     <S.Container $isActive={isActive} $isPlaying={isPlaying}>
       {(isActive || Boolean(item)) && (
@@ -83,47 +70,37 @@ const SpotifyNowPlaying: React.FC<SpotifyNowPlayingProps> = ({
         )}
 
         <S.Spotify height={40} width={40} onClick={openRicProfile} />
-        <S.SpotifyBlack
-          height={40}
-          width={40}
-          on={isActive}
-          onClick={openRicProfile}
-        />
+        <S.SpotifyBlack height={40} width={40} on={isActive} onClick={openRicProfile} />
       </S.NowPlayingContainer>
     </S.Container>
-  );
-};
+  )
+}
 function openRicProfile() {
-  window.open(
-    "https://open.spotify.com/user/ric-lavers?si=f9f171d3c07f41d0",
-    "_blank"
-  );
+  window.open("https://open.spotify.com/user/ric-lavers?si=f9f171d3c07f41d0", "_blank")
 }
 
-function getName(
-  item: Exclude<SpotifyApi.CurrentlyPlayingObject["item"], null>
-) {
+function getName(item: Exclude<SpotifyApi.CurrentlyPlayingObject["item"], null>) {
   if ("show" in item && item.show) {
-    return item.show.name;
+    return item.show.name
   }
 
   if ("artists" in item && item.artists) {
-    return item.artists.map((a) => a.name).join(", ");
+    return item.artists.map((a) => a.name).join(", ")
   }
 
-  return "";
+  return ""
 }
 //@ts-ignore
 function getImage(item) {
   return item.album && item.album.images && item.album.images.length > 0
     ? item?.album.images[0].url
-    : item?.images?.[0]?.url || null;
+    : item?.images?.[0]?.url || null
 }
 
 //@ts-ignore
 const TrackInfo = ({ title, name }) => {
   const titleRef = useRef<HTMLParagraphElement>(null),
-    nameRef = useRef<HTMLParagraphElement>(null);
+    nameRef = useRef<HTMLParagraphElement>(null)
 
   return (
     <S.TrackInfo>
@@ -134,8 +111,8 @@ const TrackInfo = ({ title, name }) => {
         {name}
       </S.Marquee>
     </S.TrackInfo>
-  );
-};
+  )
+}
 
 // const Play = () => (
 //   <svg viewBox="0 0 16 16" fill="white">
@@ -153,4 +130,4 @@ const TrackInfo = ({ title, name }) => {
 //   </svg>
 // )
 
-export default SpotifyNowPlaying;
+export default SpotifyNowPlaying

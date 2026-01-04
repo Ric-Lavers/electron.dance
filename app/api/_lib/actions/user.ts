@@ -1,4 +1,4 @@
-'use server'
+"use server"
 import { models, Schema } from "mongoose"
 import { connectToDatabase } from "@/db/mongo/connect"
 import { cookies } from "next/headers"
@@ -20,7 +20,7 @@ export async function createUser() {
   const jar = await cookies()
   await connectToDatabase()
   let user = await models.User.create({})
-  jar.set("userId", user.id),
+  ;(jar.set("userId", user.id),
     {
       name: "userId",
       value: user.id,
@@ -28,7 +28,7 @@ export async function createUser() {
       maxAge: 60 * 60 * 24 * 7 * 52, //  1 year
       path: "/",
       sameSite: "lax",
-    }
+    })
   return user
 }
 

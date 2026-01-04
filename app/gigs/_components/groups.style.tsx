@@ -1,5 +1,5 @@
-"use client";
-import styled, { css } from "styled-components";
+"use client"
+import styled, { css } from "styled-components"
 
 export const Section = styled.section<{ $open: boolean }>`
   padding: 8px 0;
@@ -77,7 +77,7 @@ export const Link = styled.button`
   cursor: pointer;
 `
 
-export const Group = styled.div<{ $count: number; $colorNumber: number; $side?: 'right' }>`
+export const Group = styled.div<{ $count: number; $colorNumber: number; $side?: "right" }>`
   color: #000;
   width: 100%;
 
@@ -124,7 +124,7 @@ export const Group = styled.div<{ $count: number; $colorNumber: number; $side?: 
   }
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     block-size: 3px;
 
@@ -138,8 +138,8 @@ export const Group = styled.div<{ $count: number; $colorNumber: number; $side?: 
     animation: linePulse 1.1s ease-in-out infinite;
   }
   &::after {
-    content: '';
-    ${({ $side }) => $side === 'right' && 'right: 0;'}
+    content: "";
+    ${({ $side }) => $side === "right" && "right: 0;"}
     position: absolute;
     border-radius: 99px;
 
@@ -155,7 +155,7 @@ export const Group = styled.div<{ $count: number; $colorNumber: number; $side?: 
     background-image: linear-gradient(to right, var(--card-color), var(--column-color) 80%);
   }
   ${({ $side }) =>
-    $side === 'right' &&
+    $side === "right" &&
     css`
       justify-content: flex-end;
       &::after {
@@ -173,10 +173,10 @@ export const Count = styled.span`
 
   display: grid;
   place-content: center;
-`;
+`
 export const Title = styled.h2`
   text-transform: uppercase;
   font-size: 13px;
   font-weight: bolder;
   z-index: 1;
-`;
+`

@@ -1,4 +1,4 @@
-import { model, Schema, InferSchemaType, HydratedDocument, models, Model } from 'mongoose'
+import { model, Schema, InferSchemaType, HydratedDocument, models, Model } from "mongoose"
 
 export const EventSchema = new Schema(
   {
@@ -29,6 +29,6 @@ export type EventDoc = EventSchemaType & {
 export type EventDocument = HydratedDocument<EventDoc>
 
 //@ts-ignore
-const EventModel = (models.Event as Model<EventDoc>) || model<EventDoc>('Event', EventSchema)
+const EventModel = (models.Event as Model<EventDoc>) || model<EventDoc>("Event", EventSchema)
 
 export default EventModel

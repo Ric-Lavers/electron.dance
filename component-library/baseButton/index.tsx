@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components"
 
 export const BaseButton = styled.button`
   display: flex;
@@ -13,8 +13,11 @@ export const BaseButton = styled.button`
   word-wrap: nowrap;
   height: 40px;
   min-width: fit-content;
-  transition: color 200ms ease-in, background-color 200ms ease-in,
-    border-color 200ms ease-in, fill 200ms ease-in;
+  transition:
+    color 200ms ease-in,
+    background-color 200ms ease-in,
+    border-color 200ms ease-in,
+    fill 200ms ease-in;
 
   &:hover {
     text-decoration: none;
@@ -31,4 +34,4 @@ export const BaseButton = styled.button`
     cursor: auto;
     pointer-events: none;
   }
-`;
+`

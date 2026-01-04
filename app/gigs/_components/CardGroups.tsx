@@ -1,6 +1,6 @@
-"use client";
-import { createContext, useContext, useEffect, useState } from "react";
-import * as S from "./groups.style";
+"use client"
+import { createContext, useContext, useEffect, useState } from "react"
+import * as S from "./groups.style"
 
 export const Group = ({ id, title, colorNumber = 6, count, dragging = false, double = false, children }) => {
   const { attendanceSummary, expanded, setExpanded } = useContext(GroupCTX),

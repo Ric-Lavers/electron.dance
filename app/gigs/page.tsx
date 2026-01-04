@@ -1,10 +1,10 @@
-import { startOfToday } from "date-fns";
-import { cookies } from "next/headers";
+import { startOfToday } from "date-fns"
+import { cookies } from "next/headers"
 
-import { AddEvent } from "./_components/AddEvent";
-import { GroupS_CTX } from "./_components/CardGroups";
-import { EventsHeader } from "./_components/Header";
-import TwoSectionDnD from "./_components/DemoDnD";
+import { AddEvent } from "./_components/AddEvent"
+import { GroupS_CTX } from "./_components/CardGroups"
+import { EventsHeader } from "./_components/Header"
+import TwoSectionDnD from "./_components/DemoDnD"
 
 import { getAllAttendance, getActiveUser, getGigs, getOthersAttendanceSummary } from "../api/_lib/actions/user"
 import { redirect } from "next/navigation"
@@ -41,4 +41,4 @@ const Events = async ({ searchParams }) => {
     </>
   )
 }
-export default Events;
+export default Events

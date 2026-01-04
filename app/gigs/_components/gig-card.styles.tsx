@@ -1,16 +1,16 @@
-"use client";
-import styled, { css, keyframes } from "styled-components";
-import { otherGroupSwitch } from "./GigCard";
+"use client"
+import styled, { css, keyframes } from "styled-components"
+import { otherGroupSwitch } from "./GigCard"
 
 export const Day = styled.h3`
   height: 24px;
   position: sticky;
   left: 0;
   width: fit-content;
-`;
+`
 export const DayNull = styled.div`
   height: 24px;
-`;
+`
 
 export const Item = styled.li`
   scroll-snap-align: start;
@@ -26,7 +26,7 @@ export const Item = styled.li`
   &::marker {
     display: none;
   }
-`;
+`
 export const Card = styled.div`
   min-height: 88px;
   height: 100%;
@@ -44,7 +44,7 @@ export const Card = styled.div`
   time {
     margin: 0;
   }
-`;
+`
 export const Title = styled.h3`
   grid-area: title;
   font-size: 1.1em;
@@ -52,11 +52,11 @@ export const Title = styled.h3`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-`;
+`
 export const Support = styled.p`
   grid-area: support;
   font-size: 0.75em;
-`;
+`
 
 export const Row = styled.div`
   display: flex;
@@ -68,8 +68,8 @@ export const Row = styled.div`
   p {
     font-size: 0.75em;
   }
-`;
-export const Time = styled.time``;
+`
+export const Time = styled.time``
 export const Location = styled.div`
   /* all: unset; */
   display: inline;
@@ -83,7 +83,7 @@ export const Location = styled.div`
     text-decoration: underline;
     cursor: pointer;
   }
-`;
+`
 
 const leftToRight = (width) => keyframes`
 
@@ -105,7 +105,7 @@ const leftToRight = (width) => keyframes`
   100% {
     transform: translateX(0);
   }
-`;
+`
 
 export const Marquee = styled.a<{ $width: number }>`
   display: inline;
@@ -119,17 +119,16 @@ export const Marquee = styled.a<{ $width: number }>`
   ${({ $width }) =>
     $width > 150 &&
     css`
-      animation: ${leftToRight($width)}
-        ${Math.min(20, Math.max(6, Math.round($width / 25)))}s linear infinite;
+      animation: ${leftToRight($width)} ${Math.min(20, Math.max(6, Math.round($width / 25)))}s linear infinite;
     `}
-`;
+`
 
 export const Organiser = styled.p`
   font-size: 0.75em;
   width: 100%;
   padding: 0 4px;
   text-align: right;
-`;
+`
 const fadeOut = keyframes`
   from {
     opacity: 1;
@@ -139,7 +138,7 @@ const fadeOut = keyframes`
     opacity: 0;
     transform: translateY(4px);
   }
-`;
+`
 const shrink = keyframes`
  from {
       transform: scale(1);
@@ -147,8 +146,7 @@ const shrink = keyframes`
     to {
       transform: scale(0.55);
     }
-    `;
-
+    `
 
 const thumb = (props) => css`
   -webkit-appearance: none;

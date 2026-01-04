@@ -1,15 +1,15 @@
-import { NextRequest, NextResponse } from 'next/server'
-import Token from '@/db/mongo/models/token'
-import { UserDoc } from '@/db/mongo/models/user'
-import { UserRegistrator } from '@/services/models/userRegistration'
-import { setUserId } from '@/services/api.utils'
-import { exchangeGoogleinCodeForTokens } from '@/services/google/exchangeCodeForTokens'
+import { NextRequest, NextResponse } from "next/server"
+import Token from "@/db/mongo/models/token"
+import { UserDoc } from "@/db/mongo/models/user"
+import { UserRegistrator } from "@/services/models/userRegistration"
+import { setUserId } from "@/services/api.utils"
+import { exchangeGoogleinCodeForTokens } from "@/services/google/exchangeCodeForTokens"
 
 export async function GET(req: NextRequest) {
   try {
     const query = Object.fromEntries(req.nextUrl.searchParams),
       url = new URL(req.url),
-      redirect_uri = url.origin + '/api/google/callback',
+      redirect_uri = url.origin + "/api/google/callback",
       created_at = Date.now()
 
     const data = await exchangeGoogleinCodeForTokens(query.code as string, redirect_uri),
@@ -17,26 +17,26 @@ export async function GET(req: NextRequest) {
 
     const userInfo = await fetch(`https://openidconnect.googleapis.com/v1/userinfo`, {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${access_token}`,
       },
     }).then((res) => res.json())
 
     // we need to know if the user exists
     let userUri = userInfo.sub,
-      stateString = decodeURIComponent(query.state || ''),
+      stateString = decodeURIComponent(query.state || ""),
       params = new URLSearchParams(stateString),
-      origin = params.get('origin'),
-      userId = params.get('userId')
-    origin = origin === 'undefined' ? '' : origin
+      origin = params.get("origin"),
+      userId = params.get("userId")
+    origin = origin === "undefined" ? "" : origin
 
     const UserReg = await UserRegistrator.init(userId)
     const exisitingUser = UserReg.user
 
     const googleToken = await Token.findOneAndUpdate(
-      { userUri, provider: 'google' },
+      { userUri, provider: "google" },
       {
-        provider: 'google',
+        provider: "google",
         userUri,
         userId,
         accessToken: access_token,
@@ -56,15 +56,15 @@ export async function GET(req: NextRequest) {
       user = exisitingUserWithToken
       //no actions required, token would have updated automatically
     } else if (exisitingUser) {
-      console.log('exisitingUser -> WithoutToken')
-      user = await UserReg.addTokenToUser(googleToken._id, 'google')
+      console.log("exisitingUser -> WithoutToken")
+      user = await UserReg.addTokenToUser(googleToken._id, "google")
     } else if (userId) {
       // new user with a session id as user id
-      user = await UserReg.createUser(googleToken._id, 'google')
+      user = await UserReg.createUser(googleToken._id, "google")
       console.warn(`Oops, this has the user id cookie, but no user was found in db, userId:${userId}`)
       // throw Error(`Oops, this has the user id cookie, but no user was found in db, userId:${userId}`)
     } else {
-      user = await UserReg.createUser(googleToken._id, 'google')
+      user = await UserReg.createUser(googleToken._id, "google")
     }
     userId = user?.id || null
 
@@ -72,13 +72,13 @@ export async function GET(req: NextRequest) {
       if (userId) {
         await setUserId(userId)
       }
-      console.log('redirecting to ', { origin })
+      console.log("redirecting to ", { origin })
 
       return NextResponse.redirect(origin)
     }
     return NextResponse.json(
       {
-        message: 'Callback processed successfully',
+        message: "Callback processed successfully",
         data: {
           userUri: userInfo.sub,
           accessToken: access_token,
@@ -90,7 +90,7 @@ export async function GET(req: NextRequest) {
       { status: 200 }
     )
   } catch (error) {
-    console.error('Error processing Google callback:', error)
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    console.error("Error processing Google callback:", error)
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
   }
 }

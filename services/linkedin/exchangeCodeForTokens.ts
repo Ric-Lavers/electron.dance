@@ -1,9 +1,9 @@
 export async function exchangeLinkedinCodeForTokens(
   code: string,
-  redirect_uri = 'http://localhost:3000/api/linkedin/callback'
+  redirect_uri = "http://localhost:3000/api/linkedin/callback"
 ) {
   const params = new URLSearchParams({
-    grant_type: 'authorization_code',
+    grant_type: "authorization_code",
     code,
     client_id: process.env.LINKEDIN_CLIENT_ID!,
     client_secret: process.env.LINKEDIN_CLIENT_SECRET!,
@@ -11,15 +11,15 @@ export async function exchangeLinkedinCodeForTokens(
   })
 
   const res = await fetch(`https://www.linkedin.com/oauth/v2/accessToken`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      "Content-Type": "application/x-www-form-urlencoded",
     },
     body: params,
   })
 
   if (!res.ok) throw new Error(`Token exchange failed: ${res.status}`)
   const data = await res.json()
-  console.log('\ntoken recieved\n')
+  console.log("\ntoken recieved\n")
   return data
 }

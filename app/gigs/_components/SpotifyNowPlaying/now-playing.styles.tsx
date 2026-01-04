@@ -1,5 +1,5 @@
-import { SpotifyBlackIcon, SpotifyIcon, theme } from "@/component-library";
-import styled, { css, keyframes } from "styled-components";
+import { SpotifyBlackIcon, SpotifyIcon, theme } from "@/component-library"
+import styled, { css, keyframes } from "styled-components"
 
 const spotifyColors = {
   green: "#1ED760",
@@ -37,28 +37,28 @@ const spotifyColors = {
     --decorative-base: #fff;
     --decorative-subdued: #292929;
   */
-};
+}
 //@ts-ignore
 const info = ({ $isPlaying, $isActive }) => {
   switch (true) {
     case $isPlaying:
       return css`
         content: "right now, I'm listening to ";
-      `;
+      `
     case !$isPlaying && $isActive:
       return css`
         content: "right now, I'm paused on ";
-      `;
+      `
     case !$isActive:
       return css`
         content: "this month, my top track is ";
-      `;
+      `
   }
-};
+}
 
 export const Container = styled.div<{
-  $isActive: boolean;
-  $isPlaying: boolean;
+  $isActive: boolean
+  $isPlaying: boolean
 }>`
   height: 57px;
   display: flex;
@@ -72,10 +72,9 @@ export const Container = styled.div<{
   }
   p,
   h6 {
-    font-family: SpotifyMixUI, "Inter", CircularSp-Arab, CircularSp-Hebr,
-      CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, "Helvetica Neue",
-      helvetica, arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo,
-      "MS Gothic", sans-serif;
+    font-family:
+      SpotifyMixUI, "Inter", CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva,
+      "Helvetica Neue", helvetica, arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, "MS Gothic", sans-serif;
     font-weight: 400;
     font-size: 13px;
     line-height: 13px;
@@ -108,7 +107,7 @@ export const Container = styled.div<{
       }
     }
   }
-`;
+`
 
 export const NowPlayingContainer = styled.div<{ $isPlaying: boolean }>`
   display: flex;
@@ -139,11 +138,7 @@ export const NowPlayingContainer = styled.div<{ $isPlaying: boolean }>`
           justify-content: space-between;
           /* background: ${spotifyColors.background}; */
           background-image: linear-gradient(#121212 0px, #222 70.06%);
-          background-image: linear-gradient(
-            #2a2a2a 0px,
-            #1f1f1f 70.06%,
-            ${spotifyColors.backgroundBase} 100%
-          );
+          background-image: linear-gradient(#2a2a2a 0px, #1f1f1f 70.06%, ${spotifyColors.backgroundBase} 100%);
 
           cursor: default;
 
@@ -158,7 +153,7 @@ export const NowPlayingContainer = styled.div<{ $isPlaying: boolean }>`
             justify-content: flex-end;
           }
         `}
-`;
+`
 export const Info = styled.div`
   display: flex;
   align-items: center;
@@ -184,7 +179,7 @@ export const Info = styled.div`
       opacity: 1;
     }
   }
-`;
+`
 export const AlbumImg = styled.img`
   width: 40px;
   max-height: 40px;
@@ -210,7 +205,7 @@ export const TrackInfo = styled.div`
   }
 
   overflow: hidden;
-`;
+`
 //@ts-ignore
 const leftToRight = (width) => keyframes`
 
@@ -230,11 +225,11 @@ const leftToRight = (width) => keyframes`
     transform: translateX(0);
   }
 
-`;
+`
 export const Marquee = styled.p<{
-  subdued?: boolean;
-  $width: number;
-  $on?: boolean;
+  subdued?: boolean
+  $width: number
+  $on?: boolean
 }>`
   ${({ subdued }) => subdued && `color: ${spotifyColors.textSubdued};`}
 
@@ -251,10 +246,9 @@ export const Marquee = styled.p<{
     $on &&
     $width > 150 &&
     css`
-      animation: ${leftToRight($width)}
-        ${Math.min(30, Math.max(6, Math.round($width / 25)))}s linear infinite;
+      animation: ${leftToRight($width)} ${Math.min(30, Math.max(6, Math.round($width / 25)))}s linear infinite;
     `}
-`;
+`
 
 export const Spotify = styled(SpotifyIcon)`
   width: 40px;
@@ -262,7 +256,7 @@ export const Spotify = styled(SpotifyIcon)`
   height: 40px;
   min-height: 40px;
   cursor: pointer;
-`;
+`
 export const SpotifyBlack = styled(SpotifyBlackIcon)`
   width: 40px;
   min-width: 40px;
@@ -277,23 +271,25 @@ export const SpotifyBlack = styled(SpotifyBlackIcon)`
   position: absolute;
   top: 8px;
   right: 9px;
-  transition: opacity 2s ease-out, transform 2s ease-out;
+  transition:
+    opacity 2s ease-out,
+    transform 2s ease-out;
   opacity: ${({ on }) => (on ? 0 : 1)};
   transform: ${({ on }) => (on ? "translate(-4px, 2px)" : "translate(0, 0)")};
-`;
+`
 
 export const Controls = styled.div`
   display: flex;
   justify-content: flex-end;
-`;
+`
 export const H6 = styled.h6`
   position: absolute;
   top: -12px;
-`;
+`
 
 export const GigPreview = styled(NowPlayingContainer)`
   animation: none;
 
   width: 215px;
   cursor: grab;
-`;
+`

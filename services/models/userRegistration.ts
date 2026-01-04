@@ -1,7 +1,7 @@
-import { connectToDatabase } from '@/db/mongo/connect'
-import { ObjectId } from 'mongoose'
-import User, { UserDoc } from '@/db/mongo/models/user'
-import { TokenProvider } from '@/app/_providers/UserTokensProvider'
+import { connectToDatabase } from "@/db/mongo/connect"
+import { ObjectId } from "mongoose"
+import User, { UserDoc } from "@/db/mongo/models/user"
+import { TokenProvider } from "@/app/_providers/UserTokensProvider"
 
 export class UserRegistrator {
   user: UserDoc | null
@@ -21,18 +21,18 @@ export class UserRegistrator {
     const [user] = await User.aggregate([
       {
         $lookup: {
-          from: 'tokens', // collection name for Token
-          localField: 'tokens', // array of ObjectId references on User
-          foreignField: '_id',
-          as: 'tokens',
+          from: "tokens", // collection name for Token
+          localField: "tokens", // array of ObjectId references on User
+          foreignField: "_id",
+          as: "tokens",
         },
       },
-      { $unwind: '$tokens' },
-      { $match: { 'tokens.userUri': userUri } },
+      { $unwind: "$tokens" },
+      { $match: { "tokens.userUri": userUri } },
       {
         $group: {
-          _id: '$_id',
-          doc: { $first: '$$ROOT' },
+          _id: "$_id",
+          doc: { $first: "$$ROOT" },
         },
       },
     ])
@@ -53,7 +53,7 @@ export class UserRegistrator {
         { upsert: true }
       )
     } else {
-      throw Error('missing userId')
+      throw Error("missing userId")
     }
   }
   async createUser(tokenObjectId: ObjectId, type: TokenProvider) {

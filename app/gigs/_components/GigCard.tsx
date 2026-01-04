@@ -1,10 +1,10 @@
-import { format } from "date-fns";
-import * as S from "./gig-card.styles";
-import GigPreview from "./SpotifyNowPlaying/GigPreview";
-import { draggable } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import { format } from "date-fns"
+import * as S from "./gig-card.styles"
+import GigPreview from "./SpotifyNowPlaying/GigPreview"
+import { draggable } from "@atlaskit/pragmatic-drag-and-drop/element/adapter"
 
-import { useContext, useEffect, useRef } from "react";
-import { ITEM_DRAG_TYPE, onDropCTX } from "./DemoDnD";
+import { useContext, useEffect, useRef } from "react"
+import { ITEM_DRAG_TYPE, onDropCTX } from "./DemoDnD"
 import { GroupCTX } from "./CardGroups"
 
 export const GigCard = ({ groupId, index, id, title, artists, organiser, location, startDate, url, image }) => {

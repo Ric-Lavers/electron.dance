@@ -1,34 +1,34 @@
-import { NextRequest, NextResponse } from "next/server";
-import { generateEventData } from "../_lib/open-api";
-import { chromium } from "playwright";
-import { connectToDatabase } from "@/db/mongo/connect";
-import Event, { EventDoc } from "@/db/mongo/models/event";
+import { NextRequest, NextResponse } from "next/server"
+import { generateEventData } from "../_lib/open-api"
+import { chromium } from "playwright"
+import { connectToDatabase } from "@/db/mongo/connect"
+import Event, { EventDoc } from "@/db/mongo/models/event"
 
-const SydneyGigGuideURL = "https://sydneymusic.net/gig-guide";
+const SydneyGigGuideURL = "https://sydneymusic.net/gig-guide"
 export async function GET(req: NextRequest) {
   try {
-    await connectToDatabase();
+    await connectToDatabase()
 
-    let gigs = await gigGuideEvents();
-    const result: EventDoc[] = [];
+    let gigs = await gigGuideEvents()
+    const result: EventDoc[] = []
     // gigs = gigs.slice(0, 2)
-    let i = 0;
+    let i = 0
     for (const gig of gigs) {
-      console.log(`processing: ${i++} of ${gigs.length}`);
-      console.log(gig);
+      console.log(`processing: ${i++} of ${gigs.length}`)
+      console.log(gig)
       try {
-        let ç: any = await Event.findOne({ uri: gig.uri });
+        let ç: any = await Event.findOne({ uri: gig.uri })
         if (!ç) {
-          ç = await generateEventData(gig.url, gig);
+          ç = await generateEventData(gig.url, gig)
           await Event.create({
             public: true,
             ...ç,
-          });
+          })
         }
-        result.push(ç);
+        result.push(ç)
       } catch (error) {
-        console.log("ERR0R", error);
-        console.log(JSON.stringify(error));
+        console.log("ERR0R", error)
+        console.log(JSON.stringify(error))
       }
     }
 
@@ -38,47 +38,42 @@ export async function GET(req: NextRequest) {
       result,
 
       { status: 200 }
-    );
+    )
   } catch (error) {
-    console.error(error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
+    console.error(error)
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
   }
 }
 
 async function getContent(ƒ, fallback: any = "") {
   try {
-    return ƒ();
+    return ƒ()
   } catch (error) {
-    console.log(error);
+    console.log(error)
 
-    return fallback;
+    return fallback
   }
 }
 export async function gigGuideEvents() {
-  const browser = await chromium.launch({ headless: true });
-  const page = await browser.newPage();
-  await page.goto(SydneyGigGuideURL, { waitUntil: "networkidle" });
+  const browser = await chromium.launch({ headless: true })
+  const page = await browser.newPage()
+  await page.goto(SydneyGigGuideURL, { waitUntil: "networkidle" })
 
-  const months = page.locator(".guide-month");
+  const months = page.locator(".guide-month")
 
-  const gigs: any = [];
+  const gigs: any = []
   for (const monthIndex of [0, 1]) {
-    const month = months.nth(monthIndex);
+    const month = months.nth(monthIndex)
 
-    const cards = month.locator(".eventcardhost");
-    const count = await cards.count();
+    const cards = month.locator(".eventcardhost")
+    const count = await cards.count()
 
     for (let i = 0; i < count - 1; i++) {
       // process.stdout.write(`scraping: ${i++} of ${count}`)
-      const card = cards.nth(i);
+      const card = cards.nth(i)
 
-      let startDate = await getContent(() =>
-        card.locator("[data-gigstartdate]").getAttribute("data-gigstartdate")
-      );
-      if (!startDate) continue;
+      let startDate = await getContent(() => card.locator("[data-gigstartdate]").getAttribute("data-gigstartdate"))
+      if (!startDate) continue
 
       let uri = await card.locator("[data-gigid]").getAttribute("data-gigid"),
         title = await card.locator(".headliner").textContent(),
@@ -89,10 +84,10 @@ export async function gigGuideEvents() {
           const $ = await card.locator(".supports"),
             count = await $.count(),
             text = count !== 0 ? ((await $.textContent()) as string) : "",
-            artists = text.replace("W/ ", "").split(", ").filter(Boolean);
-          return artists;
+            artists = text.replace("W/ ", "").split(", ").filter(Boolean)
+          return artists
         }, []),
-        artists = support;
+        artists = support
 
       gigs.push({
         uri,
@@ -101,15 +96,15 @@ export async function gigGuideEvents() {
         title,
         location,
         artists,
-      });
-      console.log(`Complete: scraping: ${i++} of ${count}`);
+      })
+      console.log(`Complete: scraping: ${i++} of ${count}`)
       // process with month context
     }
   }
 
   // let html = await page.content();
 
-  await browser.close();
+  await browser.close()
 
-  return gigs;
+  return gigs
 }

@@ -1,10 +1,10 @@
-'use client'
-import styled from 'styled-components'
+"use client"
+import styled from "styled-components"
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
+`
 export const AddForm = styled.form`
   width: 100%;
   max-width: 600px;
@@ -13,10 +13,11 @@ export const AddForm = styled.form`
   margin-bottom: 24px;
   padding: 24px;
   border: 1px solid var(--color-selected-dark);
-  box-shadow: oklch(0 0 0 / 0.05) 0px 0px 0px 1px,
+  box-shadow:
+    oklch(0 0 0 / 0.05) 0px 0px 0px 1px,
     oklch(0 0 0 / 0.05) 0px 1.92px 1.92px 0px,
     oklch(0 0 0 / 0.05) 0px 3.84px 3.84px 0px;
-`;
+`
 export const Button = styled.button`
   appearance: none;
   border: 0;
@@ -34,7 +35,7 @@ export const Button = styled.button`
   &::before {
     content: "+ ";
   }
-`;
+`
 
 export const CreateForm = styled.form`
   display: flex;
@@ -42,7 +43,7 @@ export const CreateForm = styled.form`
   gap: 16px;
   width: 100%;
   max-width: 600px;
-`;
+`
 
 export const FormGroup = styled.div`
   display: flex;
