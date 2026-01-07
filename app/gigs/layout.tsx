@@ -1,5 +1,4 @@
 import React from "react"
-import styled from "styled-components"
 import StyledComponentsRegistry from "../_providers/style-registery"
 import ClientProviders from "../_providers/ClientProviders"
 
