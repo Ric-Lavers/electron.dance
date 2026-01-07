@@ -12,6 +12,12 @@ export async function get_or_createUser() {
 
   if (!user) {
     user = await createUser()
+
+    await models.Attendance.findOneAndUpdate(
+      { userId: user._id, eventId: "695af7de46fa9b9ffa6dea44" },
+      { status: "going", community: "sydney" },
+      { new: true, upsert: true }
+    ).catch(console.error)
   }
   return JSON.parse(JSON.stringify(user))
 }
