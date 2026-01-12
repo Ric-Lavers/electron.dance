@@ -15,7 +15,13 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Electron.Dance",
-  description: "",
+  description: "Find your next gig with your friends",
+  openGraph: {
+    title: "Electron.Dance",
+    description: "Find your next gig with your friends",
+    images: ["/Electron.Dance.png"],
+  },
+
   icons: {
     icon: "/favicon.ico",
   },
