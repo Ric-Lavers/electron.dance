@@ -53,7 +53,6 @@ const useDragGroup = (groupId) => {
 
     return dropTargetForElements({
       element: el,
-      onGenerateDragPreview() {},
       getData: () => ({ type: "SECTION", columnId: groupId, groupId }),
 
       onDragEnter() {
@@ -91,8 +90,20 @@ function DragGroup(props: { id: GroupId; title: string; items: Item[]; colorNumb
         colorNumber={colorNumber}
         double={groupId === "maybe"}
         dragging={dragging}
-        items={items}
-      />
+      >
+        {items.map(
+          (item, index, arr) => (
+            (isPrevDate = formatDate(item.startDate) === formatDate(arr[index - 1]?.startDate)),
+            (
+              <DateTrack key={item.id}>
+                {isPrevDate ? <DayNull /> : <Day> {format(new Date(item.startDate), "EEEE d MMMM")}</Day>}
+                {/* @ts-ignore */}
+                <GigCard groupId={groupId} index={index} {...item} />
+              </DateTrack>
+            )
+          )
+        )}
+      </Group>
     </>
   )
 }
