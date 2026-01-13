@@ -1,11 +1,17 @@
 "use client"
 import { createContext, useContext, useEffect, useState } from "react"
 import * as S from "./groups.style"
+import { format } from "date-fns"
+import { Day, DayNull } from "./gig-card.styles"
+import { GigCard } from "./GigCard"
 
-export const Group = ({ id, title, colorNumber = 6, count, gigs, dragging = false, double = false, children }) => {
+export const Group = ({ id, title, colorNumber = 6, count, gigs, dragging = false, double = false, items }) => {
   const { attendanceSummary, expanded, setExpanded } = useContext(GroupCTX),
     open = expanded === id,
-    totalAttendance = attendanceSummary.reduce((a, c) => a + c.count, 0)
+    totalAttendance = attendanceSummary.reduce((a, c) => a + c.count, 0),
+    formatDate = (startDate) => startDate && format(new Date(startDate), "MM-dd")
+
+  let isPrevDate = false
   if (double) {
     return (
       <>
@@ -34,7 +40,21 @@ export const Group = ({ id, title, colorNumber = 6, count, gigs, dragging = fals
             </S.Link>
           )}
         </S.DoubleSection>
-        {open && <S.Content>{children}</S.Content>}
+        {open && (
+          <S.Content>
+            {items.map(
+              (item, index, arr) => (
+                (isPrevDate = formatDate(item.startDate) === formatDate(arr[index - 1]?.startDate)),
+                (
+                  <S.DateTrack key={item.id}>
+                    {isPrevDate ? <DayNull /> : <Day> {format(new Date(item.startDate), "EEEE d MMMM")}</Day>}
+                    <GigCard groupId={item.id} index={index} {...item} />
+                  </S.DateTrack>
+                )
+              )
+            )}
+          </S.Content>
+        )}
       </>
     )
   }
@@ -46,7 +66,21 @@ export const Group = ({ id, title, colorNumber = 6, count, gigs, dragging = fals
           <S.Title className="cards__expander-title">{title + String()}</S.Title>
         </S.Group>
       </S.Link>
-      {open && <S.Content>{children}</S.Content>}
+      {open && (
+        <S.Content>
+          {items.map(
+            (item, index, arr) => (
+              (isPrevDate = formatDate(item.startDate) === formatDate(arr[index - 1]?.startDate)),
+              (
+                <S.DateTrack key={item.id}>
+                  {isPrevDate ? <DayNull /> : <Day> {format(new Date(item.startDate), "EEEE d MMMM")}</Day>}
+                  <GigCard groupId={item.id} index={index} {...item} />
+                </S.DateTrack>
+              )
+            )
+          )}
+        </S.Content>
+      )}
     </S.Section>
   )
 }

@@ -7,7 +7,6 @@ import { GigCard } from "./GigCard"
 import { Group, GroupCTX } from "./CardGroups"
 import { format } from "date-fns"
 import { Day, DayNull } from "./gig-card.styles"
-import { saveUserGigs } from "../_utils/localStorage"
 import { GroupId } from "../_utils/types"
 import { updateUserGigAttendance } from "@/app/api/_lib/actions/user"
 import { DateTrack } from "./groups.style"
@@ -44,7 +43,6 @@ function findItem(state: State, id: string): { columnId: GroupId; index: number;
   return null
 }
 
-
 const useDragGroup = (groupId) => {
   const { consideringDropId } = useContext(onDropCTX)
   const [dragging, s_dragging] = useState(false)
@@ -55,6 +53,7 @@ const useDragGroup = (groupId) => {
 
     return dropTargetForElements({
       element: el,
+      onGenerateDragPreview() {},
       getData: () => ({ type: "SECTION", columnId: groupId, groupId }),
 
       onDragEnter() {
@@ -92,20 +91,8 @@ function DragGroup(props: { id: GroupId; title: string; items: Item[]; colorNumb
         colorNumber={colorNumber}
         double={groupId === "maybe"}
         dragging={dragging}
-      >
-        {items.map(
-          (item, index, arr) => (
-            (isPrevDate = formatDate(item.startDate) === formatDate(arr[index - 1]?.startDate)),
-            (
-              <DateTrack key={item.id}>
-                {isPrevDate ? <DayNull /> : <Day> {format(new Date(item.startDate), "EEEE d MMMM")}</Day>}
-                {/* @ts-ignore */}
-                <GigCard groupId={groupId} index={index} {...item} />
-              </DateTrack>
-            )
-          )
-        )}
-      </Group>
+        items={items}
+      />
     </>
   )
 }
