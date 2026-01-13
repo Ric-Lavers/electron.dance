@@ -10,6 +10,7 @@ export const AddEvent = () => {
 
   async function handleSubmit(formData: any) {
     await axios.post("/api/gig", formData, {
+      timeout: 150_000,
       params: { start: startOfDay(new Date()) },
     })
   }

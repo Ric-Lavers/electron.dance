@@ -7,10 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "prettier --write .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "postinstall": "node scripts/postinstall.mjs"
   },
   "dependencies": {
     "@atlaskit/pragmatic-drag-and-drop": "^1.7.7",
+    "@sparticuz/chromium-min": "^143.0.4",
     "@vercel/analytics": "^1.6.1",
     "@vercel/og": "^0.8.6",
     "axios": "^1.13.2",
@@ -21,6 +23,8 @@
     "next": "16.1.1",
     "openai": "^6.15.0",
     "playwright": "^1.57.0",
+    "puppeteer": "^24.35.0",
+    "puppeteer-core": "^24.35.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "socket.io-client": "^4.8.3",
