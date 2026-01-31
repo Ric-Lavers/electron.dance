@@ -29,6 +29,20 @@ export const Day = styled.h3`
   left: 0;
   width: fit-content;
   width: 100%;
+  display: flex;
+  align-items: center;
+
+  position: relative;
+`
+export const NextButton = styled.button`
+  border: 0;
+  padding: 0;
+  svg {
+    //@ts-ignore
+    fill: ${({ theme }) => theme.colors.accentGreen};
+  }
+  position: absolute;
+  left: 250px;
 `
 export const DayNull = styled.div`
   height: 24px;

@@ -5,6 +5,7 @@ import * as S from "./groups.style"
 
 import { format } from "date-fns"
 import { GigCard } from "./GigCard"
+import { ChevronRightIcon } from "@/component-library"
 
 type Item = {
   id: string
@@ -103,10 +104,26 @@ const GigCards = ({ items, groupId }) => {
         <table style={{ borderSpacing: "16px 4px", borderCollapse: "separate" }}>
           <tbody>
             <tr>
-              {groups.map((group) => {
+              {groups.map((group, index) => {
                 return (
-                  <S.StickyTd key={group.date} colSpan={group.items.length} style={{ minWidth: 250 }}>
-                    <S.Day>{group.date}</S.Day>
+                  <S.StickyTd
+                    key={group.date}
+                    id={String(index)}
+                    colSpan={group.items.length}
+                    style={{ minWidth: 250 }}
+                  >
+                    <S.Day>
+                      <span>{group.date} </span>
+                      <S.NextButton
+                        onClick={() => {
+                          document
+                            .getElementById(String(index + 1))
+                            ?.scrollIntoView({ behavior: "smooth", inline: "start" })
+                        }}
+                      >
+                        <ChevronRightIcon width={20} />
+                      </S.NextButton>
+                    </S.Day>
                   </S.StickyTd>
                 )
               })}
