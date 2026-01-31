@@ -19,7 +19,7 @@ export const Item = styled.li`
   padding: 16px;
   min-width: 250px;
   max-width: 250px;
-  width: clamp(250px, 45%, 300px);
+  /* width: clamp(250px, 45%, 300px); */
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -128,6 +128,10 @@ export const Organiser = styled.p`
   width: 100%;
   padding: 0 4px;
   text-align: right;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 `
 const fadeOut = keyframes`
   from {

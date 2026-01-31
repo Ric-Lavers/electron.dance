@@ -29,3 +29,8 @@ main {
   padding: 8px 12px;
   min-height: 100dvh;
 }
+
+td,
+th {
+  vertical-align: top;
+}

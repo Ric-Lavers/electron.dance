@@ -1,7 +1,8 @@
 "use client"
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useRef, useState } from "react"
+// import { useVirtualizer } from "@tanstack/react-virtual"
 import * as S from "./groups.style"
-import { Day, DayNull } from "./gig-card.styles"
+
 import { format } from "date-fns"
 import { GigCard } from "./GigCard"
 
@@ -13,7 +14,17 @@ type Item = {
   location?: string
 }
 
-export const Group = ({ id, title, colorNumber = 6, count, gigs, dragging = false, double = false, items }) => {
+export const Group = ({
+  id,
+  groupId,
+  title,
+  colorNumber = 6,
+  count,
+  gigs,
+  dragging = false,
+  double = false,
+  items,
+}) => {
   const { attendanceSummary, expanded, setExpanded } = useContext(GroupCTX),
     open = expanded === id,
     totalAttendance = attendanceSummary.reduce((a, c) => a + c.count, 0)
@@ -47,7 +58,7 @@ export const Group = ({ id, title, colorNumber = 6, count, gigs, dragging = fals
         </S.DoubleSection>
         {open && (
           <S.Content>
-            <GigCards items={items} groupId={id} />
+            <GigCards items={items} groupId={groupId} />
           </S.Content>
         )}
       </>
@@ -62,36 +73,117 @@ export const Group = ({ id, title, colorNumber = 6, count, gigs, dragging = fals
           <S.Title className="cards__expander-title">{title + String()}</S.Title>
         </S.Group>
       </S.Link>
-      {open && (
-        <S.Content>
-          <GigCards items={items} groupId={id} />
-        </S.Content>
-      )}
+      {open && <GigCards items={items} groupId={groupId} />}
     </S.Section>
   )
 }
 
-const formatDate = (startDate) => startDate && format(new Date(startDate), "MM-dd")
 const GigCards = ({ items, groupId }) => {
-  if (!items) return null
+  const parentRef = useRef<HTMLUListElement>(null)
+  const groups = groupByDate(items)
 
-  let isPrevDate = false
+  // const v = useVirtualizer({
+  //   horizontal: true,
+  //   count: groups.length,
+  //   getScrollElement: () => parentRef.current,
+  //   estimateSize: (i) => {
+  //     console.log("size", groups[i].date, groups[i].width)
+  //     return groups[i].width
+  //   },
+  //   overscan: 3,
+  // })
+
+  if (!items) return null
   return (
     <>
-      {items.map(
-        (item, index, arr) => (
-          (isPrevDate = formatDate(item.startDate) === formatDate(arr[index - 1]?.startDate)),
-          (
-            <S.DateTrack key={item.id}>
-              {isPrevDate ? <DayNull /> : <Day> {format(new Date(item.startDate), "EEEE d MMMM")}</Day>}
-              <GigCard groupId={groupId} index={index} {...item} />
-            </S.DateTrack>
+      <S.Content ref={parentRef} style={{ position: "relative" }}>
+        <table style={{ borderSpacing: "16px 4px", borderCollapse: "separate" }}>
+          <tbody>
+            <tr>
+              {groups.map((group) => {
+                return (
+                  <S.StickyTd key={group.date} colSpan={group.items.length} style={{ minWidth: 250 }}>
+                    <S.Day>{group.date}</S.Day>
+                  </S.StickyTd>
+                )
+              })}
+            </tr>
+
+            <tr>
+              {groups.map((group) => {
+                return group.items.map((item, index) => (
+                  <S.Td key={item.id} style={{ minWidth: 250 }}>
+                    <GigCard groupId={groupId} index={index} {...item} />
+                  </S.Td>
+                ))
+              })}
+            </tr>
+            {/*  <tr>
+              {v.getVirtualItems().map((vi) => {
+                const group = groups[vi.index]
+                return (
+                  <S.StickyTd key={group.date} colSpan={group.items.length} style={{ minWidth: 250 }}>
+                    <S.Day>{group.date}</S.Day>
+                  </S.StickyTd>
+                )
+              })}
+            </tr>
+             <tr>
+              {v.getVirtualItems().map((vi) => {
+                const group = groups[vi.index]
+
+                return group.items.map((item, index) => (
+                  <S.Td key={item.id} style={{ minWidth: 250 }}>
+                    <GigCard groupId={groupId} index={index} {...item} />
+                  </S.Td>
+                ))
+              })}
+            </tr> */}
+          </tbody>
+        </table>
+      </S.Content>
+
+      {/* <S.Content>
+        {items.map((item, index, arr) => {
+          const isPrevDate = formatDate(item.startDate) === formatDate(arr[index - 1]?.startDate)
+          return (
+            <>
+              <S.DateTrack key={item.id}>
+                {isPrevDate ? null : <S.Day> {format(new Date(item.startDate), "EEEE d MMMM")}</S.Day>}
+
+                <GigCard groupId={groupId} index={index} {...item} />
+              </S.DateTrack>
+            </>
           )
-        )
-      )}
+        })}
+      </S.Content> */}
     </>
   )
 }
+
+function groupByDate(items: (Item & { index: number })[]) {
+  const groups: { date: string; items: Item[] }[] = []
+
+  let index = 0
+  for (const item of items) {
+    const date = format(new Date(item.startDate), "EEEE d MMMM")
+    const last = groups.at(-1)
+    item.index = index
+
+    if (last && last.date === date) {
+      last.items.push(item)
+    } else {
+      groups.push({ date, items: [item] })
+    }
+  }
+  index++
+
+  return groups.map((g) => ({
+    ...g,
+    width: g.items.length * 250,
+  }))
+}
+
 
 export const GroupCTX = createContext({
   expanded: "Going",

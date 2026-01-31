@@ -3,93 +3,119 @@ import * as S from "./gig-card.styles"
 import GigPreview from "./SpotifyNowPlaying/GigPreview"
 import { draggable } from "@atlaskit/pragmatic-drag-and-drop/element/adapter"
 
-import { useContext, useEffect, useRef } from "react"
+import { memo, useContext, useEffect, useRef } from "react"
 import { ITEM_DRAG_TYPE, onDropCTX } from "./DemoDnD"
 import { GroupCTX } from "./CardGroups"
 
-export const GigCard = ({ groupId, index, id, title, artists, organiser, location, startDate, url, image }) => {
-  startDate = new Date(startDate)
+export const GigCard = memo(
+  ({
+    groupId,
+    index,
+    id,
+    title,
+    artists,
+    organiser = "",
+    location,
+    startDate,
+    url,
+    image,
+  }: {
+    groupId: string
+    index: number
+    id: string
+    title: string
+    artists: string[]
+    organiser?: string
+    location: string
+    startDate: string | Date
+    url: string
+    image: string
+  }) => {
+    startDate = new Date(startDate)
 
-  const { setConsideringDropId, setUsersGroups } = useContext(onDropCTX)
+    const { setConsideringDropId, setUsersGroups } = useContext(onDropCTX)
 
-  function setPosition({ id, groupId }) {
-    setUsersGroups({ id, groupId })
-  }
-  const locationRef = useRef<HTMLAnchorElement>(null)
+    function setPosition({ id, groupId }: { id: string; groupId: string }) {
+      setUsersGroups({ id, groupId })
+    }
+    const locationRef = useRef<HTMLAnchorElement>(null)
 
-  useEffect(() => {
-    const el = document.getElementById(id)
+    useEffect(() => {
+      const el = document.getElementById(id)
 
-    if (!el) return
+      if (!el) return
 
-    return draggable({
-      element: el,
-      getInitialData: () => ({
-        type: ITEM_DRAG_TYPE,
-        id,
-        fromColumnId: groupId,
-        fromIndex: index,
-      }),
-    })
-  }, [id, groupId, index])
+      return draggable({
+        element: el,
+        getInitialData: () => ({
+          type: ITEM_DRAG_TYPE,
+          id,
+          fromColumnId: groupId,
+          fromIndex: index,
+        }),
+      })
+    }, [id, groupId, index])
 
-  return (
-    <>
-      <S.Item>
-        <S.Card>
-          <S.Row>
-            <S.Time dateTime={format(startDate, "yyyy-MM-ddTHH:MM")}>{format(startDate, "h:mma").toLowerCase()}</S.Time>{" "}
-            <S.Location>
-              <S.Marquee
-                href={url}
-                target="_blank"
-                title={location}
-                ref={locationRef}
-                $width={locationRef.current?.scrollWidth || 150}
-              >
-                {location}
-              </S.Marquee>
-            </S.Location>
-          </S.Row>
-          <S.Row></S.Row>
+    return (
+      <>
+        <S.Item>
+          <S.Card>
+            <S.Row>
+              <S.Time dateTime={format(startDate, "yyyy-MM-ddTHH:MM")}>
+                {format(startDate, "h:mma").toLowerCase()}
+              </S.Time>{" "}
+              <S.Location>
+                <S.Marquee
+                  href={url}
+                  target="_blank"
+                  title={location}
+                  ref={locationRef}
+                  $width={locationRef.current?.scrollWidth || 150}
+                >
+                  {location}
+                </S.Marquee>
+              </S.Location>
+            </S.Row>
+            <S.Row></S.Row>
 
-          <div id={id} style={{ borderRadius: "8px", overflow: "hidden" }}>
-            {/* @ts-ignore */}
-            <GigPreview
-              {...{
-                isActive: true,
-                isPlaying: true,
-                item: {
-                  uri: "test",
-                  name: title,
-                  artists: artists.map((name) => ({ name })).slice(0, 12),
-                  album: { images: [{ url: image }] },
-                },
+            <div id={id} style={{ borderRadius: "8px", overflow: "hidden" }}>
+              {/* @ts-ignore */}
+              <GigPreview
+                {...{
+                  isActive: true,
+                  isPlaying: true,
+                  item: {
+                    uri: "test",
+                    name: title,
+                    artists: artists.map((name) => ({ name })).slice(0, 12),
+                    album: { images: [{ url: image }] },
+                  },
 
-                url,
-              }}
+                  url,
+                }}
+              />
+            </div>
+
+            {organiser !== location ? (
+              <S.Organiser style={{ visibility: organiser ? "visible" : "hidden" }}>
+                <i>presented by </i>
+                {organiser}
+              </S.Organiser>
+            ) : (
+              <div style={{ height: 14 }} />
+            )}
+            <CoolRange
+              groupId={groupId}
+              gigId={id}
+              setPosition={setPosition}
+              setConsideringDropId={setConsideringDropId}
             />
-          </div>
-
-          {organiser !== location ? (
-            <S.Organiser style={{ visibility: organiser ? "visible" : "hidden" }}>
-              <i>presented by </i>
-              {organiser}
-            </S.Organiser>
-          ) : (
-            <div style={{ height: 14 }} />
-          )}
-          <CoolRange
-            groupId={groupId}
-            gigId={id}
-            setPosition={setPosition}
-            setConsideringDropId={setConsideringDropId}
-          />
-        </S.Card>
-      </S.Item>
-    </>
-  )
-}
+          </S.Card>
+        </S.Item>
+      </>
+    )
+  }
+)
 
 const CoolRange = ({ groupId, gigId, setPosition, setConsideringDropId }) => {
   const { gigs } = useContext(GroupCTX)

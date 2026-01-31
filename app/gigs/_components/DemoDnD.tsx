@@ -1,5 +1,5 @@
 "use client"
-import React, { createContext, useActionState, useContext, useEffect, useMemo, useState } from "react"
+import React, { createContext, useActionState, useCallback, useContext, useEffect, useMemo, useState } from "react"
 
 import { dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter"
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter"
@@ -81,6 +81,7 @@ export function DragGroup(props: { id: GroupId; title: string; items: Item[]; co
   return (
     <Group
       id={`container-${groupId}`}
+      groupId={groupId}
       title={title}
       count={items.length}
       gigs={gigs}
@@ -137,15 +138,18 @@ export default function TwoSectionDnD({ gigs }) {
     setState(extractData(stored_gigs))
   }, [stored_gigs])
 
-  async function setUsersGroups({ groupId, id }) {
-    const newGroups = newDrops({ toColumnId: groupId, id })(state)
+  const setUsersGroups = useCallback(
+    async function ({ groupId, id }) {
+      const newGroups = newDrops({ toColumnId: groupId, id })(state)
 
-    setState(newGroups)
-    updateUserGigAttendance({ groupId, eventId: id })
-  }
-  function setConsideringDropId(groupId: GroupId) {
+      setState(newGroups)
+      updateUserGigAttendance({ groupId, eventId: id })
+    },
+    [state]
+  )
+  const setConsideringDropId = useCallback(function (groupId: GroupId) {
     s_ConsideringDropId(groupId)
-  }
+  }, [])
 
   // Monitor handles the "drop" and updates state.
   useEffect(() => {

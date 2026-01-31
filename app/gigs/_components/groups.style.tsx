@@ -1,6 +1,41 @@
 "use client"
 import styled, { css } from "styled-components"
 
+
+export const Table = styled.table`
+  display: flex;
+  flex-direction: column;
+`
+export const Tr = styled.tr`
+  display: contents;
+`
+export const Td = styled.td`
+  position: relative;
+`
+export const StickyTd = styled.td`
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: white;
+`
+
+export const Relative = styled.div`
+  position: relative;
+  border: 1px solid blue;
+`
+export const Day = styled.h3`
+  height: 24px;
+  position: sticky;
+  left: 0;
+  width: fit-content;
+  width: 100%;
+`
+export const DayNull = styled.div`
+  height: 24px;
+  border: 1px solid red;
+  width: 250px;
+`
+
 export const Section = styled.section<{ $open: boolean }>`
   padding: 8px 0;
   row-gap: 16px;
@@ -186,16 +221,4 @@ export const Title = styled.h2`
   font-size: 13px;
   font-weight: bolder;
   z-index: 1;
-`
-
-export const Table = styled.table`
-  display: flex;
-  flex-direction: column;
-`
-export const Tr = styled.tr`
-  display: contents;
-`
-export const Td = styled.td`
-  position: relative;
-  border: 1px solid oklch(var(--lch-ink-light));
 `
