@@ -38,8 +38,9 @@ export const NextButton = styled.button`
   border: 0;
   padding: 0;
   svg {
-    //@ts-ignore
-    fill: ${({ theme }) => theme.colors.accentGreen};
+    fill: ${({ theme }) =>
+      //@ts-ignore
+      theme?.colors.accentGreen};
   }
   position: absolute;
   left: 250px;
