@@ -89,6 +89,7 @@ export { default as TimeIcon } from "./time.svg"
 export { default as SupportIcon } from "./support.svg"
 export { default as MailIcon } from "./mail.svg"
 export { default as PlayIcon } from "./play.svg"
+export { default as ChevronRewindIcon } from "./chevron-rewind.svg"
 
 export { default as DownloadIcon } from "./download.svg"
 

@@ -33,6 +33,9 @@ export const Day = styled.h3`
   align-items: center;
 
   position: relative;
+  span {
+    margin-left: 16px;
+  }
 `
 export const NextButton = styled.button`
   border: 0;
@@ -44,6 +47,19 @@ export const NextButton = styled.button`
   }
   position: absolute;
   left: 250px;
+  margin-left: -4px;
+`
+export const PrevButton = styled.button`
+  border: 0;
+  padding: 0;
+  svg {
+    fill: ${({ theme }) =>
+      //@ts-ignore
+      theme?.colors.accentGreen};
+  }
+  position: absolute;
+  left: -4px;
+  display: flex;
 `
 export const DayNull = styled.div`
   height: 24px;

@@ -5,7 +5,7 @@ import * as S from "./groups.style"
 
 import { format } from "date-fns"
 import { GigCard } from "./GigCard"
-import { ChevronRightIcon } from "@/component-library"
+import { ChevronRewindIcon, ChevronRightIcon } from "@/component-library"
 
 type Item = {
   id: string
@@ -103,6 +103,7 @@ const GigCards = ({ items, groupId }) => {
       <S.Content ref={parentRef} style={{ position: "relative" }}>
         <table style={{ borderSpacing: "16px 4px", borderCollapse: "separate" }}>
           <tbody>
+            <div id="start" />
             <tr>
               {groups.map((group, index) => {
                 return (
@@ -113,6 +114,15 @@ const GigCards = ({ items, groupId }) => {
                     style={{ minWidth: 250 }}
                   >
                     <S.Day>
+                      {index > 0 && (
+                        <S.PrevButton
+                          onClick={() => {
+                            document.getElementById("start")?.scrollIntoView({ behavior: "smooth", inline: "start" })
+                          }}
+                        >
+                          <ChevronRewindIcon width={20} />
+                        </S.PrevButton>
+                      )}
                       <span>{group.date} </span>
                       <S.NextButton
                         onClick={() => {
