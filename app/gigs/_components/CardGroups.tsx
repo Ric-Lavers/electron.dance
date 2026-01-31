@@ -9,9 +9,12 @@ import { GigCard } from "./GigCard"
 type Item = {
   id: string
   title: string
-  startDate: string
   organiser?: string
-  location?: string
+  artists: string[]
+  location: string
+  startDate: string | Date
+  url: string
+  image: string
 }
 
 export const Group = ({
@@ -113,7 +116,18 @@ const GigCards = ({ items, groupId }) => {
               {groups.map((group) => {
                 return group.items.map((item, index) => (
                   <S.Td key={item.id} style={{ minWidth: 250 }}>
-                    <GigCard groupId={groupId} index={index} {...item} />
+                    <GigCard
+                      groupId={groupId}
+                      index={index}
+                      id={item.id}
+                      title={item.title}
+                      artists={item.artists}
+                      organiser={item.organiser}
+                      location={item.location}
+                      startDate={item.startDate}
+                      url={item.url}
+                      image={item.image}
+                    />
                   </S.Td>
                 ))
               })}
