@@ -149,7 +149,7 @@ const shrink = keyframes`
     `
 
 const thumb = (props) => css`
-  -webkit-appearance: none;
+  --webkit-appearance: none;
   appearance: none;
   margin-top: -10px;
   border-radius: 50%;
@@ -228,7 +228,7 @@ export const RangeWrap = styled.div<{ $groupId: string }>`
     z-index: 2;
     position: absolute;
 
-    -webkit-appearance: none;
+    --webkit-appearance: none;
     appearance: none;
     width: 100%;
     height: 32px;

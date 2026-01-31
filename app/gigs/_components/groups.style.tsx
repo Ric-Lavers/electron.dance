@@ -187,3 +187,15 @@ export const Title = styled.h2`
   font-weight: bolder;
   z-index: 1;
 `
+
+export const Table = styled.table`
+  display: flex;
+  flex-direction: column;
+`
+export const Tr = styled.tr`
+  display: contents;
+`
+export const Td = styled.td`
+  position: relative;
+  border: 1px solid oklch(var(--lch-ink-light));
+`

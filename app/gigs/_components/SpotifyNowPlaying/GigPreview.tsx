@@ -35,6 +35,7 @@ const GigPreview: React.FC<SpotifyNowPlayingProps & {}> = ({
             <S.AlbumImg
               src={src}
               alt={`${item.name} album art`}
+              loading="lazy"
               onError={function (e) {
                 let ø = e.currentTarget
                 /* prevent ∞ loop */ ø.onerror = null

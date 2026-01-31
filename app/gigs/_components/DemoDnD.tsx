@@ -9,7 +9,7 @@ import { format } from "date-fns"
 import { Day, DayNull } from "./gig-card.styles"
 import { GroupId } from "../_utils/types"
 import { updateUserGigAttendance } from "@/app/api/_lib/actions/user"
-import { DateTrack } from "./groups.style"
+import { Tr, Td, Table, DateTrack } from "./groups.style"
 
 type Item = {
   id: string
@@ -73,38 +73,22 @@ const useDragGroup = (groupId) => {
 
   return dragging || dragging || consideringDropId === groupId
 }
-function DragGroup(props: { id: GroupId; title: string; items: Item[]; colorNumber: number; gigs: object }) {
+export function DragGroup(props: { id: GroupId; title: string; items: Item[]; colorNumber: number; gigs: object }) {
   const { id: groupId, title, items, colorNumber, gigs } = props
 
   const dragging = useDragGroup(groupId)
-  const formatDate = (startDate) => startDate && format(new Date(startDate), "MM-dd")
-  let isPrevDate = false
 
   return (
-    <>
-      <Group
-        id={`container-${groupId}`}
-        title={title}
-        count={items.length}
-        gigs={gigs}
-        colorNumber={colorNumber}
-        double={groupId === "maybe"}
-        dragging={dragging}
-      >
-        {items.map(
-          (item, index, arr) => (
-            (isPrevDate = formatDate(item.startDate) === formatDate(arr[index - 1]?.startDate)),
-            (
-              <DateTrack key={item.id}>
-                {isPrevDate ? <DayNull /> : <Day> {format(new Date(item.startDate), "EEEE d MMMM")}</Day>}
-                {/* @ts-ignore */}
-                <GigCard groupId={groupId} index={index} {...item} />
-              </DateTrack>
-            )
-          )
-        )}
-      </Group>
-    </>
+    <Group
+      id={`container-${groupId}`}
+      title={title}
+      count={items.length}
+      gigs={gigs}
+      colorNumber={colorNumber}
+      double={groupId === "maybe"}
+      dragging={dragging}
+      items={items}
+    />
   )
 }
 
