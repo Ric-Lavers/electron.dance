@@ -21,6 +21,17 @@ export async function GET(req: NextRequest) {
     }),
     state = stateParams.toString()
 
+  console.log({
+    // prompt: 'consent',
+
+    response_type: "code",
+    client_id: process.env.GOOGLE_CLIENT_ID,
+    access_type: "offline",
+    state,
+    redirect_uri,
+    scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid",
+    // scope: 'openid',
+  })
 
   const search = new URLSearchParams({
     // prompt: 'consent',
@@ -35,6 +46,7 @@ export async function GET(req: NextRequest) {
   })
 
   const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?${search}`
+  console.log(authUrl)
 
   return NextResponse.redirect(authUrl)
 }
