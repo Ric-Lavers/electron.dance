@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(req: NextRequest) {
   if (!process.env.LINKEDIN_CLIENT_ID || !process.env.LINKEDIN_CLIENT_SECRET) {
-    throw new Error("Missing Spotify client credentials in environment variables.")
+    throw new Error("Missing Linkedin client credentials in environment variables.")
   }
   const cookieJar = await cookies()
 
