@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import WhatsAppLogo from "@/component-library/svg/whatsapp.png"
 
 export default function Home() {
   const [vh, s_vh] = useState(0)
@@ -15,7 +16,7 @@ export default function Home() {
         backgroundColor: "#010",
       }}
     >
-      <main style={{ border: "5px sold lime" }} className="flex h-full flex-center items-center sm:items-start">
+      <main className="flex h-full flex-center items-center sm:items-start">
         <Electron />
       </main>
     </div>
@@ -28,19 +29,12 @@ const Electron = () => {
     const length = polygon.getTotalLength()
     polygon.style.strokeDasharray = String(length)
     polygon.style.strokeDashoffset = String(length)
-
-    // const setRealVh = () => {
-    //   const vh = window.innerHeight * 0.01;
-    //   document.documentElement.style.setProperty('--vh', `${vh}px`);
-    // };
-    // setRealVh();
-    // window.addEventListener('resize', setRealVh);
-    // return () => window.removeEventListener('resize', setRealVh);
   }, [])
 
   return (
     <>
       <style>{svgAnimation}</style>
+      <LogoLink />
       <svg
         width="100%"
         height="100%"
@@ -133,4 +127,37 @@ const svgAnimation = `
           opacity: 1;
         }
       }
+      .fade-in {
+        animation: appear  1s ease-in 4s forwards;
+      }
+      
 `
+const LogoLink = () => (
+  <a
+    style={{
+      maxHeight: 80,
+      position: "absolute",
+      top: 20,
+      left: 20,
+      maxWidth: 80,
+      opacity: 0,
+      width: "clamp(50px, 10vw, 80px)",
+      height: "clamp(50px, 10vw, 80px)",
+    }}
+    href="https://chat.whatsapp.com/KI2rCCnikhPAvAwN0AKiUk"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="fade-in"
+  >
+    <img
+      src={WhatsAppLogo.src}
+      alt="WhatsApp Logo"
+      style={{
+        animation: "appear 1s ease-in 4s forards",
+      }}
+    />
+    <p style={{ color: "#ff6ec4", lineHeight: 0.8, fontSize: "clamp(10px, 1.5vw, 14px)", textAlign: "center" }}>
+      Join our community
+    </p>
+  </a>
+)

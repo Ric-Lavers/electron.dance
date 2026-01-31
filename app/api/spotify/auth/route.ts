@@ -6,13 +6,18 @@ import { NextRequest, NextResponse } from "next/server"
 export async function GET(req: NextRequest) {
   const cookieJar = await cookies(),
     url = new URL(req.url),
-    redirect_uri = url.origin + "/api/spotify/callback",
     userId = cookieJar.get("userId")?.value || "",
+    redirect_uri = url.origin + "/api/spotify/callback",
     stateParams = new URLSearchParams({
-      origin: url.origin,
+      origin: url.origin + "/gigs",
       userId,
+
+      group: "sydney",
     }),
     state = stateParams.toString()
+
+  console.log(url)
+
   // const redirect_uri = 'http://192.168.86.21:3000/api/spotify/callback'
 
   if (!process.env.SPOTIFY_CLIENT_ID || !process.env.SPOTIFY_CLIENT_SECRET) {

@@ -22,10 +22,6 @@ async function generateEventData(url: string) {
   const html = await chromiumHtml(url)
   const meta = await getSocialMeta(html)
   const content = await getRenderedHtml(html)
-  console.log({
-    meta,
-    content,
-  })
 
   return extractEventJson({
     url,

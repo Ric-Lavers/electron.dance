@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from "next/server"
 import { generateEventData } from "../_lib/open-api"
-// import { chromium } from "playwright"
+import { chromium } from "playwright"
 import { connectToDatabase } from "@/db/mongo/connect"
 import Event, { EventDoc } from "@/db/mongo/models/event"
-import { getChromiumPath } from "./util"
 
 const SydneyGigGuideURL = "https://sydneymusic.net/gig-guide"
-
 export async function GET(req: NextRequest) {
   try {
     await connectToDatabase()
@@ -56,24 +54,36 @@ async function getContent(ƒ, fallback: any = "") {
     return fallback
   }
 }
-
 export async function gigGuideEvents() {
-  let puppeteer: any,
-    launchOptions: any = {
-      headless: true,
-    }
-  const chromium = (await import("@sparticuz/chromium-min")).default
-  puppeteer = await import("puppeteer-core")
-  const executablePath = await getChromiumPath()
-  launchOptions = {
-    ...launchOptions,
-    args: chromium.args,
-    executablePath,
-  }
-  console.log("Launching browser with executable path:", executablePath)
-  let browser = await puppeteer.launch(launchOptions)
+  //   let puppeteer: any,
+  //   launchOptions: any = {
+  //     headless: true,
+  //   }
+  // const isVercel = !!process.env.VERCEL_ENV
+  // if (isVercel) {
+  //   const chromium = (await import("@sparticuz/chromium-min")).default
+  //   puppeteer = await import("puppeteer-core")
+  //   const executablePath = await getChromiumPath()
+  //   launchOptions = {
+  //     ...launchOptions,
+  //     args: chromium.args,
+  //     executablePath,
+  //   }
+  //   console.log("Launching browser with executable path:", launchOptions)
+  // } else {
+  //   puppeteer = await import("puppeteer")
+  // }
 
-  // browser = await chromium.launch({ headless: true })
+  // // const executablePath = await getChromiumPath()
+  // // launchOptions = {
+  // //   ...launchOptions,
+  // //   args: chromium.args,
+  // //   executablePath,
+  // // }
+  // // console.log("Launching browser with executable path:", executablePath)
+  // let browser = await puppeteer.launch(launchOptions)
+
+  const browser = await chromium.launch({ headless: true })
   const page = await browser.newPage()
   await page.goto(SydneyGigGuideURL, { waitUntil: "networkidle" })
 

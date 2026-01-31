@@ -1,5 +1,6 @@
 "use client"
 import styled from "styled-components"
+import { Circle } from "./Modals/login-modal.styles"
 
 export const Header = styled.header`
   display: flex;
@@ -39,7 +40,17 @@ export const Action = styled.button`
   padding: 0;
   cursor: pointer;
 
+  border: 1px solid black;
   border-radius: 40px;
   height: 36px;
   width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+export const LoggedInCircle = styled(Circle)`
+  height: 36px;
+  width: 36px;
+  background-color: white;
+  color: #000;
 `

@@ -9,14 +9,18 @@ export async function GET(req: NextRequest) {
   }
   const cookieJar = await cookies()
 
+
   const url = new URL(req.url),
     redirect_uri = url.origin + "/api/google/callback",
     userId = cookieJar.get("userId")?.value || "",
     stateParams = new URLSearchParams({
-      origin: url.origin,
+      origin: url.origin + "/gigs",
       userId,
+
+      group: "sydney",
     }),
     state = stateParams.toString()
+
 
   const search = new URLSearchParams({
     // prompt: 'consent',

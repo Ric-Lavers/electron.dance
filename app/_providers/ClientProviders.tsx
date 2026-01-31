@@ -5,13 +5,16 @@ import { ErrorBoundary } from "./errorBoundary"
 import { theme } from "@/styles/theme"
 
 import { UserTokenContextProvider } from "./UserTokensProvider"
+import { ModalContextProvider } from "./ModalProvider"
 
 export default function ClientProviders({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider theme={theme}>
       <ErrorBoundary>
         <GlobalStyle />
-        <UserTokenContextProvider>{children}</UserTokenContextProvider>
+        <UserTokenContextProvider>
+          <ModalContextProvider>{children}</ModalContextProvider>
+        </UserTokenContextProvider>
       </ErrorBoundary>
     </ThemeProvider>
   )
