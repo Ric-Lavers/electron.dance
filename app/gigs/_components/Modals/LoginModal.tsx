@@ -16,19 +16,27 @@ export const LoginModal = () => {
   const [openId, s_open] = useState<string>("")
   function handleMobiletooltipOpens(serviceId) {
     if (isTouchDevice()) {
-      s_open(serviceId)
+      if (openId === serviceId) {
+        s_open("")
+      } else {
+        s_open(serviceId)
+      }
+    }
+  }
+  function handleMobiletooltipClose({ currentTarget }) {
+    if (isTouchDevice()) {
+      s_open("")
     }
   }
 
   return (
-    <S.Container>
+    <S.Container onClick={handleMobiletooltipClose}>
       <S.Content>{`To unlock more access, introduce yourself with a Spotify, Google or LinkedIn login.`}</S.Content>
       <S.List>
         {services.map(
           (service, tokenProfile: any, token: any) => (
             (token = getToken(service.id as TokenProvider)),
             (tokenProfile = getTokenProfile(service.id as TokenProvider)),
-            console.log({ tokenProfile }),
             (
               <S.Item key={service.name}>
                 <Logo tokenProfileUrl={tokenProfile?.avatarUrl} serviceLogo={service.logo} />

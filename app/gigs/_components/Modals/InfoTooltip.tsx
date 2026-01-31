@@ -8,7 +8,13 @@ export const InfoTooltip = ({ id, open, onMobiletooltipOpens, content = "Add to 
   return (
     <Tooltip.Provider delayDuration={0}>
       <Tooltip.Root open={isTouchDevice() ? open : undefined}>
-        <Tooltip.Trigger asChild onClick={() => onMobiletooltipOpens(id)}>
+        <Tooltip.Trigger
+          asChild
+          onClick={(e) => {
+            e.stopPropagation()
+            onMobiletooltipOpens(id)
+          }}
+        >
           <span>
             <InfoCircleIcon width={24} height={24} />
           </span>
