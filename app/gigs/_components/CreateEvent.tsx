@@ -83,7 +83,7 @@ export const CreateEvent = ({ onSubmit }) => {
           id="url"
           name="url"
           type="url"
-          value={formData.url}
+          value={formData?.url || ""}
           onChange={handleChange}
           required
           placeholder="https://example.com/event"
