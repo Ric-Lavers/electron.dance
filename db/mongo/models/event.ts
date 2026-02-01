@@ -5,7 +5,6 @@ export const EventSchema = new Schema(
     uri: String,
     url: {
       type: String,
-      required: true,
       unique: true,
     },
     title: String,

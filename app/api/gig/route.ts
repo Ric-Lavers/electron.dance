@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true, data: event }, { status: 201 })
   } catch (error) {
     console.error("Error creating event:", error)
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
+    return NextResponse.json({ errorMessage: error.messages, error }, { status: 500 })
   }
 }
 

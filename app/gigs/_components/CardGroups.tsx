@@ -101,9 +101,9 @@ const GigCards = ({ items, groupId }) => {
   return (
     <>
       <S.Content ref={parentRef} style={{ position: "relative" }}>
+        <div id="start" />
         <table style={{ borderSpacing: "16px 4px", borderCollapse: "separate" }}>
           <tbody>
-            <div id="start" />
             <tr>
               {groups.map((group, index) => {
                 return (
