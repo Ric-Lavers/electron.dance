@@ -33,7 +33,7 @@ export const GigCard = memo(
   }) => {
     startDate = new Date(startDate)
 
-    const { setConsideringDropId, setUsersGroups } = useContext(onDropCTX)
+    const { setConsideringDropId, setUsersGroups, consideringDropId } = useContext(onDropCTX)
 
     function setPosition({ id, groupId }: { id: string; groupId: string }) {
       setUsersGroups({ id, groupId })

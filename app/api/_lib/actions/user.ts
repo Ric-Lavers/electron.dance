@@ -52,7 +52,6 @@ export async function getActiveUser(userId?: string) {
 
   if (!user) return null
 
-  // console.log(gigs)
   const result = {
     ...user.toObject(),
     gigs: gigs

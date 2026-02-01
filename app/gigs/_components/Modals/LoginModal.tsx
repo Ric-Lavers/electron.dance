@@ -98,7 +98,7 @@ const ServiceName = ({ token, service }) => {
     <div>
       <p>{service.name} </p>{" "}
       <small>
-        <i>active {formatDistanceToNow(createdAt)}</i>
+        <i>created {formatDistanceToNow(createdAt)}</i>
       </small>
     </div>
   )

@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
         userId,
         accessToken: access_token,
         ...(refresh_token ? { refreshToken: refresh_token } : {}),
-        createdAt: new Date(),
+        createdAt: new Date(created_at),
         expiresAt: new Date(created_at + expires_in * 1000),
         data: { id_token, ...userInfo },
       },

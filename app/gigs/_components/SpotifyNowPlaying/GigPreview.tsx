@@ -92,10 +92,10 @@ const TrackInfo = ({ title, name }) => {
 
   return (
     <S.TrackInfo>
-      <S.Marquee $on $width={titleRef.current?.scrollWidth || 150} ref={titleRef}>
+      <S.Marquee $on={false} $width={titleRef.current?.scrollWidth || 150} ref={titleRef}>
         {title}
       </S.Marquee>
-      <S.Marquee $on $width={nameRef.current?.scrollWidth || 150} ref={nameRef}>
+      <S.Marquee $on={false} $width={nameRef.current?.scrollWidth || 150} ref={nameRef}>
         {name}
       </S.Marquee>
     </S.TrackInfo>

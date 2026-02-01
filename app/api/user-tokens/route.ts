@@ -14,7 +14,7 @@ export async function GET() {
     await connectToDatabase()
     const user = await User.findOne({ id: userId }).populate("tokens", "-accessToken -refreshToken -_id -__v"),
       //@ts-ignore
-      tokens = (user?.tokens || []).filter((t) => t.provider !== "calendly")
+      tokens = (user?.tokens || []).filter((t) => t.provider !== "calendly" && new Date(t.expiresAt) > new Date())
 
     return NextResponse.json(tokens, { status: 200 })
   } catch (error) {

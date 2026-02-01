@@ -9,7 +9,6 @@ export async function GET(req: NextRequest) {
   }
   const cookieJar = await cookies()
 
-
   const url = new URL(req.url),
     redirect_uri = url.origin + "/api/google/callback",
     userId = cookieJar.get("userId")?.value || "",
@@ -20,18 +19,6 @@ export async function GET(req: NextRequest) {
       group: "sydney",
     }),
     state = stateParams.toString()
-
-  console.log({
-    // prompt: 'consent',
-
-    response_type: "code",
-    client_id: process.env.GOOGLE_CLIENT_ID,
-    access_type: "offline",
-    state,
-    redirect_uri,
-    scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid",
-    // scope: 'openid',
-  })
 
   const search = new URLSearchParams({
     // prompt: 'consent',
