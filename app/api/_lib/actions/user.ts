@@ -43,24 +43,31 @@ export async function getActiveUser(userId?: string) {
 
   await connectToDatabase()
   const user = await models.User.findOne({ id: userId }, "-__v -createdAt -profile -gigAdmin"),
-    gigs = await models.Attendance.find({ userId: user?._id, status: { $in: ["going", "maybe"] } }).populate("eventId")
+    gigs = await models.Attendance.find({
+      userId: user?._id,
+      eventId: { $ne: null },
+      status: { $in: ["going", "maybe"] },
+      startDate: { $gte: startOfToday() },
+    }).populate("eventId")
 
   if (!user) return null
 
   // console.log(gigs)
   const result = {
     ...user.toObject(),
-    gigs: gigs.map((g) => ({
-      userId: g.eventId.userId,
-      eventId: g.eventId._id,
-      status: g.status,
-      startDate: g.eventId.startDate,
-      //future schema
-      community: g.community,
-      // previous schema
-      groupId: g.status,
-      _id: g.eventId._id,
-    })),
+    gigs: gigs
+      .filter(({ eventId }) => Boolean(eventId))
+      .map((g) => ({
+        userId: g.eventId.userId,
+        eventId: g.eventId._id,
+        status: g.status,
+        startDate: g.eventId.startDate,
+        //future schema
+        community: g.community,
+        // previous schema
+        groupId: g.status,
+        _id: g.eventId._id,
+      })),
   }
 
   return JSON.parse(JSON.stringify(result))
