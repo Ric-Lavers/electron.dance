@@ -4,7 +4,7 @@ import styled, { css } from "styled-components"
 
 export const Table = styled.table`
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
 `
 export const Tr = styled.tr`
   display: contents;
@@ -86,7 +86,7 @@ export const Section = styled.section<{ $open: boolean }>`
           --content-visibility: visible;
           min-height: 160px;
           display: flex;
-          flex-direction: column;
+          /* flex-direction: column; */
           justify-content: flex-start;
         `
       : css`
