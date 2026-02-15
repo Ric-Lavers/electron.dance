@@ -173,9 +173,9 @@ export default function TwoSectionDnD({ gigs }) {
   }, [state])
 
   const maybeItems = useMemo(() => {
-    return [...state.maybe, ...state.others].sort(
-      (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
-    )
+    let byTime = (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+
+    return [...state.maybe.sort(byTime), ...state.others.sort(byTime)]
   }, [state.maybe, state.others])
 
   return (

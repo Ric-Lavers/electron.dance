@@ -31,8 +31,11 @@ export const Group = ({
 }) => {
   const { attendanceSummary, expanded, setExpanded } = useContext(GroupCTX),
     open = expanded === id,
-    totalAttendance = attendanceSummary.reduce((a, c) => a + c.count, 0)
+    totalAttendance = attendanceSummary.reduce((a, c) => a + c.count, 0),
+    maybeSet = new Set<string>([])
+
   if (double) {
+    gigs.maybe.map((g) => maybeSet.add(g.id))
     return (
       <>
         <S.DoubleSection id={id} $open={open}>
@@ -61,9 +64,9 @@ export const Group = ({
           )}
         </S.DoubleSection>
         {open && (
-          <S.Content>
-            <GigCards items={items} groupId={groupId} />
-          </S.Content>
+          <S.ContentList>
+            <GigCards items={items} groupId={groupId} maybeSet={maybeSet} />
+          </S.ContentList>
         )}
       </>
     )
@@ -78,11 +81,12 @@ export const Group = ({
         </S.Group>
       </S.Link>
       {open && <GigCards items={items} groupId={groupId} />}
+      {/* <S.End id="end" /> */}
     </S.Section>
   )
 }
 
-const GigCards = ({ items, groupId }) => {
+const GigCards = ({ items, groupId, maybeSet = new Set<string>([]) }) => {
   const parentRef = useRef<HTMLUListElement>(null)
   const groups = groupByDate(items)
 
@@ -96,11 +100,19 @@ const GigCards = ({ items, groupId }) => {
   //   },
   //   overscan: 3,
   // })
-
+  function sortMaybeItems({}) {
+    /* already done -> on pages.tsx */
+    // if (groupId != "maybe" || groupId != "others" ) return items
+    // let _id = () => ({ id }) => id,
+    //   itemIds = items.map(_id)
+    //   items = [...items.filter(({ id }) => maybeSet.has(id)), ...items.filter(({ id }) => !maybeSet.has(id))]
+    //   console.log("itmems", items, maybeSet)
+  }
+  sortMaybeItems({})
   if (!items) return null
   return (
     <>
-      <S.Content ref={parentRef} style={{ position: "relative" }}>
+      <S.ContentList ref={parentRef} style={{ position: "relative" }}>
         <div id="start" />
         <table style={{ borderSpacing: "16px 4px", borderCollapse: "separate" }}>
           <tbody>
@@ -116,6 +128,7 @@ const GigCards = ({ items, groupId }) => {
                     <S.Day>
                       {index > 0 && (
                         <S.PrevButton
+                          id="rewind"
                           onClick={() => {
                             document.getElementById("start")?.scrollIntoView({ behavior: "smooth", inline: "start" })
                           }}
@@ -125,6 +138,7 @@ const GigCards = ({ items, groupId }) => {
                       )}
                       <span>{group.date} </span>
                       <S.NextButton
+                        id="next"
                         onClick={() => {
                           document
                             .getElementById(String(index + 1))
@@ -182,7 +196,7 @@ const GigCards = ({ items, groupId }) => {
             </tr> */}
           </tbody>
         </table>
-      </S.Content>
+      </S.ContentList>
 
       {/* <S.Content>
         {items.map((item, index, arr) => {
@@ -224,7 +238,6 @@ function groupByDate(items: (Item & { index: number })[]) {
     width: g.items.length * 250,
   }))
 }
-
 
 export const GroupCTX = createContext({
   expanded: "Going",

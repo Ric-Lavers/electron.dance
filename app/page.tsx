@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import WhatsAppLogo from "@/component-library/svg/whatsapp.png"
+import InstagramLogo from "@/component-library/svg/instagram.png"
 
 export default function Home() {
   const [vh, s_vh] = useState(0)
@@ -34,7 +35,20 @@ const Electron = () => {
   return (
     <>
       <style>{svgAnimation}</style>
-      <LogoLink />
+      <LogoLink
+        text="Join our community"
+        src={WhatsAppLogo.src}
+        alt="WhatsApp Logo"
+        href="https://chat.whatsapp.com/KI2rCCnikhPAvAwN0AKiUk"
+        style={{ top: 20, left: 20 }}
+      />
+      <LogoLink
+        text="Follow our Instagram"
+        src={InstagramLogo.src}
+        alt="Instagram Logo"
+        href="https://www.instagram.com/electron.dance/"
+        style={{ top: 20, right: 20 }}
+      />
       <svg
         width="100%"
         height="100%"
@@ -132,32 +146,38 @@ const svgAnimation = `
       }
       
 `
-const LogoLink = () => (
+
+const LogoLink: React.FC<{
+  src: string
+  alt: string
+  href: string
+  text: string
+  style?: React.CSSProperties
+}> = ({ src, alt, href, text, style = {} }) => (
   <a
     style={{
       maxHeight: 80,
       position: "absolute",
-      top: 20,
-      left: 20,
       maxWidth: 80,
       opacity: 0,
       width: "clamp(50px, 10vw, 80px)",
       height: "clamp(50px, 10vw, 80px)",
+      ...style,
     }}
-    href="https://chat.whatsapp.com/KI2rCCnikhPAvAwN0AKiUk"
+    href={href}
     target="_blank"
     rel="noopener noreferrer"
     className="fade-in"
   >
     <img
-      src={WhatsAppLogo.src}
-      alt="WhatsApp Logo"
+      src={src}
+      alt={alt}
       style={{
         animation: "appear 1s ease-in 4s forards",
       }}
     />
     <p style={{ color: "#ff6ec4", lineHeight: 0.8, fontSize: "clamp(10px, 1.5vw, 14px)", textAlign: "center" }}>
-      Join our community
+      {text}
     </p>
   </a>
 )

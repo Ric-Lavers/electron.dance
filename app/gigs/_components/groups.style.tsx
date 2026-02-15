@@ -1,7 +1,6 @@
 "use client"
 import styled, { css } from "styled-components"
 
-
 export const Table = styled.table`
   display: flex;
   /* flex-direction: column; */
@@ -69,6 +68,7 @@ export const DayNull = styled.div`
 
 export const Section = styled.section<{ $open: boolean }>`
   padding: 8px 0;
+  position: relative;
   row-gap: 16px;
 
   display: grid;
@@ -109,7 +109,7 @@ export const DoubleSection = styled(Section)`
           --content-visibility: hidden;
         `};
 `
-export const Content = styled.ul`
+export const ContentList = styled.ul`
   //<{ $open: boolean }>
   visibility: var(--content-visibility);
   display: var(--content-visibility);
@@ -132,7 +132,14 @@ export const Content = styled.ul`
   grid-template-rows: auto;
   grid-auto-columns: 45%;
 `
-
+export const End = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 32px;
+  z-index: 2;
+`
 export const Link = styled.button`
   /* all: unset;
   cursor: pointer; */
