@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import WhatsAppLogo from "@/component-library/svg/whatsapp.png"
 import InstagramLogo from "@/component-library/svg/instagram.png"
+import HumantixLogo from "@/component-library/svg/humantix.png"
 
 export default function Home() {
   const [vh, s_vh] = useState(0)
@@ -49,6 +50,15 @@ const Electron = () => {
         href="https://www.instagram.com/electron.dance/"
         style={{ top: 20, right: 20 }}
       />
+      {new Date("2026-02-22") > new Date() && (
+        <LogoLink
+          text="Next gig - this Friday - Sydney Park"
+          src={HumantixLogo.src}
+          alt="Humantix Logo"
+          href="https://events.humanitix.com/localhost-0002"
+          style={{ bottom: 60, right: 20 }}
+        />
+      )}
       <svg
         width="100%"
         height="100%"
