@@ -59,6 +59,52 @@ const Electron = () => {
           style={{ bottom: 60, right: 20 }}
         />
       )}
+      <a
+        href="https://cards.electron.dance"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fade-in"
+        style={{
+          position: "absolute",
+          bottom: 60,
+          left: 20,
+          opacity: 0,
+          width: "clamp(50px, 10vw, 80px)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 4,
+          textDecoration: "none",
+        }}
+      >
+        <svg width="100%" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="djc-card" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#2a0060" />
+              <stop offset="100%" stopColor="#1a0a2e" />
+            </linearGradient>
+          </defs>
+          <g transform="rotate(-18 80 110)">
+            <rect x="30" y="10" width="68" height="95" rx="8" fill="#2d1060" stroke="#a78bfa" strokeWidth="1.5" />
+            <rect x="30" y="10" width="6" height="95" rx="3" fill="#a78bfa" />
+          </g>
+          <g transform="rotate(18 80 110)">
+            <rect x="62" y="10" width="68" height="95" rx="8" fill="#2d1060" stroke="#a78bfa" strokeWidth="1.5" />
+            <rect x="62" y="10" width="6" height="95" rx="3" fill="#a78bfa" />
+          </g>
+          <rect x="46" y="8" width="68" height="95" rx="8" fill="#3d1580" stroke="#e2c97e" strokeWidth="2" />
+          <rect x="46" y="8" width="6" height="95" rx="3" fill="#e2c97e" />
+          <circle cx="80" cy="52" r="26" fill="#3d1a80" />
+          <circle cx="80" cy="52" r="24" fill="none" stroke="#e2c97e" strokeWidth="1" opacity="1" />
+          <circle cx="80" cy="52" r="18" fill="none" stroke="#e2c97e" strokeWidth="0.8" opacity="0.8" />
+          <circle cx="80" cy="52" r="12" fill="none" stroke="#e2c97e" strokeWidth="0.6" opacity="0.6" />
+          <circle cx="80" cy="52" r="8" fill="#c4b5fd" />
+          <circle cx="80" cy="52" r="2.5" fill="#3d1a80" />
+        </svg>
+        <p style={{ color: "#ff6ec4", lineHeight: 0.8, fontSize: "clamp(10px, 1.5vw, 14px)", textAlign: "center", margin: 0 }}>
+          DJ Cards
+        </p>
+      </a>
       <svg
         width="100%"
         height="100%"
