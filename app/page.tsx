@@ -50,15 +50,39 @@ const Electron = () => {
         href="https://www.instagram.com/electron.dance/"
         style={{ top: 20, right: 20 }}
       />
-      {new Date("2026-02-22") > new Date() && (
-        <LogoLink
-          text="Next gig - this Friday - Sydney Park"
-          src={HumantixLogo.src}
-          alt="Humantix Logo"
-          href="https://events.humanitix.com/localhost-0002"
-          style={{ bottom: 60, right: 20 }}
-        />
-      )}
+      <a
+        href="https://drive.google.com/drive/folders/1CSmJuAQc9KpeMThfrrWbqezVcet2MNH1?usp=sharing"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fade-in"
+        style={{
+          position: "absolute",
+          bottom: 60,
+          right: 20,
+          opacity: 0,
+          width: "clamp(50px, 10vw, 80px)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 4,
+          textDecoration: "none",
+        }}
+      >
+        <svg width="100%" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="mix-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#ff6ec4" />
+              <stop offset="100%" stopColor="#7873f5" />
+            </linearGradient>
+          </defs>
+          <path fill="url(#mix-gradient)" d="M9 13c0 1.105-1.12 2-2.5 2S4 14.105 4 13s1.12-2 2.5-2 2.5.895 2.5 2" />
+          <path fill="url(#mix-gradient)" fillRule="evenodd" d="M9 3v10H8V3z" />
+          <path fill="url(#mix-gradient)" d="M8 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 13 2.22V4L8 5z" />
+        </svg>
+        <p style={{ color: "#ff6ec4", lineHeight: 0.8, fontSize: "clamp(10px, 1.5vw, 14px)", textAlign: "center", margin: 0 }}>
+          Mixs
+        </p>
+      </a>
       <a
         href="https://cards.electron.dance"
         target="_blank"
