@@ -51,6 +51,38 @@ const Electron = () => {
         style={{ top: 20, right: 20 }}
       />
       <a
+        href="sms:+19206898256"
+        className="fade-in"
+        style={{
+          position: "absolute",
+          bottom: 60,
+          left: "50%",
+          transform: "translateX(-50%)",
+          opacity: 0,
+          width: "clamp(50px, 10vw, 80px)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 4,
+          textDecoration: "none",
+        }}
+      >
+        <svg width="100%" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="sms-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#ff6ec4" />
+              <stop offset="100%" stopColor="#7873f5" />
+            </linearGradient>
+          </defs>
+          <path fill="url(#sms-gradient)" d="M20 2H4C2.9 2 2 2.9 2 4v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
+          <rect x="6" y="8.5" width="12" height="1.8" rx="0.9" fill="white" opacity="0.85" />
+          <rect x="6" y="12" width="8" height="1.8" rx="0.9" fill="white" opacity="0.85" />
+        </svg>
+        <p style={{ color: "#ff6ec4", lineHeight: 0.8, fontSize: "clamp(10px, 1.5vw, 14px)", textAlign: "center", margin: 0 }}>
+          Msg our bot
+        </p>
+      </a>
+      <a
         href="https://drive.google.com/drive/folders/1CSmJuAQc9KpeMThfrrWbqezVcet2MNH1?usp=sharing"
         target="_blank"
         rel="noopener noreferrer"
