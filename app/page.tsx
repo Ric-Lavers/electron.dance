@@ -116,6 +116,41 @@ const Electron = () => {
         </p>
       </a>
       <a
+        href="https://beta.electron.dance/events"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fade-in"
+        style={{
+          position: "absolute",
+          top: 20,
+          left: "50%",
+          transform: "translateX(-50%)",
+          opacity: 0,
+          width: "clamp(50px, 10vw, 80px)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 4,
+          textDecoration: "none",
+        }}
+      >
+        <svg width="100%" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="beta-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#ff6ec4" />
+              <stop offset="100%" stopColor="#7873f5" />
+            </linearGradient>
+          </defs>
+          <rect x="8" y="2" width="8" height="2.5" rx="1.25" fill="url(#beta-gradient)" />
+          <path fill="url(#beta-gradient)" d="M10 4.5h4v5l6 12H4l6-12V4.5z" opacity="0.9" />
+          <circle cx="10" cy="17" r="1.5" fill="white" opacity="0.3" />
+          <circle cx="14.5" cy="19.5" r="1" fill="white" opacity="0.25" />
+        </svg>
+        <p style={{ color: "#ff6ec4", lineHeight: 0.8, fontSize: "clamp(10px, 1.5vw, 14px)", textAlign: "center", margin: 0 }}>
+          Beta
+        </p>
+      </a>
+      <a
         href="https://cards.electron.dance"
         target="_blank"
         rel="noopener noreferrer"
