@@ -51,9 +51,7 @@ const Electron = () => {
         style={{ top: 20, right: 20 }}
       />
       <a
-        href="https://gigs.electron.dance"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="/gigs"
         className="fade-in"
         style={{
           position: "absolute",
@@ -258,14 +256,14 @@ const Electron = () => {
         </g>
         <text
           x="460"
-          y="420"
+          y="470"
           style={{
             // fill: 'aliceblue',
             // fill: '#7873f5',
             fill: "url(#modernGradient_pink)",
           }}
         >
-          Hello you,
+          Hello you&apos;s
         </text>
       </svg>
     </>
