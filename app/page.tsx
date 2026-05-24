@@ -43,6 +43,15 @@ const Electron = () => {
         href="https://chat.whatsapp.com/KI2rCCnikhPAvAwN0AKiUk"
         style={{ top: 20, left: 20 }}
       />
+      {new Date() < new Date("2026-06-08") && (
+        <LogoLink
+          text="Next Event"
+          src={HumantixLogo.src}
+          alt="Humanitix Logo"
+          href="https://events.humanitix.com/kings-b-day-open-decks-take-over_electron-dance"
+          style={{ top: "calc(30% + 16px)", left: "calc(33% + 24px)" }}
+        />
+      )}
       <LogoLink
         text="Follow our Instagram"
         src={InstagramLogo.src}
