@@ -51,6 +51,41 @@ const Electron = () => {
         style={{ top: 20, right: 20 }}
       />
       <a
+        href="https://gigs.electron.dance"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fade-in"
+        style={{
+          position: "absolute",
+          top: "50%",
+          transform: "translateY(-50%)",
+          right: 20,
+          opacity: 0,
+          width: "clamp(50px, 10vw, 80px)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 4,
+          textDecoration: "none",
+        }}
+      >
+        <svg width="100%" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gig-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#ff6ec4" />
+              <stop offset="100%" stopColor="#7873f5" />
+            </linearGradient>
+          </defs>
+          <rect x="9" y="2" width="6" height="10" rx="3" fill="url(#gig-gradient)" />
+          <path fill="url(#gig-gradient)" d="M5 10a7 7 0 0 0 14 0h-2a5 5 0 0 1-10 0H5z" />
+          <rect x="11" y="17" width="2" height="4" fill="url(#gig-gradient)" />
+          <rect x="8" y="21" width="8" height="1.5" rx="0.75" fill="url(#gig-gradient)" />
+        </svg>
+        <p style={{ color: "#ff6ec4", lineHeight: 0.8, fontSize: "clamp(10px, 1.5vw, 14px)", textAlign: "center", margin: 0 }}>
+          Gigs
+        </p>
+      </a>
+      <a
         href="sms:+19206898256"
         className="fade-in"
         style={{
@@ -231,17 +266,6 @@ const Electron = () => {
           }}
         >
           Hello you,
-        </text>
-        <text
-          onClick={() => window.open("/gigs")}
-          x="460"
-          y="500"
-          style={{
-            fill: "url(#modernGradient_pink)",
-            cursor: "pointer",
-          }}
-        >
-          looking for a gig?
         </text>
       </svg>
     </>
