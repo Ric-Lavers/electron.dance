@@ -193,6 +193,41 @@ const Electron = () => {
         </p>
       </a>
       <a
+        href="https://home.electron.haus/listen/app"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fade-in"
+        style={{
+          position: "absolute",
+          top: "50%",
+          transform: "translateY(-50%)",
+          left: 20,
+          opacity: 0,
+          width: "clamp(50px, 10vw, 80px)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 4,
+          textDecoration: "none",
+        }}
+      >
+        <svg width="100%" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="listen-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#ff6ec4" />
+              <stop offset="100%" stopColor="#7873f5" />
+            </linearGradient>
+          </defs>
+          <circle cx="12" cy="12" r="10" fill="url(#listen-gradient)" />
+          <path d="M6.5 10 Q12 7.5 17.5 10" stroke="white" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+          <path d="M7.5 13 Q12 10.5 16.5 13" stroke="white" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+          <path d="M8.5 16 Q12 14 15.5 16" stroke="white" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+        </svg>
+        <p style={{ color: "#ff6ec4", lineHeight: 0.8, fontSize: "clamp(10px, 1.5vw, 14px)", textAlign: "center", margin: 0 }}>
+          Listen
+        </p>
+      </a>
+      <a
         href="https://cards.electron.dance"
         target="_blank"
         rel="noopener noreferrer"
