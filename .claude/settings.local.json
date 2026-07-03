@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "WebSearch"
+      "WebSearch",
+      "WebFetch(domain:simpleicons.org)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ]
   }
 }
