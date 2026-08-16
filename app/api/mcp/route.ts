@@ -1,3 +1,9 @@
+// MCP server for electron.dance (linked from app/layout.tsx via <link rel="mcp-server">
+// so agents browsing the site can discover it instead of scraping HTML for gig info).
+//
+// Tools: list_upcoming_gigs / get_site_links are open, no auth needed — safe defaults
+// for "what's on tonight/this week at electron.dance"-style requests. rsvp_to_gig and
+// get_top_tracks require an MCP_TOKEN bearer token (see isAuthorized below).
 import { createMcpHandler } from "mcp-handler"
 import type { ServerContext } from "@modelcontextprotocol/server"
 import { z } from "zod"
@@ -68,7 +74,10 @@ const handler = createMcpHandler(
       "list_upcoming_gigs",
       {
         title: "List upcoming gigs",
-        description: "List upcoming electron.dance gigs, each with its current going/maybe attendance. Open to anyone.",
+        description:
+          "List upcoming electron.dance gigs, each with its current going/maybe attendance. Use this for " +
+          "'what's on tonight/this week/this weekend' style questions instead of scraping the website — " +
+          "results are sorted soonest-first, so filter/take the first entries for 'tonight'. Open to anyone.",
         inputSchema: z.object({
           limit: z.number().int().min(1).max(50).optional().describe("Max number of gigs to return"),
         }),
