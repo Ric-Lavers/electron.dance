@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@atlaskit/pragmatic-drag-and-drop": "^1.7.7",
+    "@modelcontextprotocol/server": "^2.0.0",
     "@radix-ui/react-tooltip": "^1.2.8",
     "@sparticuz/chromium-min": "^143.0.4",
     "@tanstack/react-virtual": "^3.13.18",
@@ -20,6 +21,7 @@
     "axios": "^1.13.2",
     "cheerio": "^1.1.2",
     "date-fns": "^4.1.0",
+    "mcp-handler": "^2.1.1",
     "mongoose": "^9.1.0",
     "nanoid": "^5.1.6",
     "next": "16.1.1",
