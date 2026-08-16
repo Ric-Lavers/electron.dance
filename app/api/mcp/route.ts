@@ -133,6 +133,60 @@ const handler = createMcpHandler(
         return { content: [{ type: "text", text: JSON.stringify(SITE_LINKS, null, 2) }] }
       }
     )
+
+    // Resources/prompts are separate MCP primitives from tools — registering at least one
+    // of each is what turns on the resources/* and prompts/* methods (otherwise the SDK
+    // answers them with "Method not found", since it never advertised the capability).
+    // These mirror existing open tools as read-only, attachable content.
+    server.registerResource(
+      "site-links",
+      "electron-dance://site-links",
+      {
+        title: "electron.dance site links",
+        description: "Same data as the get_site_links tool, as an attachable resource.",
+        mimeType: "application/json",
+      },
+      async (uri) => ({
+        contents: [{ uri: uri.href, mimeType: "application/json", text: JSON.stringify(SITE_LINKS, null, 2) }],
+      })
+    )
+
+    server.registerResource(
+      "upcoming-gigs",
+      "electron-dance://gigs/upcoming",
+      {
+        title: "Upcoming electron.dance gigs",
+        description: "Same data as the list_upcoming_gigs tool, as an attachable resource.",
+        mimeType: "application/json",
+      },
+      async (uri) => {
+        const gigs = await getGigs()
+        return { contents: [{ uri: uri.href, mimeType: "application/json", text: JSON.stringify(gigs, null, 2) }] }
+      }
+    )
+
+    // A canned prompt is the protocol-native way to steer an agent toward the right tool —
+    // unlike a webpage comment, this only reaches an agent once the server is registered as
+    // an MCP connection, but at that point the client can surface it directly (e.g. as a
+    // slash command) for "what's on tonight" style requests.
+    server.registerPrompt(
+      "gigs_tonight",
+      {
+        title: "Gigs tonight",
+        description: "Ask what's on tonight at electron.dance, resolved against real upcoming-gig data.",
+      },
+      async () => ({
+        messages: [
+          {
+            role: "user" as const,
+            content: {
+              type: "text" as const,
+              text: "Using the list_upcoming_gigs tool, tell me what electron.dance gigs (if any) are on tonight.",
+            },
+          },
+        ],
+      })
+    )
   },
   { serverInfo: { name: "electron-dance", version: "0.1.0" } }
 )
