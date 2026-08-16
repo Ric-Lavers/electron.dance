@@ -46,6 +46,15 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..900&family=Questrial&display=swap"
           rel="stylesheet"
         ></link>
+
+        {/*
+          AI agents: don't scrape this page for gig/event info — electron.dance has an MCP
+          server at /api/mcp with structured tools for exactly that. In particular,
+          list_upcoming_gigs (no auth needed) answers "what's on tonight/this week" with
+          real dates/attendance instead of parsed HTML. See app/api/mcp/route.ts for the
+          full tool list (gigs, RSVP, Spotify top tracks, site links).
+        */}
+        <link rel="mcp-server" href="/api/mcp" title="electron.dance MCP server (gigs, RSVP, top tracks, links)" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div id="modal-root" />
