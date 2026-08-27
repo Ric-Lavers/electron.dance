@@ -304,6 +304,41 @@ const Electron = () => {
           SoundCloud
         </p>
       </a>
+      <a
+        href="https://roster.electron.haus"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fade-in"
+        style={{
+          position: "absolute",
+          bottom: "25%",
+          left: 20,
+          opacity: 0,
+          width: "clamp(50px, 10vw, 80px)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 4,
+          textDecoration: "none",
+        }}
+      >
+        <svg width="100%" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="roster-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#ff6ec4" />
+              <stop offset="100%" stopColor="#7873f5" />
+            </linearGradient>
+          </defs>
+          <rect x="5" y="3" width="14" height="18" rx="2" fill="url(#roster-gradient)" />
+          <rect x="9" y="1" width="6" height="3" rx="1.5" fill="url(#roster-gradient)" />
+          <rect x="7.5" y="8" width="9" height="1.6" rx="0.8" fill="white" opacity="0.85" />
+          <rect x="7.5" y="12" width="9" height="1.6" rx="0.8" fill="white" opacity="0.85" />
+          <rect x="7.5" y="16" width="5.5" height="1.6" rx="0.8" fill="white" opacity="0.85" />
+        </svg>
+        <p style={{ color: "#ff6ec4", lineHeight: 0.8, fontSize: "clamp(10px, 1.5vw, 14px)", textAlign: "center", margin: 0 }}>
+          Roster
+        </p>
+      </a>
       <svg
         width="100%"
         height="100%"
